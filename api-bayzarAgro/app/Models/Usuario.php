@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
+
+class Usuario extends Authenticatable
+{
+    use HasApiTokens;
+
+    protected $table = 'tbl_usuario';
+    protected $primaryKey = 'id_usuario';
+
+    public $timestamps = false;
+
+    protected $fillable = [
+        'nombre',
+        'apellidos',
+        'correo',
+        'telefono',
+        'acceso',
+        'secreto',
+        'rol',
+        'estado'
+    ];
+
+    protected $hidden = [
+        'secreto'
+    ];
+
+    public function getAuthPassword()
+    {
+        return $this->secreto;
+    }
+
+    public function fincas()
+    {
+        return $this->hasMany(
+            Finca::class,
+            'id_usuario',
+            'id_usuario'
+        );
+    }
+}
