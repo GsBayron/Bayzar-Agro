@@ -42,4 +42,12 @@ class Usuario extends Authenticatable
             'id_usuario'
         );
     }
+
+    public function inventario() {
+        return $this -> hasMany(
+        Inventario::class,
+            'id_usuario',
+            'id_usuario'
+        );
+    }
 }

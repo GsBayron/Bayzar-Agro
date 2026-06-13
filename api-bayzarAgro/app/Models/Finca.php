@@ -34,4 +34,21 @@ class Finca extends Model
         );
     }
 
+    public function cultivos()
+    {
+        return $this -> hasMany(
+            Cultivo::class,
+            'id_finca',
+            'id_finca'
+        );
+    }
+
+    public function inventario() {
+        return $this -> hasMany(
+            Inventario:: class,
+            'id_finca',
+            'id_finca'
+        );
+    }
+
 }

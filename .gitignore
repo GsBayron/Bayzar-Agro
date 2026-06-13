@@ -1,0 +1,15 @@
+# Angular
+node_modules/
+dist/
+.angular/
+.vscode/
+
+# Laravel
+vendor/
+.env
+storage/logs/*.log
+bootstrap/cache/*.php
+
+# General
+.DS_Store
+Thumbs.db
