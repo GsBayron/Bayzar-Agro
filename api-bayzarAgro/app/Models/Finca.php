@@ -19,6 +19,8 @@ class Finca extends Model
          'provincia',
          'canton',
          'distrito',
+         'latitud',
+         'longitud',
          'area',
          'unidad_area',
          'descripcion',

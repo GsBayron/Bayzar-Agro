@@ -75,7 +75,11 @@ class FincaController extends Controller
 
             'canton' => 'nullable|max:50',
 
-            'distrito' => 'nullable|max:50',
+            'distrito' => 'nullable|max:50', 
+
+            'latitud' => 'nullable|numeric',
+
+            'longitud' => 'nullable|numeric',
 
             'area' => 'nullable|numeric',
 
@@ -101,6 +105,10 @@ class FincaController extends Controller
             'canton' => $request->canton,
 
             'distrito' => $request->distrito,
+
+            'latitud' => $request->latitud,
+            
+            'longitud' => $request->longitud,
 
             'area' => $request->area,
 
@@ -134,6 +142,10 @@ class FincaController extends Controller
             'canton' => 'nullable|max:50',
 
             'distrito' => 'nullable|max:50',
+
+            'latitud' => 'nullable|numeric',
+
+            'longitud' => 'nullable|numeric',
 
             'area' => 'nullable|numeric',
 
@@ -179,6 +191,10 @@ class FincaController extends Controller
             'canton' => $request->canton,
 
             'distrito' => $request->distrito,
+            
+            'latitud' => $request->latitud,
+            
+            'longitud' => $request->longitud,
 
             'area' => $request->area,
 

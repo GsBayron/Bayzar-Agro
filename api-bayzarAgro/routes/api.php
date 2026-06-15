@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\PlaguicidaRegistradoController;
 use App\Http\Controllers\Api\FertilizanteRegistradoController;
 use App\Http\Controllers\Api\PlagaRegistradaController;
 use App\Http\Controllers\Api\PlagaCultivoController;
+use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\ClimaController;
 
 /*Route::get('/user', function (Request $request) {
     return $request->user();
@@ -34,13 +36,22 @@ Route::middleware([
         });
     });
 
-Route::middleware([
-    'auth:api'
-])
-    ->group(function () {
+Route::middleware(['auth:api']) -> group(function () {
+
+        // DASHBOARD
+        Route::get('/dashboard', [DashboardController::class, 'index']);
+
+        // CLIMA
+        Route::get('/clima/finca/{id}', [ClimaController::class, 'finca']);
 
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/perfil', [AuthController::class, 'perfil']);
+
+        // REGISTROS DEL SERVICIO FITOSANITARIO DEL ESTADO
+        Route::get('/plaguicidas-registrados', [PlaguicidaRegistradoController::class, 'listar']);
+        Route::get('/fertilizantes-registrados', [FertilizanteRegistradoController::class, 'listar']);
+        Route::get('/plagas-registradas', [PlagaRegistradaController::class, 'listar']);
+
 
         // FINCAS
         Route::prefix('fincas')->group(function () {
@@ -60,15 +71,6 @@ Route::middleware([
             Route::delete('/{id}', [CultivoController::class, 'eliminar']);
         });
 
-        // ACTIVIDADES
-        Route::prefix('actividades')->group(function () {
-            Route::get('/', [ActividadController::class, 'listar']);
-            Route::get('/{id}', [ActividadController::class, 'consultar']);
-            Route::post('/', [ActividadController::class, 'guardar']);
-            Route::put('/{id}', [ActividadController::class, 'actualizar']);
-            Route::delete('/{id}', [ActividadController::class, 'eliminar']);
-        });
-
         // INVENTARIO
         Route::prefix('inventario')->group(function () {
             Route::get('/', [InventarioController::class, 'listar']);
@@ -78,10 +80,6 @@ Route::middleware([
             Route::put('/{id}', [InventarioController::class, 'actualizar']);
             Route::delete('/{id}', [InventarioController::class, 'eliminar']);
         });
-
-        Route::get('/plaguicidas-registrados', [PlaguicidaRegistradoController::class, 'listar']);
-        Route::get('/fertilizantes-registrados', [FertilizanteRegistradoController::class, 'listar']);
-        Route::get('/plagas-registradas', [PlagaRegistradaController::class, 'listar']);
 
         // PLAGAS DE CULTIVOS
         Route::prefix('plagas-cultivo')->group(function () {
