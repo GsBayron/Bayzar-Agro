@@ -340,9 +340,7 @@ class ActividadController extends Controller
     {
         $usuario = request()->user();
 
-        $actividad = Actividad::querry()
-            ->whereKey($id)
-            ->delete();
+        $actividad = Actividad::whereKey($id)->first();
 
         if (!$actividad) {
 

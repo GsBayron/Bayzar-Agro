@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Finca;
+use Illuminate\Database\QueryException;
 
 class FincaController extends Controller
 {
@@ -83,6 +84,10 @@ class FincaController extends Controller
 
             'area' => 'nullable|numeric',
 
+            'cantidad_plantas' => 'nullable|integer|min:0',
+
+            'distancia_siembra' => 'nullable|string|max:80',
+
             'unidad_area' => 'nullable|max:20',
 
             'descripcion' => 'nullable|max:255',
@@ -111,6 +116,10 @@ class FincaController extends Controller
             'longitud' => $request->longitud,
 
             'area' => $request->area,
+
+            'cantidad_plantas' => $request->cantidad_plantas,
+
+            'distancia_siembra' => $request->distancia_siembra,
 
             'unidad_area' => $request->unidad_area,
 
@@ -148,6 +157,10 @@ class FincaController extends Controller
             'longitud' => 'nullable|numeric',
 
             'area' => 'nullable|numeric',
+
+            'cantidad_plantas' => 'nullable|integer|min:0',
+
+            'distancia_siembra' => 'nullable|string|max:80',
 
             'unidad_area' => 'nullable|max:20',
 
@@ -198,6 +211,10 @@ class FincaController extends Controller
 
             'area' => $request->area,
 
+            'cantidad_plantas' => $request->cantidad_plantas,
+
+            'distancia_siembra' => $request->distancia_siembra,
+
             'unidad_area' => $request->unidad_area,
 
             'descripcion' => $request->descripcion,
@@ -212,37 +229,38 @@ class FincaController extends Controller
     }
 
     // ELIMINAR
+
+
     public function eliminar($id)
     {
-
         $usuario = request()->user();
-
         $finca = Finca::whereKey($id)->first();
 
-        // Validar existencia
         if (!$finca) {
-
             return response()->json([
-                'message' => 'Finca no encontrada'
+                'message' => 'Finca no encontrada',
             ], 404);
         }
 
-        // Validar permisos agricultor
         if (
-            $usuario->rol === 'Agricultor'
-            &&
+            $usuario->rol !== 'Administrador' &&
             $finca->id_usuario !== $usuario->id_usuario
         ) {
-
             return response()->json([
-                'message' => 'No autorizado'
+                'message' => 'No autorizado',
             ], 403);
         }
 
-        $finca->delete();
+        try {
+            $finca->delete();
 
-        return response()->json([
-            'message' => 'Finca eliminada correctamente'
-        ]);
+            return response()->json([
+                'message' => 'Finca eliminada correctamente',
+            ]);
+        } catch (QueryException $exception) {
+            return response()->json([
+                'message' => 'No se puede eliminar la finca porque tiene registros relacionados',
+            ], 409);
+        }
     }
 }

@@ -69,7 +69,7 @@ class CultivoController extends Controller
     public function guardar(Request $request)
     {
         $request -> validate([
-            'id_finca' => 'required|integer',
+            'id_finca' => 'required|integer|exists:tbl_finca,id_finca',
 
             'nombre' => 'required|max:100',
 
@@ -79,9 +79,13 @@ class CultivoController extends Controller
 
             'fecha_siembra' => 'nullable|date',
 
-            'fecha_estimada_cosecha' => 'nullable|date',
+            'fecha_estimada_cosecha' => 'nullable|date|after_or_equal:fecha_siembra',
 
-            'area_sembrada' => 'nullable|numeric',
+            'area_sembrada' => 'nullable|numeric|min:0',
+
+            'cantidad_plantas' => 'nullable|integer|min:0',
+
+            'distancia_siembra' => 'nullable|max:80',
 
             'unidad_area' => 'nullable|max:20',
 
@@ -129,6 +133,10 @@ class CultivoController extends Controller
 
             'area_sembrada' => $request->area_sembrada,
 
+            'cantidad_plantas' => $request->cantidad_plantas,
+
+            'distancia_siembra' => $request->distancia_siembra,
+
             'unidad_area' => $request->unidad_area,
 
             'estado_cultivo' => $request->estado_cultivo,
@@ -147,7 +155,7 @@ class CultivoController extends Controller
 public function actualizar(Request $request, $id)
 {
     $request->validate([
-        'id_finca' => 'required|integer',
+        'id_finca' => 'required|integer|exists:tbl_finca,id_finca',
 
         'nombre' => 'required|string|max:100',
 
@@ -157,9 +165,13 @@ public function actualizar(Request $request, $id)
 
         'fecha_siembra' => 'nullable|date',
 
-        'fecha_estimada_cosecha' => 'nullable|date',
+        'fecha_estimada_cosecha' => 'nullable|date|after_or_equal:fecha_siembra',
 
-        'area_sembrada' => 'nullable|numeric',
+        'area_sembrada' => 'nullable|numeric|min:0',
+        
+        'cantidad_plantas' => 'nullable|integer|min:0',
+
+        'distancia_siembra' => 'nullable|max:80',
 
         'unidad_area' => 'nullable|string|max:30',
 
@@ -167,7 +179,7 @@ public function actualizar(Request $request, $id)
 
         'descripcion' => 'nullable|string',
 
-        'estado' => 'required|integer'
+        'estado' => 'required|boolean'
     ]);
 
     $usuario = $request->user();
@@ -228,6 +240,10 @@ public function actualizar(Request $request, $id)
 
         'area_sembrada' => $request->area_sembrada,
 
+        'cantidad_plantas' => $request->cantidad_plantas,
+
+        'distancia_siembra' => $request->distancia_siembra,
+
         'unidad_area' => $request->unidad_area,
 
         'estado_cultivo' => $request->estado_cultivo,
@@ -248,9 +264,11 @@ public function actualizar(Request $request, $id)
     {
         $usuario = request() -> user();
 
-        $cultivo = Cultivo::with('finca')
+        /*$cultivo = Cultivo::with('finca')
          -> whereKey($id)
-         -> first();
+         -> first();*/
+
+         $cultivo = Cultivo::whereKey($id)->first();
 
          if (!$cultivo) {
             return response() -> json([
@@ -270,10 +288,11 @@ public function actualizar(Request $request, $id)
             ],403);
          }
 
+         $cultivo -> delete();
+
          return response() -> json([
             'message' => 'Cultivo eliminado correctamente'
          ]);
 
     }
 }
-
