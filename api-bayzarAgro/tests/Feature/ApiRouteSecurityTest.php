@@ -11,10 +11,12 @@ class ApiRouteSecurityTest extends TestCase
     {
         $publicRoutes = [
             'api/login',
+            'api/public/planes',
+            'api/registro',
         ];
 
         foreach (Route::getRoutes() as $route) {
-            if (!str_starts_with($route->uri(), 'api/')) {
+            if (! str_starts_with($route->uri(), 'api/')) {
                 continue;
             }
 
@@ -50,7 +52,7 @@ class ApiRouteSecurityTest extends TestCase
                 ['POST', 'PUT', 'PATCH', 'DELETE']
             )) > 0;
 
-            if (!$isCatalogRoute || !$isMutation) {
+            if (! $isCatalogRoute || ! $isMutation) {
                 continue;
             }
 

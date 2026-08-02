@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use App\Models\Costo;
-use App\Models\Finca;
-use App\Models\Cultivo;
 use App\Models\Actividad;
+use App\Models\Costo;
+use App\Models\Cultivo;
+use App\Models\Finca;
+use Illuminate\Http\Request;
 
 class CostoController extends Controller
 {
@@ -20,7 +19,7 @@ class CostoController extends Controller
             'usuario',
             'finca',
             'cultivo',
-            'actividad'
+            'actividad',
         ])
             ->orderBy('fecha', 'desc')
             ->orderBy('id_costo', 'desc');
@@ -46,7 +45,7 @@ class CostoController extends Controller
             'usuario',
             'finca',
             'cultivo',
-            'actividad'
+            'actividad',
         ])
             ->where('id_costo', '=', $id);
 
@@ -60,9 +59,9 @@ class CostoController extends Controller
 
         $costo = $consulta->first();
 
-        if (!$costo) {
+        if (! $costo) {
             return response()->json([
-                'message' => 'Costo no encontrado'
+                'message' => 'Costo no encontrado',
             ], 404);
         }
 
@@ -88,70 +87,11 @@ class CostoController extends Controller
             'monto' => 'required|numeric|min:0',
             'fecha' => 'required|date',
             'observaciones' => 'nullable|string',
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
 
-        if (
-            $usuario->rol === 'Agricultor'
-            &&
-            $request->id_finca
-        ) {
-            $finca = Finca::query()
-                ->where('id_finca', '=', $request->id_finca)
-                ->where('id_usuario', '=', $usuario->id_usuario)
-                ->first();
-
-            if (!$finca) {
-                return response()->json([
-                    'message' => 'No autorizado para esta finca'
-                ], 403);
-            }
-        }
-
-        if (
-            $usuario->rol === 'Agricultor'
-            &&
-            $request->id_cultivo
-        ) {
-            $cultivo = Cultivo::query()
-                ->where('id_cultivo', '=', $request->id_cultivo)
-                ->whereHas('finca', function ($query) use ($usuario) {
-                    $query->where(
-                        'id_usuario',
-                        '=',
-                        $usuario->id_usuario
-                    );
-                })
-                ->first();
-
-            if (!$cultivo) {
-                return response()->json([
-                    'message' => 'No autorizado para este cultivo'
-                ], 403);
-            }
-        }
-
-        if (
-            $usuario->rol === 'Agricultor'
-            &&
-            $request->id_actividad
-        ) {
-            $actividad = Actividad::query()
-                ->where('id_actividad', '=', $request->id_actividad)
-                ->whereHas('cultivo.finca', function ($query) use ($usuario) {
-                    $query->where(
-                        'id_usuario',
-                        '=',
-                        $usuario->id_usuario
-                    );
-                })
-                ->first();
-
-            if (!$actividad) {
-                return response()->json([
-                    'message' => 'No autorizado para esta actividad'
-                ], 403);
-            }
+        if ($respuesta = $this->validarRelaciones($request)) {
+            return $respuesta;
         }
 
         $costo = Costo::create([
@@ -170,12 +110,12 @@ class CostoController extends Controller
             'monto' => $request->monto,
             'fecha' => $request->fecha,
             'observaciones' => $request->observaciones,
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Costo registrado correctamente',
-            'data' => $costo
+            'data' => $costo,
         ], 201);
     }
 
@@ -196,9 +136,9 @@ class CostoController extends Controller
 
         $costo = $consulta->first();
 
-        if (!$costo) {
+        if (! $costo) {
             return response()->json([
-                'message' => 'Costo no encontrado'
+                'message' => 'Costo no encontrado',
             ], 404);
         }
 
@@ -217,8 +157,12 @@ class CostoController extends Controller
             'monto' => 'required|numeric|min:0',
             'fecha' => 'required|date',
             'observaciones' => 'nullable|string',
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
+
+        if ($respuesta = $this->validarRelaciones($request)) {
+            return $respuesta;
+        }
 
         $costo->update([
             'id_finca' => $request->id_finca,
@@ -235,12 +179,12 @@ class CostoController extends Controller
             'monto' => $request->monto,
             'fecha' => $request->fecha,
             'observaciones' => $request->observaciones,
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Costo actualizado correctamente',
-            'data' => $costo
+            'data' => $costo,
         ]);
     }
 
@@ -259,18 +203,75 @@ class CostoController extends Controller
             );
         }
 
-        //$costo = $consulta->first();
-        $costo = Costo::WhereKey($id)->first();
-        if (!$costo) {
+        $costo = $consulta->first();
+        if (! $costo) {
             return response()->json([
-                'message' => 'Costo no encontrado'
+                'message' => 'Costo no encontrado',
             ], 404);
         }
 
         $costo->delete();
 
         return response()->json([
-            'message' => 'Costo eliminado correctamente'
+            'message' => 'Costo eliminado correctamente',
         ]);
+    }
+
+    private function validarRelaciones(Request $request)
+    {
+        $usuario = $request->user();
+        $finca = $request->id_finca
+            ? Finca::whereKey($request->id_finca)->first()
+            : null;
+        $cultivo = $request->id_cultivo
+            ? Cultivo::with('finca')->whereKey($request->id_cultivo)->first()
+            : null;
+        $actividad = $request->id_actividad
+            ? Actividad::with('cultivo.finca')->whereKey($request->id_actividad)->first()
+            : null;
+
+        if ($usuario->rol !== 'Administrador') {
+            if ($finca && $finca->id_usuario !== $usuario->id_usuario) {
+                return response()->json([
+                    'message' => 'No autorizado para esta finca',
+                ], 403);
+            }
+
+            if ($cultivo && $cultivo->finca?->id_usuario !== $usuario->id_usuario) {
+                return response()->json([
+                    'message' => 'No autorizado para este cultivo',
+                ], 403);
+            }
+
+            if ($actividad && $actividad->cultivo?->finca?->id_usuario !== $usuario->id_usuario) {
+                return response()->json([
+                    'message' => 'No autorizado para esta actividad',
+                ], 403);
+            }
+        }
+
+        if ($finca && $cultivo && $cultivo->id_finca !== $finca->id_finca) {
+            return response()->json([
+                'message' => 'El cultivo no pertenece a la finca seleccionada',
+            ], 422);
+        }
+
+        if ($cultivo && $actividad && $actividad->id_cultivo !== $cultivo->id_cultivo) {
+            return response()->json([
+                'message' => 'La actividad no pertenece al cultivo seleccionado',
+            ], 422);
+        }
+
+        if (
+            $finca
+            && $actividad
+            && $actividad->cultivo?->id_finca !== $finca->id_finca
+        ) {
+            return response()->json([
+                'message' => 'La actividad no pertenece a la finca seleccionada',
+            ], 422);
+        }
+
+        return null;
     }
 }

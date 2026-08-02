@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use App\Models\FertilizanteRegistrado;
+use Illuminate\Http\Request;
 
 class FertilizanteRegistradoController extends Controller
 {
@@ -38,9 +37,9 @@ class FertilizanteRegistradoController extends Controller
 
         $registro = $consulta->first();
 
-        if (!$registro) {
+        if (! $registro) {
             return response()->json([
-                'message' => 'Fertilizante registrado no encontrado'
+                'message' => 'Fertilizante registrado no encontrado',
             ], 404);
         }
 
@@ -57,7 +56,7 @@ class FertilizanteRegistradoController extends Controller
             'fabricante' => 'nullable|string|max:255',
             'estado_registro' => 'nullable|string|max:100',
             'fuente' => 'nullable|string|max:255',
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
 
         $registro = FertilizanteRegistrado::create([
@@ -68,12 +67,12 @@ class FertilizanteRegistradoController extends Controller
             'fabricante' => $request->fabricante,
             'estado_registro' => $request->estado_registro,
             'fuente' => $request->fuente,
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Fertilizante registrado correctamente',
-            'data' => $registro
+            'data' => $registro,
         ], 201);
     }
 
@@ -83,9 +82,9 @@ class FertilizanteRegistradoController extends Controller
             ->where('id_fertilizante_registrado', '=', $id)
             ->first();
 
-        if (!$registro) {
+        if (! $registro) {
             return response()->json([
-                'message' => 'Fertilizante registrado no encontrado'
+                'message' => 'Fertilizante registrado no encontrado',
             ], 404);
         }
 
@@ -97,7 +96,7 @@ class FertilizanteRegistradoController extends Controller
             'fabricante' => 'nullable|string|max:255',
             'estado_registro' => 'nullable|string|max:100',
             'fuente' => 'nullable|string|max:255',
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
 
         $registro->update([
@@ -108,29 +107,29 @@ class FertilizanteRegistradoController extends Controller
             'fabricante' => $request->fabricante,
             'estado_registro' => $request->estado_registro,
             'fuente' => $request->fuente,
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Fertilizante actualizado correctamente',
-            'data' => $registro
+            'data' => $registro,
         ]);
     }
 
     public function eliminar($id)
     {
-        $registro = FertilizanteRegistrado::whereKey($id)->firt();
+        $registro = FertilizanteRegistrado::whereKey($id)->first();
 
-        if (!$registro) {
+        if (! $registro) {
             return response()->json([
-                'message' => 'Fertilizante registrado no encontrado'
+                'message' => 'Fertilizante registrado no encontrado',
             ], 404);
         }
 
         $registro->delete();
 
         return response()->json([
-            'message' => 'Fertilizante eliminado correctamente'
+            'message' => 'Fertilizante eliminado correctamente',
         ]);
     }
 }

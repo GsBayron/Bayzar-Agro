@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use App\Models\PlagaCultivo;
 use App\Models\Cultivo;
+use App\Models\PlagaCultivo;
+use Illuminate\Http\Request;
 
 class PlagaCultivoController extends Controller
 {
@@ -26,9 +25,9 @@ class PlagaCultivoController extends Controller
             PlagaCultivo::whereHas('cultivo.finca', function ($query) use ($usuario) {
                 $query->where('id_usuario', $usuario->id_usuario);
             })
-            ->with(['cultivo.finca', 'plaga'])
-            ->orderBy('id_plaga_cultivo', 'desc')
-            ->get()
+                ->with(['cultivo.finca', 'plaga'])
+                ->orderBy('id_plaga_cultivo', 'desc')
+                ->get()
         );
     }
 
@@ -40,19 +39,19 @@ class PlagaCultivoController extends Controller
             ->whereKey($id)
             ->first();
 
-        if (!$registro) {
+        if (! $registro) {
             return response()->json([
-                'message' => 'Registro de plaga no encontrado'
+                'message' => 'Registro de plaga no encontrado',
             ], 404);
         }
 
         if (
-            $usuario->rol === 'Agricultor'
+            $usuario->rol !== 'Administrador'
             &&
-            $registro->cultivo->finca->id_usuario !== $usuario->id_usuario
+            $registro->cultivo?->finca?->id_usuario !== $usuario->id_usuario
         ) {
             return response()->json([
-                'message' => 'No autorizado'
+                'message' => 'No autorizado',
             ], 403);
         }
 
@@ -62,16 +61,16 @@ class PlagaCultivoController extends Controller
     public function guardar(Request $request)
     {
         $request->validate([
-            'id_cultivo' => 'required|integer',
-            'id_plaga_registrada' => 'nullable|integer',
-            'nombre_manual' => 'nullable|max:100',
+            'id_cultivo' => 'required|integer|exists:tbl_cultivo,id_cultivo',
+            'id_plaga_registrada' => 'nullable|integer|exists:tbl_plaga_registrada,id_plaga_registrada',
+            'nombre_manual' => 'nullable|required_without:id_plaga_registrada|string|max:100',
             'tipo_plaga_manual' => 'nullable|max:50',
             'fecha_deteccion' => 'required|date',
             'nivel_riesgo' => 'required|max:30',
             'estado_plaga' => 'required|max:30',
             'descripcion' => 'nullable|max:255',
             'observaciones' => 'nullable|max:255',
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
 
         $usuario = request()->user();
@@ -80,19 +79,19 @@ class PlagaCultivoController extends Controller
             ->whereKey($request->id_cultivo)
             ->first();
 
-        if (!$cultivo) {
+        if (! $cultivo) {
             return response()->json([
-                'message' => 'Cultivo no encontrado'
+                'message' => 'Cultivo no encontrado',
             ], 404);
         }
 
         if (
-            $usuario->rol === 'Agricultor'
+            $usuario->rol !== 'Administrador'
             &&
-            $cultivo->finca->id_usuario !== $usuario->id_usuario
+            $cultivo->finca?->id_usuario !== $usuario->id_usuario
         ) {
             return response()->json([
-                'message' => 'No autorizado'
+                'message' => 'No autorizado',
             ], 403);
         }
 
@@ -106,28 +105,28 @@ class PlagaCultivoController extends Controller
             'estado_plaga' => $request->estado_plaga,
             'descripcion' => $request->descripcion,
             'observaciones' => $request->observaciones,
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Plaga registrada correctamente',
-            'plaga_cultivo' => $registro
+            'plaga_cultivo' => $registro,
         ]);
     }
 
     public function actualizar(Request $request, $id)
     {
         $request->validate([
-            'id_cultivo' => 'required|integer',
-            'id_plaga_registrada' => 'nullable|integer',
-            'nombre_manual' => 'nullable|max:100',
+            'id_cultivo' => 'required|integer|exists:tbl_cultivo,id_cultivo',
+            'id_plaga_registrada' => 'nullable|integer|exists:tbl_plaga_registrada,id_plaga_registrada',
+            'nombre_manual' => 'nullable|required_without:id_plaga_registrada|string|max:100',
             'tipo_plaga_manual' => 'nullable|max:50',
             'fecha_deteccion' => 'required|date',
             'nivel_riesgo' => 'required|max:30',
             'estado_plaga' => 'required|max:30',
             'descripcion' => 'nullable|max:255',
             'observaciones' => 'nullable|max:255',
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
 
         $usuario = request()->user();
@@ -136,19 +135,19 @@ class PlagaCultivoController extends Controller
             ->whereKey($id)
             ->first();
 
-        if (!$registro) {
+        if (! $registro) {
             return response()->json([
-                'message' => 'Registro de plaga no encontrado'
+                'message' => 'Registro de plaga no encontrado',
             ], 404);
         }
 
         if (
-            $usuario->rol === 'Agricultor'
+            $usuario->rol !== 'Administrador'
             &&
-            $registro->cultivo->finca->id_usuario !== $usuario->id_usuario
+            $registro->cultivo?->finca?->id_usuario !== $usuario->id_usuario
         ) {
             return response()->json([
-                'message' => 'No autorizado'
+                'message' => 'No autorizado',
             ], 403);
         }
 
@@ -156,19 +155,19 @@ class PlagaCultivoController extends Controller
             ->whereKey($request->id_cultivo)
             ->first();
 
-        if (!$cultivo) {
+        if (! $cultivo) {
             return response()->json([
-                'message' => 'Cultivo no encontrado'
+                'message' => 'Cultivo no encontrado',
             ], 404);
         }
 
         if (
-            $usuario->rol === 'Agricultor'
+            $usuario->rol !== 'Administrador'
             &&
-            $cultivo->finca->id_usuario !== $usuario->id_usuario
+            $cultivo->finca?->id_usuario !== $usuario->id_usuario
         ) {
             return response()->json([
-                'message' => 'No autorizado'
+                'message' => 'No autorizado',
             ], 403);
         }
 
@@ -182,12 +181,12 @@ class PlagaCultivoController extends Controller
             'estado_plaga' => $request->estado_plaga,
             'descripcion' => $request->descripcion,
             'observaciones' => $request->observaciones,
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Registro de plaga actualizado correctamente',
-            'plaga_cultivo' => $registro
+            'plaga_cultivo' => $registro,
         ]);
     }
 
@@ -195,34 +194,28 @@ class PlagaCultivoController extends Controller
     {
         $usuario = request()->user();
 
-       /* $registro = PlagaCultivo::with('cultivo.finca')
-            ->whereKey($id)
-            ->first();*/
+        $registro = PlagaCultivo::with('cultivo.finca')->find($id);
 
-         $registro = PlagaCultivo::with('cultivo.finca')->find($id);
-
-        if (!$registro) {
+        if (! $registro) {
             return response()->json([
-                'message' => 'Registro de plaga no encontrado'
+                'message' => 'Registro de plaga no encontrado',
             ], 404);
         }
 
         if (
-            $usuario->rol === 'Agricultor'
+            $usuario->rol !== 'Administrador'
             &&
-            $registro->cultivo->finca->id_usuario !== $usuario->id_usuario
+            $registro->cultivo?->finca?->id_usuario !== $usuario->id_usuario
         ) {
             return response()->json([
-                'message' => 'No autorizado'
+                'message' => 'No autorizado',
             ], 403);
         }
 
-        PlagaCultivo::query()
-            ->whereKey($id)
-            ->delete();
+        $registro->delete();
 
         return response()->json([
-            'message' => 'Registro de plaga eliminado correctamente'
+            'message' => 'Registro de plaga eliminado correctamente',
         ]);
     }
 }

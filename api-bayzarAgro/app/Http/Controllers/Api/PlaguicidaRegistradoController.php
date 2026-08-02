@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use App\Models\PlaguicidaRegistrado;
+use Illuminate\Http\Request;
 
 class PlaguicidaRegistradoController extends Controller
 {
@@ -38,9 +37,9 @@ class PlaguicidaRegistradoController extends Controller
 
         $registro = $consulta->first();
 
-        if (!$registro) {
+        if (! $registro) {
             return response()->json([
-                'message' => 'Plaguicida registrado no encontrado'
+                'message' => 'Plaguicida registrado no encontrado',
             ], 404);
         }
 
@@ -59,7 +58,7 @@ class PlaguicidaRegistradoController extends Controller
             'titular' => 'nullable|string|max:255',
             'estado_registro' => 'nullable|string|max:100',
             'fuente' => 'nullable|string|max:255',
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
 
         $registro = PlaguicidaRegistrado::create([
@@ -72,12 +71,12 @@ class PlaguicidaRegistradoController extends Controller
             'titular' => $request->titular,
             'estado_registro' => $request->estado_registro,
             'fuente' => $request->fuente,
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Plaguicida registrado correctamente',
-            'data' => $registro
+            'data' => $registro,
         ], 201);
     }
 
@@ -87,9 +86,9 @@ class PlaguicidaRegistradoController extends Controller
             ->where('id_plaguicida_registrado', '=', $id)
             ->first();
 
-        if (!$registro) {
+        if (! $registro) {
             return response()->json([
-                'message' => 'Plaguicida registrado no encontrado'
+                'message' => 'Plaguicida registrado no encontrado',
             ], 404);
         }
 
@@ -103,7 +102,7 @@ class PlaguicidaRegistradoController extends Controller
             'titular' => 'nullable|string|max:255',
             'estado_registro' => 'nullable|string|max:100',
             'fuente' => 'nullable|string|max:255',
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
 
         $registro->update([
@@ -116,29 +115,29 @@ class PlaguicidaRegistradoController extends Controller
             'titular' => $request->titular,
             'estado_registro' => $request->estado_registro,
             'fuente' => $request->fuente,
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Plaguicida actualizado correctamente',
-            'data' => $registro
+            'data' => $registro,
         ]);
     }
 
     public function eliminar($id)
     {
-         $registro = PlaguicidaRegistrado::whereKey($id)->firt();
+        $registro = PlaguicidaRegistrado::whereKey($id)->first();
 
-        if (!$registro) {
+        if (! $registro) {
             return response()->json([
-                'message' => 'Plaguicida registrado no encontrado'
+                'message' => 'Plaguicida registrado no encontrado',
             ], 404);
         }
 
         $registro->delete();
 
         return response()->json([
-            'message' => 'Plaguicida eliminado correctamente'
+            'message' => 'Plaguicida eliminado correctamente',
         ]);
     }
 }

@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use App\Models\Ingreso;
-use App\Models\Finca;
 use App\Models\Cultivo;
+use App\Models\Finca;
+use App\Models\Ingreso;
 use App\Models\Produccion;
+use Illuminate\Http\Request;
 
 class IngresoController extends Controller
 {
@@ -20,7 +19,7 @@ class IngresoController extends Controller
             'usuario',
             'finca',
             'cultivo',
-            'produccion'
+            'produccion',
         ])
             ->orderBy('fecha', 'desc')
             ->orderBy('id_ingreso', 'desc');
@@ -46,7 +45,7 @@ class IngresoController extends Controller
             'usuario',
             'finca',
             'cultivo',
-            'produccion'
+            'produccion',
         ])
             ->where('id_ingreso', '=', $id);
 
@@ -60,9 +59,9 @@ class IngresoController extends Controller
 
         $ingreso = $consulta->first();
 
-        if (!$ingreso) {
+        if (! $ingreso) {
             return response()->json([
-                'message' => 'Ingreso no encontrado'
+                'message' => 'Ingreso no encontrado',
             ], 404);
         }
 
@@ -91,13 +90,13 @@ class IngresoController extends Controller
             'destino' => 'nullable|string|max:100',
 
             'observaciones' => 'nullable|string',
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
 
         $finca = Finca::query()
             ->where('id_finca', '=', $request->id_finca);
 
-        if ($usuario->rol === 'Agricultor') {
+        if ($usuario->rol !== 'Administrador') {
             $finca->where(
                 'id_usuario',
                 '=',
@@ -107,9 +106,9 @@ class IngresoController extends Controller
 
         $finca = $finca->first();
 
-        if (!$finca) {
+        if (! $finca) {
             return response()->json([
-                'message' => 'Finca no encontrada o no autorizada'
+                'message' => 'Finca no encontrada o no autorizada',
             ], 403);
         }
 
@@ -118,9 +117,9 @@ class IngresoController extends Controller
             ->where('id_finca', '=', $request->id_finca)
             ->first();
 
-        if (!$cultivo) {
+        if (! $cultivo) {
             return response()->json([
-                'message' => 'El cultivo no pertenece a la finca seleccionada'
+                'message' => 'El cultivo no pertenece a la finca seleccionada',
             ], 422);
         }
 
@@ -131,9 +130,9 @@ class IngresoController extends Controller
                 ->where('id_cultivo', '=', $request->id_cultivo)
                 ->first();
 
-            if (!$produccion) {
+            if (! $produccion) {
                 return response()->json([
-                    'message' => 'La producción no pertenece al cultivo seleccionado'
+                    'message' => 'La producción no pertenece al cultivo seleccionado',
                 ], 422);
             }
         }
@@ -160,12 +159,12 @@ class IngresoController extends Controller
             'destino' => $request->destino,
 
             'observaciones' => $request->observaciones,
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Ingreso registrado correctamente',
-            'data' => $ingreso
+            'data' => $ingreso,
         ], 201);
     }
 
@@ -186,9 +185,9 @@ class IngresoController extends Controller
 
         $ingreso = $consulta->first();
 
-        if (!$ingreso) {
+        if (! $ingreso) {
             return response()->json([
-                'message' => 'Ingreso no encontrado'
+                'message' => 'Ingreso no encontrado',
             ], 404);
         }
 
@@ -210,13 +209,13 @@ class IngresoController extends Controller
             'destino' => 'nullable|string|max:100',
 
             'observaciones' => 'nullable|string',
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
 
         $finca = Finca::query()
             ->where('id_finca', '=', $request->id_finca);
 
-        if ($usuario->rol === 'Agricultor') {
+        if ($usuario->rol !== 'Administrador') {
             $finca->where(
                 'id_usuario',
                 '=',
@@ -226,9 +225,9 @@ class IngresoController extends Controller
 
         $finca = $finca->first();
 
-        if (!$finca) {
+        if (! $finca) {
             return response()->json([
-                'message' => 'Finca no encontrada o no autorizada'
+                'message' => 'Finca no encontrada o no autorizada',
             ], 403);
         }
 
@@ -237,9 +236,9 @@ class IngresoController extends Controller
             ->where('id_finca', '=', $request->id_finca)
             ->first();
 
-        if (!$cultivo) {
+        if (! $cultivo) {
             return response()->json([
-                'message' => 'El cultivo no pertenece a la finca seleccionada'
+                'message' => 'El cultivo no pertenece a la finca seleccionada',
             ], 422);
         }
 
@@ -250,9 +249,9 @@ class IngresoController extends Controller
                 ->where('id_cultivo', '=', $request->id_cultivo)
                 ->first();
 
-            if (!$produccion) {
+            if (! $produccion) {
                 return response()->json([
-                    'message' => 'La producción no pertenece al cultivo seleccionado'
+                    'message' => 'La producción no pertenece al cultivo seleccionado',
                 ], 422);
             }
         }
@@ -278,12 +277,12 @@ class IngresoController extends Controller
             'destino' => $request->destino,
 
             'observaciones' => $request->observaciones,
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Ingreso actualizado correctamente',
-            'data' => $ingreso
+            'data' => $ingreso,
         ]);
     }
 
@@ -302,17 +301,17 @@ class IngresoController extends Controller
             );
         }
 
-        $ingreso = Ingreso::whereKey($id)->first();
-        if (!$ingreso) {
+        $ingreso = $consulta->first();
+        if (! $ingreso) {
             return response()->json([
-                'message' => 'Ingreso no encontrado'
+                'message' => 'Ingreso no encontrado',
             ], 404);
         }
 
         $ingreso->delete();
 
         return response()->json([
-            'message' => 'Ingreso eliminado correctamente'
+            'message' => 'Ingreso eliminado correctamente',
         ]);
     }
 }

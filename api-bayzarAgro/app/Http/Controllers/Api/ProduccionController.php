@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use App\Models\Produccion;
-use App\Models\Finca;
 use App\Models\Cultivo;
+use App\Models\Finca;
+use App\Models\Produccion;
+use Illuminate\Http\Request;
 
 class ProduccionController extends Controller
 {
@@ -18,7 +17,7 @@ class ProduccionController extends Controller
         $consulta = Produccion::with([
             'usuario',
             'finca',
-            'cultivo'
+            'cultivo',
         ])
             ->orderBy('fecha', 'desc')
             ->orderBy('id_produccion', 'desc');
@@ -43,7 +42,7 @@ class ProduccionController extends Controller
         $consulta = Produccion::with([
             'usuario',
             'finca',
-            'cultivo'
+            'cultivo',
         ])
             ->where('id_produccion', '=', $id);
 
@@ -57,9 +56,9 @@ class ProduccionController extends Controller
 
         $produccion = $consulta->first();
 
-        if (!$produccion) {
+        if (! $produccion) {
             return response()->json([
-                'message' => 'Producción no encontrada'
+                'message' => 'Producción no encontrada',
             ], 404);
         }
 
@@ -85,13 +84,13 @@ class ProduccionController extends Controller
             'destino' => 'nullable|string|max:100',
 
             'observaciones' => 'nullable|string',
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
 
         $finca = Finca::query()
             ->where('id_finca', '=', $request->id_finca);
 
-        if ($usuario->rol === 'Agricultor') {
+        if ($usuario->rol !== 'Administrador') {
             $finca->where(
                 'id_usuario',
                 '=',
@@ -101,9 +100,9 @@ class ProduccionController extends Controller
 
         $finca = $finca->first();
 
-        if (!$finca) {
+        if (! $finca) {
             return response()->json([
-                'message' => 'Finca no encontrada o no autorizada'
+                'message' => 'Finca no encontrada o no autorizada',
             ], 403);
         }
 
@@ -112,9 +111,9 @@ class ProduccionController extends Controller
             ->where('id_finca', '=', $request->id_finca)
             ->first();
 
-        if (!$cultivo) {
+        if (! $cultivo) {
             return response()->json([
-                'message' => 'El cultivo no pertenece a la finca seleccionada'
+                'message' => 'El cultivo no pertenece a la finca seleccionada',
             ], 422);
         }
 
@@ -134,12 +133,12 @@ class ProduccionController extends Controller
             'destino' => $request->destino,
 
             'observaciones' => $request->observaciones,
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Producción registrada correctamente',
-            'data' => $produccion
+            'data' => $produccion,
         ], 201);
     }
 
@@ -160,9 +159,9 @@ class ProduccionController extends Controller
 
         $produccion = $consulta->first();
 
-        if (!$produccion) {
+        if (! $produccion) {
             return response()->json([
-                'message' => 'Producción no encontrada'
+                'message' => 'Producción no encontrada',
             ], 404);
         }
 
@@ -181,13 +180,13 @@ class ProduccionController extends Controller
             'destino' => 'nullable|string|max:100',
 
             'observaciones' => 'nullable|string',
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
 
         $finca = Finca::query()
             ->where('id_finca', '=', $request->id_finca);
 
-        if ($usuario->rol === 'Agricultor') {
+        if ($usuario->rol !== 'Administrador') {
             $finca->where(
                 'id_usuario',
                 '=',
@@ -197,9 +196,9 @@ class ProduccionController extends Controller
 
         $finca = $finca->first();
 
-        if (!$finca) {
+        if (! $finca) {
             return response()->json([
-                'message' => 'Finca no encontrada o no autorizada'
+                'message' => 'Finca no encontrada o no autorizada',
             ], 403);
         }
 
@@ -208,9 +207,9 @@ class ProduccionController extends Controller
             ->where('id_finca', '=', $request->id_finca)
             ->first();
 
-        if (!$cultivo) {
+        if (! $cultivo) {
             return response()->json([
-                'message' => 'El cultivo no pertenece a la finca seleccionada'
+                'message' => 'El cultivo no pertenece a la finca seleccionada',
             ], 422);
         }
 
@@ -229,12 +228,12 @@ class ProduccionController extends Controller
             'destino' => $request->destino,
 
             'observaciones' => $request->observaciones,
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Producción actualizada correctamente',
-            'data' => $produccion
+            'data' => $produccion,
         ]);
     }
 
@@ -253,19 +252,18 @@ class ProduccionController extends Controller
             );
         }
 
-        //$produccion = $consulta->first();
-        $produccion = Produccion::WhereKey($id)->first();
+        $produccion = $consulta->first();
 
-        if (!$produccion) {
+        if (! $produccion) {
             return response()->json([
-                'message' => 'Producción no encontrada'
+                'message' => 'Producción no encontrada',
             ], 404);
         }
 
         $produccion->delete();
 
         return response()->json([
-            'message' => 'Producción eliminada correctamente'
+            'message' => 'Producción eliminada correctamente',
         ]);
     }
 }

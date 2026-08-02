@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Http;
-
 use App\Models\Finca;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
+use RuntimeException;
+use Throwable;
 
 class ClimaController extends Controller
 {
@@ -15,60 +17,81 @@ class ClimaController extends Controller
 
         $finca = Finca::whereKey($id)->first();
 
-        if (!$finca) {
+        if (! $finca) {
             return response()->json([
-                'message' => 'Finca no encontrada'
+                'message' => 'Finca no encontrada',
             ], 404);
         }
 
         if (
-            $usuario->rol === 'Agricultor'
+            $usuario->rol !== 'Administrador'
             &&
             $finca->id_usuario !== $usuario->id_usuario
         ) {
             return response()->json([
-                'message' => 'No autorizado'
+                'message' => 'No autorizado',
             ], 403);
         }
 
-        if (!$finca->latitud || !$finca->longitud) {
+        if (
+            $finca->latitud === null || $finca->latitud === ''
+            || $finca->longitud === null || $finca->longitud === ''
+        ) {
             return response()->json([
-                'message' => 'La finca no tiene coordenadas registradas'
+                'message' => 'La finca no tiene coordenadas registradas',
             ], 422);
         }
 
-        $respuesta = Http::timeout(10)->get(
-            'https://api.open-meteo.com/v1/forecast',
-            [
-                'latitude' => $finca->latitud,
-                'longitude' => $finca->longitud,
-                'current' => implode(',', [
-                    'temperature_2m',
-                    'relative_humidity_2m',
-                    'precipitation',
-                    'rain',
-                    'wind_speed_10m',
-                    'weather_code'
-                ]),
-                'hourly' => implode(',', [
-                    'precipitation_probability',
-                    'temperature_2m',
-                    'relative_humidity_2m'
-                ]),
-                'forecast_days' => 1,
-                'timezone' => 'America/Costa_Rica'
-            ]
+        $cacheKey = sprintf(
+            'clima:finca:%s:%s',
+            $finca->id_finca,
+            sha1($finca->latitud.'|'.$finca->longitud)
         );
 
-        if (!$respuesta->successful()) {
+        try {
+            $datos = Cache::remember($cacheKey, now()->addMinutes(10), function () use ($finca) {
+                $respuesta = Http::retry(2, 250)
+                    ->timeout(10)
+                    ->get('https://api.open-meteo.com/v1/forecast', [
+                        'latitude' => $finca->latitud,
+                        'longitude' => $finca->longitud,
+                        'current' => implode(',', [
+                            'temperature_2m',
+                            'relative_humidity_2m',
+                            'precipitation',
+                            'rain',
+                            'wind_speed_10m',
+                            'weather_code',
+                        ]),
+                        'hourly' => implode(',', [
+                            'precipitation_probability',
+                            'temperature_2m',
+                            'relative_humidity_2m',
+                        ]),
+                        'forecast_days' => 1,
+                        'timezone' => 'America/Costa_Rica',
+                    ]);
+
+                if (! $respuesta->successful() || ! is_array($respuesta->json())) {
+                    throw new RuntimeException(
+                        'El proveedor de clima respondió con estado '.$respuesta->status()
+                    );
+                }
+
+                return $respuesta->json();
+            });
+        } catch (Throwable $exception) {
+            report($exception);
+
             return response()->json([
-                'message' => 'No se pudo consultar el clima'
-            ], 500);
+                'message' => 'El servicio de clima no está disponible temporalmente',
+            ], 503);
         }
 
-        $datos = $respuesta->json();
-
         $probabilidades = $datos['hourly']['precipitation_probability'] ?? [];
+        $probabilidades = is_array($probabilidades)
+            ? array_values(array_filter($probabilidades, 'is_numeric'))
+            : [];
 
         $probabilidadMaxima = count($probabilidades) > 0
             ? max($probabilidades)
@@ -84,7 +107,7 @@ class ClimaController extends Controller
                 'id_finca' => $finca->id_finca,
                 'nombre' => $finca->nombre,
                 'latitud' => $finca->latitud,
-                'longitud' => $finca->longitud
+                'longitud' => $finca->longitud,
             ],
 
             'clima_actual' => [
@@ -92,7 +115,7 @@ class ClimaController extends Controller
                 'humedad' => $humedad,
                 'lluvia' => $lluvia,
                 'viento' => $viento,
-                'probabilidad_lluvia' => $probabilidadMaxima
+                'probabilidad_lluvia' => $probabilidadMaxima,
             ],
 
             'recomendacion' => $this->generarRecomendacion(
@@ -100,7 +123,7 @@ class ClimaController extends Controller
                 $humedad,
                 $probabilidadMaxima,
                 $viento
-            )
+            ),
         ]);
     }
 

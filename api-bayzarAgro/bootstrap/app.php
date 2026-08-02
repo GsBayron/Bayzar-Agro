@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Middleware\RolMiddleware;
+use App\Http\Middleware\RolValidoMiddleware;
+use App\Http\Middleware\SecurityHeadersMiddleware;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -15,8 +18,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
 
+        $middleware->append(SecurityHeadersMiddleware::class);
+
         $middleware->alias([
-            'rol' => \App\Http\Middleware\RolMiddleware::class,
+            'rol' => RolMiddleware::class,
+            'rol.valido' => RolValidoMiddleware::class,
         ]);
     })
 
@@ -25,7 +31,13 @@ return Application::configure(basePath: dirname(__DIR__))
             QueryException $exception,
             Request $request
         ) {
-            if (!$request->isMethod('delete')) {
+            if (! $request->isMethod('delete')) {
+                return null;
+            }
+
+            $sqlState = $exception->errorInfo[0] ?? (string) $exception->getCode();
+
+            if (! in_array($sqlState, ['23000', '23503'], true)) {
                 return null;
             }
 

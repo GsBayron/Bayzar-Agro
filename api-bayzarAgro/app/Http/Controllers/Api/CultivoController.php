@@ -3,72 +3,70 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Cultivo;
 use App\Models\Finca;
-
-
+use Illuminate\Http\Request;
 
 class CultivoController extends Controller
 {
     // LISTAR
     public function listar()
     {
-        $usuario = request() -> user();
-         
-        // ADMINISTRADOR
-        if ($usuario -> rol === 'Administrador') 
-            {
-                $datos = Cultivo::with('finca')
-                -> orderBy('id_cultivo', 'desc')
-                -> get();
+        $usuario = request()->user();
 
-                return response() -> json($datos);
+        // ADMINISTRADOR
+        if ($usuario->rol === 'Administrador') {
+            $datos = Cultivo::with('finca')
+                ->orderBy('id_cultivo', 'desc')
+                ->get();
+
+            return response()->json($datos);
         }
         // AGRICULTOR
         $datos = Cultivo::whereHas('finca', function ($query) use ($usuario) {
-            $query -> where(
+            $query->where(
                 'id_usuario',
-                $usuario -> id_usuario
+                $usuario->id_usuario
             );
         })
-        -> with('finca')
-        -> orderBy('id_cultivo', 'desc')
-        -> get();
-        
-        return response() -> json($datos);
+            ->with('finca')
+            ->orderBy('id_cultivo', 'desc')
+            ->get();
+
+        return response()->json($datos);
     }
 
     public function consultar($id)
     {
-        $usuario = request() -> user();
+        $usuario = request()->user();
 
         $cultivo = Cultivo::with('finca')
-        -> whereKey($id)
-        -> first();
+            ->whereKey($id)
+            ->first();
 
-        if (!$cultivo) {
-            return response() -> json([
-                'message' => 'Cultivo no encontrado'
-            ],404);
+        if (! $cultivo) {
+            return response()->json([
+                'message' => 'Cultivo no encontrado',
+            ], 404);
         }
 
         if (
-            $usuario -> rol === 'Agricultor'
+            $usuario->rol !== 'Administrador'
             &&
-            $cultivo -> finca -> id_usuario !== $usuario -> id_usuario
+            $cultivo->finca?->id_usuario !== $usuario->id_usuario
         ) {
-            return response() -> json([
-                'message' => 'No autorizado'
+            return response()->json([
+                'message' => 'No autorizado',
             ], 403);
         }
-        return response() -> json($cultivo);
+
+        return response()->json($cultivo);
     }
 
     // GUARDAR
     public function guardar(Request $request)
     {
-        $request -> validate([
+        $request->validate([
             'id_finca' => 'required|integer|exists:tbl_finca,id_finca',
 
             'nombre' => 'required|max:100',
@@ -93,32 +91,32 @@ class CultivoController extends Controller
 
             'descripcion' => 'nullable|max:255',
 
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
-        
-        $usuario = request() -> user();
 
-        $finca = Finca::whereKey($request -> id_finca)
-             -> first();
+        $usuario = request()->user();
 
-             if (!$finca) {
-                return \response() -> json([
-                    'message' => 'Finca no encontrada'
-                ],404);
-             }
+        $finca = Finca::whereKey($request->id_finca)
+            ->first();
 
-             // Validar que el agricultor solo guarde sus propias fincas
-             if (
-                $usuario -> rol === 'Agricultor'
-                &&
-                $finca -> id_usuario !== $usuario -> id_usuario
-             ) {
-                return response() -> json([
-                    'message' => 'No autorizado'
-                ],403);
-             }
+        if (! $finca) {
+            return \response()->json([
+                'message' => 'Finca no encontrada',
+            ], 404);
+        }
 
-             $cultivo = Cultivo::create([
+        // Validar que el agricultor solo guarde sus propias fincas
+        if (
+            $usuario->rol !== 'Administrador'
+            &&
+            $finca->id_usuario !== $usuario->id_usuario
+        ) {
+            return response()->json([
+                'message' => 'No autorizado',
+            ], 403);
+        }
+
+        $cultivo = Cultivo::create([
             'id_finca' => $request->id_finca,
 
             'nombre' => $request->nombre,
@@ -143,156 +141,153 @@ class CultivoController extends Controller
 
             'descripcion' => $request->descripcion,
 
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
-        return response() -> json([
+        return response()->json([
             'message' => 'Cultivo guardado correctamente',
-            'cultivo' => $cultivo
+            'cultivo' => $cultivo,
         ]);
     }
-// ACTUALIZAR 
-public function actualizar(Request $request, $id)
-{
-    $request->validate([
-        'id_finca' => 'required|integer|exists:tbl_finca,id_finca',
 
-        'nombre' => 'required|string|max:100',
+    // ACTUALIZAR
+    public function actualizar(Request $request, $id)
+    {
+        $request->validate([
+            'id_finca' => 'required|integer|exists:tbl_finca,id_finca',
 
-        'tipo_cultivo' => 'nullable|string|max:100',
+            'nombre' => 'required|string|max:100',
 
-        'variedad' => 'nullable|string|max:100',
+            'tipo_cultivo' => 'nullable|string|max:100',
 
-        'fecha_siembra' => 'nullable|date',
+            'variedad' => 'nullable|string|max:100',
 
-        'fecha_estimada_cosecha' => 'nullable|date|after_or_equal:fecha_siembra',
+            'fecha_siembra' => 'nullable|date',
 
-        'area_sembrada' => 'nullable|numeric|min:0',
-        
-        'cantidad_plantas' => 'nullable|integer|min:0',
+            'fecha_estimada_cosecha' => 'nullable|date|after_or_equal:fecha_siembra',
 
-        'distancia_siembra' => 'nullable|max:80',
+            'area_sembrada' => 'nullable|numeric|min:0',
 
-        'unidad_area' => 'nullable|string|max:30',
+            'cantidad_plantas' => 'nullable|integer|min:0',
 
-        'estado_cultivo' => 'nullable|string|max:50',
+            'distancia_siembra' => 'nullable|max:80',
 
-        'descripcion' => 'nullable|string',
+            'unidad_area' => 'nullable|string|max:30',
 
-        'estado' => 'required|boolean'
-    ]);
+            'estado_cultivo' => 'nullable|string|max:50',
 
-    $usuario = $request->user();
+            'descripcion' => 'nullable|string',
 
-    $cultivo = Cultivo::with('finca')
-        ->whereKey($id)
-        ->first();
+            'estado' => 'required|boolean',
+        ]);
 
-    if (!$cultivo) {
+        $usuario = $request->user();
+
+        $cultivo = Cultivo::with('finca')
+            ->whereKey($id)
+            ->first();
+
+        if (! $cultivo) {
+            return response()->json([
+                'message' => 'Cultivo no encontrado',
+            ], 404);
+        }
+
+        // Validar que el agricultor solo actualice cultivos de sus fincas
+        if (
+            $usuario->rol !== 'Administrador'
+            &&
+            $cultivo->finca?->id_usuario !== $usuario->id_usuario
+        ) {
+            return response()->json([
+                'message' => 'No autorizado',
+            ], 403);
+        }
+
+        $fincaNueva = Finca::whereKey($request->id_finca)
+            ->first();
+
+        if (! $fincaNueva) {
+            return response()->json([
+                'message' => 'Finca no encontrada',
+            ], 404);
+        }
+
+        // Validar que el agricultor no mueva el cultivo a una finca ajena
+        if (
+            $usuario->rol !== 'Administrador'
+            &&
+            $fincaNueva->id_usuario !== $usuario->id_usuario
+        ) {
+            return response()->json([
+                'message' => 'No autorizado',
+            ], 403);
+        }
+
+        $cultivo->update([
+            'id_finca' => $request->id_finca,
+
+            'nombre' => $request->nombre,
+
+            'tipo_cultivo' => $request->tipo_cultivo,
+
+            'variedad' => $request->variedad,
+
+            'fecha_siembra' => $request->fecha_siembra,
+
+            'fecha_estimada_cosecha' => $request->fecha_estimada_cosecha,
+
+            'area_sembrada' => $request->area_sembrada,
+
+            'cantidad_plantas' => $request->cantidad_plantas,
+
+            'distancia_siembra' => $request->distancia_siembra,
+
+            'unidad_area' => $request->unidad_area,
+
+            'estado_cultivo' => $request->estado_cultivo,
+
+            'descripcion' => $request->descripcion,
+
+            'estado' => $request->estado,
+        ]);
+
         return response()->json([
-            'message' => 'Cultivo no encontrado'
-        ], 404);
+            'message' => 'Cultivo actualizado correctamente',
+            'cultivo' => $cultivo,
+        ]);
     }
-
-    // Validar que el agricultor solo actualice cultivos de sus fincas
-    if (
-        $usuario->rol === 'Agricultor'
-        &&
-        $cultivo->finca->id_usuario !== $usuario->id_usuario
-    ) {
-        return response()->json([
-            'message' => 'No autorizado'
-        ], 403);
-    }
-
-    $fincaNueva = Finca::whereKey($request->id_finca)
-        ->first();
-
-    if (!$fincaNueva) {
-        return response()->json([
-            'message' => 'Finca no encontrada'
-        ], 404);
-    }
-
-    // Validar que el agricultor no mueva el cultivo a una finca ajena
-    if (
-        $usuario->rol === 'Agricultor'
-        &&
-        $fincaNueva->id_usuario !== $usuario->id_usuario
-    ) {
-        return response()->json([
-            'message' => 'No autorizado'
-        ], 403);
-    }
-
-    $cultivo->update([
-        'id_finca' => $request->id_finca,
-
-        'nombre' => $request->nombre,
-
-        'tipo_cultivo' => $request->tipo_cultivo,
-
-        'variedad' => $request->variedad,
-
-        'fecha_siembra' => $request->fecha_siembra,
-
-        'fecha_estimada_cosecha' => $request->fecha_estimada_cosecha,
-
-        'area_sembrada' => $request->area_sembrada,
-
-        'cantidad_plantas' => $request->cantidad_plantas,
-
-        'distancia_siembra' => $request->distancia_siembra,
-
-        'unidad_area' => $request->unidad_area,
-
-        'estado_cultivo' => $request->estado_cultivo,
-
-        'descripcion' => $request->descripcion,
-
-        'estado' => $request->estado
-    ]);
-
-    return response()->json([
-        'message' => 'Cultivo actualizado correctamente',
-        'cultivo' => $cultivo
-    ]);
-}
 
     // ELIMINAR
     public function eliminar($id)
     {
-        $usuario = request() -> user();
+        $usuario = request()->user();
 
-        /*$cultivo = Cultivo::with('finca')
-         -> whereKey($id)
-         -> first();*/
+        $cultivo = Cultivo::with('finca')->whereKey($id)->first();
 
-         $cultivo = Cultivo::whereKey($id)->first();
+        if (! $cultivo) {
+            return response()->json([
+                'message' => 'Cultivo no encontrado',
+            ], 404);
+        }
 
-         if (!$cultivo) {
-            return response() -> json([
-                'message' => 'Cultivo no encontrado'
-            ],404);
-         }
-
-         // Validar permisos de agricultor
-         if (
-            $usuario -> rol === 'Agricultor'
+        // Validar permisos de agricultor
+        if (
+            $usuario->rol !== 'Administrador'
             &&
-            $cultivo -> finca -> id_usuario !== $usuario -> id_usuario
-          ) {
+            $cultivo->finca?->id_usuario !== $usuario->id_usuario
+        ) {
 
-         return response() -> json([
-                'message' => 'Cultivo no encontrado'
-            ],403);
-         }
+            return response()->json([
+                'message' => 'No autorizado',
+            ], 403);
+        }
 
-         $cultivo -> delete();
+        $cultivo->delete();
 
-         return response() -> json([
-            'message' => 'Cultivo eliminado correctamente'
-         ]);
+        return response()->json([
+            'message' => 'Cultivo eliminado correctamente',
+        ]);
 
     }
 }

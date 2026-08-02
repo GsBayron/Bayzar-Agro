@@ -1,39 +1,43 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\Api\FincaController;
-use App\Http\Controllers\Api\CultivoController;
 use App\Http\Controllers\Api\ActividadController;
-use App\Http\Controllers\Api\InventarioController;
-use App\Http\Controllers\Api\PlaguicidaRegistradoController;
-use App\Http\Controllers\Api\FertilizanteRegistradoController;
-use App\Http\Controllers\Api\PlagaRegistradaController;
-use App\Http\Controllers\Api\PlagaCultivoController;
-use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\AlertaController;
 use App\Http\Controllers\Api\ClimaController;
 use App\Http\Controllers\Api\CostoController;
-use App\Http\Controllers\Api\ProduccionController;
+use App\Http\Controllers\Api\CultivoController;
+use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\FertilizanteRegistradoController;
+use App\Http\Controllers\Api\FincaController;
 use App\Http\Controllers\Api\IngresoController;
-use App\Http\Controllers\Api\AlertaController;
-use App\Http\Controllers\Api\ReporteController;
+use App\Http\Controllers\Api\InventarioController;
+use App\Http\Controllers\Api\PlagaCultivoController;
+use App\Http\Controllers\Api\PlagaRegistradaController;
+use App\Http\Controllers\Api\PlaguicidaRegistradoController;
+use App\Http\Controllers\Api\ProduccionController;
 use App\Http\Controllers\Api\Publico\PlanPublicoController;
 use App\Http\Controllers\Api\Publico\RegistroController;
+use App\Http\Controllers\Api\ReporteController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UsuarioController;
+use Illuminate\Support\Facades\Route;
 
 // RUTAS PUBLICAS
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])
+    ->middleware('throttle:login');
 
 Route::prefix('public')->group(function () {
-    Route::get('/planes', [PlanPublicoController::class, 'listar']);
+    Route::get('/planes', [PlanPublicoController::class, 'listar'])
+        ->middleware('throttle:60,1');
 });
 
-Route::post('/registro', [RegistroController::class, 'registrar']);
+Route::post('/registro', [RegistroController::class, 'registrar'])
+    ->middleware('throttle:registration');
 
 Route::middleware([
     'auth:api',
-    'rol:Administrador'
+    'rol.valido',
+    'rol:Administrador',
 ])
     ->group(function () {
 
@@ -47,7 +51,7 @@ Route::middleware([
         });
     });
 
-Route::middleware(['auth:api'])->group(function () {
+Route::middleware(['auth:api', 'rol.valido'])->group(function () {
 
     // DASHBOARD
     Route::get('/dashboard', [DashboardController::class, 'index']);
@@ -66,10 +70,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::put('/perfil', [AuthController::class, 'actualizarPerfil']);
 
     // REGISTROS DEL SERVICIO FITOSANITARIO DEL ESTADO
-    //Route::get('/plaguicidas-registrados', [PlaguicidaRegistradoController::class, 'listar']);
-    //Route::get('/fertilizantes-registrados', [FertilizanteRegistradoController::class, 'listar']);
-    //Route::get('/plagas-registradas', [PlagaRegistradaController::class, 'listar']);
-
+    // Route::get('/plaguicidas-registrados', [PlaguicidaRegistradoController::class, 'listar']);
+    // Route::get('/fertilizantes-registrados', [FertilizanteRegistradoController::class, 'listar']);
+    // Route::get('/plagas-registradas', [PlagaRegistradaController::class, 'listar']);
 
     // FINCAS
     Route::prefix('fincas')->group(function () {
