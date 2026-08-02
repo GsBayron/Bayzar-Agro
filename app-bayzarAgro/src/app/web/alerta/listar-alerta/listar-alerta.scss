@@ -1,0 +1,21 @@
+.alerta-resumen {
+    border-radius: 18px;
+
+    h3 {
+        font-size: 2rem;
+    }
+}
+
+.resumen-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+        font-size: 1.35rem;
+    }
+}

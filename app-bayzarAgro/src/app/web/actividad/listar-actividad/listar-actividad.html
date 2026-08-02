@@ -1,0 +1,528 @@
+<div class="module-page">
+
+    <div class="module-header mb-4">
+
+        <div>
+            <div class="header-badge mb-2">
+                <i class="bi bi-list-check"></i>
+                Módulo de actividades
+            </div>
+
+            <h3 class="fw-bold mb-1">
+                Actividades
+            </h3>
+
+            <p class="text-muted mb-0">
+                Control, planificación y seguimiento de actividades agrícolas.
+            </p>
+        </div>
+
+        <a class="btn btn-agro" routerLink="/app/actividades/guardar">
+            <i class="bi bi-plus-circle me-1"></i>
+            Nueva actividad
+        </a>
+
+    </div>
+
+    <div class="card module-card border-0 shadow-sm">
+
+        <div class="card-body p-4">
+
+            <div class="table-toolbar mb-4">
+
+                <div>
+                    <h5 class="fw-bold mb-1">
+                        Listado de actividades
+                    </h5>
+
+                    <small class="text-muted">
+                        Consulte, filtre, edite o revise el detalle de cada actividad registrada.
+                    </small>
+                </div>
+
+            </div>
+
+            <div class="filters-panel mb-4">
+
+                <div class="row g-3 align-items-end">
+
+                    <div class="col-12 col-md-4">
+                        <label class="form-label">Buscar</label>
+
+                        <div class="search-box">
+                            <i class="bi bi-search"></i>
+
+                            <input type="text" class="form-control"
+                                placeholder="Buscar por cultivo, producto, responsable..." (keyup)="filtrar($event)">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-2">
+                        <label class="form-label">Tipo de actividad</label>
+
+                        <select class="form-select" [(ngModel)]="filtroTipoActividad" (change)="aplicarFiltros()">
+
+                            <option value="">Todas</option>
+
+                            @for(tipo of tiposActividad; track tipo) {
+                            <option [value]="tipo">
+                                {{ tipo }}
+                            </option>
+                            }
+
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-2">
+                        <label class="form-label">Estado</label>
+
+                        <select class="form-select" [(ngModel)]="filtroEstadoActividad" (change)="aplicarFiltros()">
+
+                            <option value="">Todos</option>
+
+                            @for(estado of estadosActividad; track estado) {
+                            <option [value]="estado">
+                                {{ estado }}
+                            </option>
+                            }
+
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-2">
+                        <label class="form-label">Prioridad</label>
+
+                        <select class="form-select" [(ngModel)]="filtroPrioridad" (change)="aplicarFiltros()">
+
+                            <option value="">Todas</option>
+
+                            @for(prioridad of prioridades; track prioridad) {
+                            <option [value]="prioridad">
+                                {{ prioridad }}
+                            </option>
+                            }
+
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-2">
+                        <label class="form-label">Vencidas</label>
+
+                        <select class="form-select" [(ngModel)]="filtroVencida" (change)="aplicarFiltros()">
+
+                            <option value="">Todas</option>
+                            <option value="si">Solo vencidas</option>
+                            <option value="no">No vencidas</option>
+
+                        </select>
+                    </div>
+
+                    <div class="col-12 d-flex justify-content-end">
+                        <button type="button" class="btn btn-agro-secondary btn-sm" (click)="limpiarFiltros()">
+
+                            <i class="bi bi-eraser me-1"></i>
+                            Limpiar filtros
+
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="table-responsive module-table-wrapper">
+
+                <table mat-table [dataSource]="datos" matSort multiTemplateDataRows
+                    class="table table-hover align-middle mb-0 module-table">
+
+                    <ng-container matColumnDef="id_actividad">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            ID
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            <span class="id-pill">
+                                #{{ item.id_actividad }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="cultivo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Cultivo
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            <div class="entity-cell">
+
+                                <div class="entity-icon">
+                                    <i class="bi bi-flower1"></i>
+                                </div>
+
+                                <div>
+                                    <span class="fw-semibold">
+                                        {{ item.cultivo?.nombre || '-' }}
+                                    </span>
+
+                                    <small class="text-muted d-block">
+                                        Cultivo asociado
+                                    </small>
+                                </div>
+
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tipo_actividad">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Actividad
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            <span class="main-cell-text">
+                                {{ item.tipo_actividad }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fecha_programada">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Programada
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            <div class="icon-cell">
+
+                                <i class="bi bi-calendar-event"></i>
+
+                                <span>
+                                    {{ item.fecha_programada }}
+                                </span>
+
+                                @if(actividadVencida(item)) {
+                                <span class="vencida-pill ms-2">
+                                    Vencida
+                                </span>
+                                }
+
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="estado_actividad">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Estado actividad
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            <span [class]="'badge-agro ' + claseEstadoActividad(item.estado_actividad)">
+                                {{ item.estado_actividad }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="prioridad">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Prioridad
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            <span [class]="'badge-agro ' + clasePrioridad(item.prioridad)">
+                                {{ item.prioridad }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="producto">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Producto
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            <div class="icon-cell">
+
+                                <i class="bi bi-box-seam"></i>
+
+                                <span>
+                                    {{ nombreProductoActividad(item) || '-' }}
+                                </span>
+
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="estado">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Registro
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+
+                            @if(item.estado === 1 || item.estado === true) {
+                            <span class="registro-pill activo">
+                                <i class="bi bi-check-circle"></i>
+                                Activo
+                            </span>
+                            } @else {
+                            <span class="registro-pill inactivo">
+                                <i class="bi bi-x-circle"></i>
+                                Inactivo
+                            </span>
+                            }
+
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">
+                            Acciones
+                        </th>
+
+                        <td mat-cell *matCellDef="let item" class="text-center">
+
+                            <div class="action-cell">
+
+                                <button type="button" class="btn-action view" title="Ver más información"
+                                    (click)="alternarDetalle(item)">
+
+                                    <i class="bi"
+                                        [class.bi-eye]="actividadExpandida?.id_actividad !== item.id_actividad"
+                                        [class.bi-eye-slash]="actividadExpandida?.id_actividad === item.id_actividad">
+                                    </i>
+
+                                </button>
+
+                                <a class="btn-action edit" title="Editar actividad" [routerLink]="[
+                                        '/app/actividades/actualizar',
+                                        item.id_actividad
+                                    ]">
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                </a>
+
+                                <button type="button" class="btn-action delete" title="Eliminar actividad"
+                                    (click)="eliminar(item.id_actividad!)">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </button>
+
+                            </div>
+
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="detalle">
+
+                        <td mat-cell *matCellDef="let item" [attr.colspan]="columnas.length" class="detalle-cell">
+
+                            @if(actividadExpandida?.id_actividad === item.id_actividad) {
+
+                            <div class="detail-panel">
+
+                                <div class="detail-header">
+
+                                    <div>
+                                        <h5 class="fw-bold mb-1">
+                                            Detalle de la actividad #{{ item.id_actividad }}
+                                        </h5>
+
+                                        <p class="text-muted mb-0">
+                                            Información completa del registro seleccionado.
+                                        </p>
+                                    </div>
+
+                                    <div class="d-flex gap-2 flex-wrap">
+
+                                        <span [class]="'badge-agro ' + claseEstadoActividad(item.estado_actividad)">
+                                            {{ item.estado_actividad }}
+                                        </span>
+
+                                        <span [class]="'badge-agro ' + clasePrioridad(item.prioridad)">
+                                            {{ item.prioridad }}
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row g-3 mt-2">
+
+                                    <div class="col-md-4">
+                                        <div class="detail-box">
+                                            <small>Cultivo</small>
+                                            <strong>{{ item.cultivo?.nombre || '-' }}</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="detail-box">
+                                            <small>Tipo de actividad</small>
+                                            <strong>{{ item.tipo_actividad || '-' }}</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="detail-box">
+                                            <small>Responsable</small>
+                                            <strong>{{ item.responsable || 'Sin responsable' }}</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="detail-box">
+                                            <small>Fecha programada</small>
+                                            <strong>{{ item.fecha_programada || '-' }}</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="detail-box">
+                                            <small>Fecha de realización</small>
+                                            <strong>{{ item.fecha_realizacion || 'No realizada' }}</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="detail-box">
+                                            <small>Registro</small>
+
+                                            @if(item.estado === 1 || item.estado === true) {
+                                            <strong class="text-success">
+                                                Activo
+                                            </strong>
+                                            } @else {
+                                            <strong class="text-secondary">
+                                                Inactivo
+                                            </strong>
+                                            }
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="detail-box">
+                                            <small>Producto utilizado</small>
+                                            <strong>{{ nombreProducto(item) || 'No aplica' }}</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="detail-box">
+                                            <small>Cantidad utilizada</small>
+                                            <strong>{{ item.cantidad_producto || '0' }}</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="detail-box">
+                                            <small>Unidad</small>
+                                            <strong>{{ item.unidad_producto || '-' }}</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="detail-box detail-text">
+                                            <small>Descripción</small>
+
+                                            <p class="mb-0">
+                                                {{ item.descripcion || 'Sin descripción registrada.' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="detail-box detail-text">
+                                            <small>Observaciones</small>
+
+                                            <p class="mb-0">
+                                                {{ item.observaciones || 'Sin observaciones registradas.' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="detail-actions mt-3">
+
+                                    <a class="btn btn-sm btn-agro" [routerLink]="[
+                                            '/app/actividades/actualizar',
+                                            item.id_actividad
+                                        ]">
+
+                                        <i class="bi bi-pencil-square me-1"></i>
+                                        Editar actividad
+
+                                    </a>
+
+                                    <button type="button" class="btn btn-sm btn-agro-secondary"
+                                        (click)="alternarDetalle(item)">
+
+                                        <i class="bi bi-chevron-up me-1"></i>
+                                        Ocultar detalle
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            }
+
+                        </td>
+
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+
+                    <tr mat-row *matRowDef="let row; columns: columnas;" class="module-row"
+                        [class.fila-expandida]="actividadExpandida?.id_actividad === row.id_actividad">
+                    </tr>
+
+                    <tr mat-row *matRowDef="let row; columns: ['detalle'];" class="detalle-row">
+                    </tr>
+
+                </table>
+
+            </div>
+
+            @if(datos.filteredData.length === 0) {
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    <i class="bi bi-inbox"></i>
+                </div>
+
+                <h5 class="fw-bold mb-1">
+                    No hay actividades para mostrar
+                </h5>
+
+                <p class="text-muted mb-3">
+                    No se encontraron registros con el filtro ingresado.
+                </p>
+
+                <a class="btn btn-agro btn-sm" routerLink="/app/actividades/guardar">
+
+                    <i class="bi bi-plus-circle me-1"></i>
+                    Registrar actividad
+
+                </a>
+
+            </div>
+
+            }
+
+            <div class="paginator-wrapper mt-3">
+
+                <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons>
+                </mat-paginator>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

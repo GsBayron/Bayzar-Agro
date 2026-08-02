@@ -1,0 +1,407 @@
+﻿<div class="module-page">
+
+    <div class="module-header mb-4">
+
+        <div>
+            <div class="header-badge mb-2">
+                <i class="bi bi-flower1"></i>
+                Gestión de cultivos
+            </div>
+
+            <h3 class="fw-bold mb-1">
+                Actualizar cultivo
+            </h3>
+
+            <p class="text-muted mb-0">
+                Actualice la información del cultivo registrado por finca.
+            </p>
+        </div>
+
+        <button type="button" class="btn btn-agro-secondary btn-sm" routerLink="/app/cultivos">
+
+            <i class="bi bi-arrow-left me-1"></i>
+            Volver
+
+        </button>
+
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="actualizar()">
+
+        <div class="row g-4">
+
+            <div class="col-lg-8">
+
+                <div class="card form-card border-0 shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="section-title mb-4">
+
+                            <div class="section-icon">
+                                <i class="bi bi-info-circle"></i>
+                            </div>
+
+                            <div>
+                                <h5 class="mb-0 fw-bold">
+                                    Información principal
+                                </h5>
+
+                                <small class="text-muted">
+                                    Datos básicos del cultivo agrícola.
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Finca
+                                </label>
+
+                                <select class="form-select" formControlName="id_finca"
+                                    [class.is-invalid]="f['id_finca'].touched && f['id_finca'].invalid">
+
+                                    <option [ngValue]="null">
+                                        Seleccione una finca
+                                    </option>
+
+                                    @for(finca of fincas; track finca.id_finca) {
+                                    <option [ngValue]="finca.id_finca">
+                                        {{ finca.nombre }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                                @if(f['id_finca'].touched && f['id_finca'].invalid) {
+                                <small class="form-error">
+                                    La finca es requerida.
+                                </small>
+                                }
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Nombre
+                                </label>
+
+                                <div class="input-icon">
+
+                                    
+
+                                    <input type="text" class="form-control" formControlName="nombre"
+                                        placeholder="Ejemplo: Café lote norte"
+                                        [class.is-invalid]="f['nombre'].touched && f['nombre'].invalid">
+
+                                </div>
+
+                                @if(f['nombre'].touched && f['nombre'].invalid) {
+                                <small class="form-error">
+                                    El nombre es requerido.
+                                </small>
+                                }
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Tipo de cultivo
+                                </label>
+
+                                <select class="form-select" formControlName="tipo_cultivo">
+
+                                    <option value="">
+                                        Seleccione un tipo
+                                    </option>
+
+                                    @for(tipo of tiposCultivo; track tipo) {
+                                    <option [value]="tipo">
+                                        {{ tipo }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Variedad
+                                </label>
+
+                                <input type="text" class="form-control" formControlName="variedad"
+                                    placeholder="Ejemplo: Caturra, Catuaí, Criollo">
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Fecha de siembra
+                                </label>
+
+                                <div class="input-icon">
+
+                                    <i class="bi bi-calendar-event"></i>
+
+                                    <input type="date" class="form-control" formControlName="fecha_siembra">
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Fecha estimada de cosecha
+                                </label>
+
+                                <div class="input-icon">
+
+                                    <i class="bi bi-calendar-check"></i>
+
+                                    <input type="date" class="form-control" formControlName="fecha_estimada_cosecha">
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Estado del cultivo
+                                </label>
+
+                                <select class="form-select" formControlName="estado_cultivo">
+
+                                    @for(estado of estadosCultivo; track estado) {
+                                    <option [value]="estado">
+                                        {{ estado }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Estado del registro
+                                </label>
+
+                                <select class="form-select" formControlName="estado">
+
+                                    <option [ngValue]="true">
+                                        Activo
+                                    </option>
+
+                                    <option [ngValue]="false">
+                                        Inactivo
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card form-card border-0 shadow-sm mt-4">
+
+                    <div class="card-body p-4">
+
+                        <div class="section-title mb-4">
+
+                            <div class="section-icon section-icon-detail">
+                                <i class="bi bi-bounding-box"></i>
+                            </div>
+
+                            <div>
+                                <h5 class="mb-0 fw-bold">
+                                    Detalles del cultivo
+                                </h5>
+
+                                <small class="text-muted">
+                                    Área sembrada, cantidad de plantas, distancia y descripción.
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Área sembrada
+                                </label>
+
+                                <input type="number" class="form-control" formControlName="area_sembrada" min="0"
+                                    step="0.01" placeholder="Ejemplo: 2.5">
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Unidad de área
+                                </label>
+
+                                <select class="form-select" formControlName="unidad_area">
+
+                                    <option value="">
+                                        Seleccione una unidad
+                                    </option>
+
+                                    @for(unidad of unidadesArea; track unidad) {
+                                    <option [value]="unidad">
+                                        {{ unidad }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Cantidad de plantas
+                                </label>
+
+                                <input type="number" class="form-control" formControlName="cantidad_plantas" min="0"
+                                    step="1" placeholder="Ej: 1500">
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Distancia de siembra
+                                </label>
+
+                                <input type="text" class="form-control" formControlName="distancia_siembra"
+                                    placeholder="Ej: 40 cm x 80 cm">
+
+                            </div>
+
+                            <div class="col-md-12">
+
+                                <label class="form-label">
+                                    Descripción
+                                </label>
+
+                                <textarea class="form-control" rows="3" formControlName="descripcion"
+                                    placeholder="Describa brevemente el cultivo">
+                                </textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="card summary-card border-0 shadow-sm sticky-lg-top">
+
+                    <div class="card-body p-4">
+
+                        <div class="summary-icon mb-3">
+                            <i class="bi bi-pencil-square"></i>
+                        </div>
+
+                        <h5 class="fw-bold mb-2">
+                            Resumen de actualización
+                        </h5>
+
+                        <p class="text-muted small mb-4">
+                            Revise la información antes de actualizar este cultivo agrícola.
+                        </p>
+
+                        <div class="summary-item">
+                            <span>
+                                <i class="bi bi-check-circle"></i>
+                                Finca
+                            </span>
+
+                            <small>Requerido</small>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>
+                                <i class="bi bi-check-circle"></i>
+                                Nombre
+                            </span>
+
+                            <small>Requerido</small>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>
+                                <i class="bi bi-flower1"></i>
+                                Tipo de cultivo
+                            </span>
+
+                            <small>Recomendado</small>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>
+                                <i class="bi bi-calendar-event"></i>
+                                Fecha de siembra
+                            </span>
+
+                            <small>Recomendado</small>
+                        </div>
+
+                        <div class="alert alert-success border-0 mt-4 mb-0">
+                            <i class="bi bi-lightbulb me-1"></i>
+                            Mantenga actualizada la información del cultivo para mejorar el control agrícola.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-actions mt-4">
+
+            <button type="button" class="btn btn-agro-secondary" routerLink="/app/cultivos">
+
+                <i class="bi bi-x-circle me-1"></i>
+                Cancelar
+
+            </button>
+
+            <button type="submit" class="btn btn-agro px-4" [disabled]="form.invalid">
+
+                <i class="bi bi-check-circle me-1"></i>
+                Actualizar cultivo
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

@@ -1,0 +1,173 @@
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+@use './app/shared/styles/variables';
+@use './app/shared/styles/base';
+@use './app/shared/styles/animations';
+@use './app/shared/styles/layout';
+@use './app/shared/styles/badges';
+@use './app/shared/styles/buttons';
+@use './app/shared/styles/forms';
+@use './app/shared/styles/tables';
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+  height: 100%;
+}
+/* You can add global styles to this file, and also import other style files */
+
+@media (max-width: 992px) {
+  .module-table,
+  .actividades-table {
+    min-width: 900px !important;
+  }
+
+  .fincas-table,
+  .usuarios-table {
+    min-width: 820px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .module-page,
+  .actividades-page,
+  .fincas-page,
+  .usuarios-page,
+  .actividad-page,
+  .finca-page,
+  .usuario-page,
+  .inicio-page {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .module-header,
+  .actividades-header,
+  .fincas-header,
+  .usuarios-header,
+  .actividad-header,
+  .finca-header,
+  .usuario-header,
+  .inicio-header {
+    padding: 1rem !important;
+    border-radius: 1rem !important;
+  }
+
+  .module-card .card-body,
+  .actividades-card .card-body,
+  .fincas-card .card-body,
+  .usuarios-card .card-body,
+  .actividad-card .card-body,
+  .finca-card .card-body,
+  .usuario-card .card-body {
+    padding: 1rem !important;
+  }
+
+  .table-responsive,
+  .module-table-wrapper,
+  .actividades-table-wrapper,
+  .fincas-table-wrapper,
+  .usuarios-table-wrapper {
+    border-radius: 0.85rem !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .module-table th,
+  .module-table td,
+  .actividades-table th,
+  .actividades-table td,
+  .fincas-table th,
+  .fincas-table td,
+  .usuarios-table th,
+  .usuarios-table td {
+    padding: 0.75rem !important;
+    white-space: nowrap;
+  }
+
+  .mat-mdc-paginator-container {
+    justify-content: center !important;
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 576px) {
+  h3,
+  .h3 {
+    font-size: 1.35rem !important;
+  }
+
+  h4,
+  .h4 {
+    font-size: 1.15rem !important;
+  }
+
+  .header-badge {
+    font-size: 0.72rem !important;
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .module-header .btn,
+  .actividades-header .btn,
+  .fincas-header .btn,
+  .usuarios-header .btn,
+  .actividad-header .btn,
+  .finca-header .btn,
+  .usuario-header .btn {
+    width: 100%;
+  }
+
+  .filters-panel {
+    padding: 0.8rem !important;
+  }
+
+  .form-control,
+  .form-select {
+    min-height: 44px;
+  }
+
+  .acciones-form,
+  .detalle-actions {
+    flex-direction: column-reverse !important;
+  }
+
+  .acciones-form .btn,
+  .detalle-actions .btn {
+    width: 100%;
+  }
+
+  .resumen-card {
+    position: static !important;
+  }
+}

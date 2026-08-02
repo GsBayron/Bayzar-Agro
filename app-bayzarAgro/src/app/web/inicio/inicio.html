@@ -1,0 +1,1222 @@
+<div class="inicio-page">
+
+    <div class="inicio-header mb-4">
+
+        <div>
+            <div class="header-badge mb-2">
+                <i class="bi bi-speedometer2"></i>
+                Panel principal
+            </div>
+
+            <h3 class="fw-bold mb-1">
+                Inicio
+            </h3>
+
+            <p class="text-muted mb-0">
+                Bienvenido al panel principal de BayzarAgro.
+            </p>
+        </div>
+
+        <div class="header-icon">
+            <i class="bi bi-leaf"></i>
+        </div>
+
+    </div>
+
+    @if(cargando && !datos) {
+
+    <div class="alert-dashboard info mb-4">
+        <i class="bi bi-hourglass-split"></i>
+
+        <div>
+            <strong>Cargando información</strong>
+            <span>Cargando información del dashboard...</span>
+        </div>
+    </div>
+
+    }
+
+    @if(error) {
+
+    <div class="alert-dashboard danger mb-4">
+        <i class="bi bi-exclamation-triangle"></i>
+
+        <div>
+            <strong>Ocurrió un error</strong>
+            <span>{{ error }}</span>
+        </div>
+    </div>
+
+    }
+
+    @if(datos) {
+
+    @if(esAdministrador()) {
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Usuarios activos
+                            </span>
+
+                            <h3>
+                                {{ datos.usuarios || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon green">
+                            <i class="bi bi-people"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Agricultores
+                            </span>
+
+                            <h3>
+                                {{ datos.agricultores || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon blue">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Fincas registradas
+                            </span>
+
+                            <h3>
+                                {{ datos.fincas || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon orange">
+                            <i class="bi bi-map"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Cultivos activos
+                            </span>
+
+                            <h3>
+                                {{ datos.cultivos || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon green">
+                            <i class="bi bi-flower1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Inventario
+                            </span>
+
+                            <h3>
+                                {{ datos.inventario || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon purple">
+                            <i class="bi bi-box-seam"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Plagas detectadas
+                            </span>
+
+                            <h3>
+                                {{ datos.plagas || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon red">
+                            <i class="bi bi-virus"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card warning border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Actividades vencidas
+                            </span>
+
+                            <h3>
+                                {{ datos.actividades_vencidas || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon yellow">
+                            <i class="bi bi-calendar-x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card danger border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Productos por vencer
+                            </span>
+
+                            <h3>
+                                {{ datos.productos_por_vencer || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon red">
+                            <i class="bi bi-exclamation-octagon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    }
+
+    @if(esAgricultor()) {
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Mis fincas
+                            </span>
+
+                            <h3>
+                                {{ datos.mis_fincas || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon orange">
+                            <i class="bi bi-map"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Mis cultivos
+                            </span>
+
+                            <h3>
+                                {{ datos.mis_cultivos || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon green">
+                            <i class="bi bi-flower1"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Mi inventario
+                            </span>
+
+                            <h3>
+                                {{ datos.mi_inventario || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon purple">
+                            <i class="bi bi-box-seam"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Mis plagas
+                            </span>
+
+                            <h3>
+                                {{ datos.mis_plagas || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon red">
+                            <i class="bi bi-virus"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Actividades para hoy
+                            </span>
+
+                            <h3>
+                                {{ datos.actividades_hoy || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon blue">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card stat-card warning border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Actividades vencidas
+                            </span>
+
+                            <h3>
+                                {{ datos.actividades_vencidas || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon yellow">
+                            <i class="bi bi-calendar-x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card stat-card danger border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Productos por vencer
+                            </span>
+
+                            <h3>
+                                {{ datos.productos_por_vencer || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon red">
+                            <i class="bi bi-exclamation-octagon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    }
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Costos
+                            </span>
+
+                            <h3>
+                                {{ formatoMoneda(datos.total_costos) }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon red">
+                            <i class="bi bi-cash-stack"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Ingresos
+                            </span>
+
+                            <h3>
+                                {{ formatoMoneda(datos.total_ingresos) }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon green">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Ganancia estimada
+                            </span>
+
+                            <h3>
+                                {{ formatoMoneda(datos.ganancia_estimada) }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon blue">
+                            <i class="bi bi-wallet2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card stat-card warning border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Alertas críticas
+                            </span>
+
+                            <h3>
+                                {{ datos.alertas_criticas || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon yellow">
+                            <i class="bi bi-bell"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="stat-content">
+                        <div>
+                            <span class="stat-label">
+                                Producciones
+                            </span>
+
+                            <h3>
+                                {{ datos.registros_produccion || 0 }}
+                            </h3>
+                        </div>
+
+                        <div class="stat-icon green">
+                            <i class="bi bi-basket"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    @if(esAdministrador()) {
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-lg-12">
+
+            <div class="card panel-card border-0 shadow-sm">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h5 class="mb-0">
+                            Ingresos por agricultor
+                        </h5>
+
+                        <small class="text-muted">
+                            Resumen de ventas registradas por cada agricultor.
+                        </small>
+                    </div>
+
+                    <a routerLink="/app/ingresos" class="btn btn-outline-success btn-sm">
+                        Ver ingresos
+                    </a>
+
+                </div>
+
+                <div class="card-body">
+
+                    @if(datos.ingresos_por_agricultor.length === 0) {
+
+                    <div class="empty-state-small">
+                        <i class="bi bi-person-lines-fill"></i>
+
+                        <p class="mb-0">
+                            No hay agricultores registrados.
+                        </p>
+                    </div>
+
+                    }
+
+                    @for(agricultor of datos.ingresos_por_agricultor; track agricultor.id_usuario) {
+
+                    <div class="list-item-dashboard">
+
+                        <div class="list-icon green">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+
+                        <div class="list-content">
+                            <strong>
+                                {{ agricultor.nombre }} {{ agricultor.apellidos }}
+                            </strong>
+
+                            <div class="text-muted small">
+                                {{ agricultor.correo }}
+                                ·
+                                Ventas registradas:
+                                {{ agricultor.cantidad_ingresos }}
+                            </div>
+                        </div>
+
+                        <div class="list-badges">
+                            <span class="badge bg-success">
+                                {{ formatoMoneda(agricultor.total_ingresos) }}
+                            </span>
+                        </div>
+
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    }
+
+    <div class="weather-dashboard-card mb-4">
+
+        <div class="weather-main">
+
+            <div class="weather-info">
+
+                <div class="weather-badge">
+                    <i class="bi bi-cloud-sun"></i>
+                    Clima inteligente
+                </div>
+
+                <h4 class="fw-bold mb-1">
+                    Clima por finca
+                </h4>
+
+                <p class="mb-0">
+                    Consulta las condiciones climáticas para tomar mejores decisiones agrícolas.
+                </p>
+
+            </div>
+
+            <div class="weather-action">
+
+                <label class="form-label">
+                    Seleccione una finca
+                </label>
+
+                <div class="d-flex gap-2">
+
+                    <select class="form-select weather-select" [(ngModel)]="idFincaSeleccionada"
+                        (change)="consultarClima()">
+
+                        @for(finca of fincas; track finca.id_finca) {
+                        <option [ngValue]="finca.id_finca">
+                            {{ finca.nombre }}
+                        </option>
+                        }
+
+                    </select>
+
+                    <button type="button" class="btn btn-light weather-btn" (click)="consultarClima()">
+
+                        <i class="bi bi-arrow-clockwise"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        @if(cargandoClima) {
+
+        <div class="weather-loading mt-3">
+            <i class="bi bi-hourglass-split"></i>
+            Consultando clima...
+        </div>
+
+        }
+
+        @if(errorClima) {
+
+        <div class="weather-alert mt-3">
+            <i class="bi bi-exclamation-triangle"></i>
+            {{ errorClima }}
+        </div>
+
+        }
+
+        @if(clima && !cargandoClima) {
+
+        <div class="row g-3 mt-3">
+
+            <div class="col-md-3">
+                <div class="weather-box temperature">
+                    <div>
+                        <span>
+                            Temperatura
+                        </span>
+
+                        <strong>
+                            {{ clima.clima_actual.temperatura }} °C
+                        </strong>
+                    </div>
+
+                    <i class="bi bi-thermometer-sun"></i>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="weather-box humidity">
+                    <div>
+                        <span>
+                            Humedad
+                        </span>
+
+                        <strong>
+                            {{ clima.clima_actual.humedad }} %
+                        </strong>
+                    </div>
+
+                    <i class="bi bi-droplet-half"></i>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="weather-box rain">
+                    <div>
+                        <span>
+                            Prob. lluvia
+                        </span>
+
+                        <strong>
+                            {{ clima.clima_actual.probabilidad_lluvia }} %
+                        </strong>
+                    </div>
+
+                    <i class="bi bi-cloud-rain"></i>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="weather-box wind">
+                    <div>
+                        <span>
+                            Viento
+                        </span>
+
+                        <strong>
+                            {{ clima.clima_actual.viento }} km/h
+                        </strong>
+                    </div>
+
+                    <i class="bi bi-wind"></i>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="weather-recommendation" [ngClass]="claseClima()">
+
+                    <div class="recommendation-icon">
+                        <i class="bi bi-lightbulb"></i>
+                    </div>
+
+                    <div>
+                        <strong>
+                            Recomendación agrícola
+                        </strong>
+
+                        <p class="mb-0">
+                            {{ clima.recomendacion }}
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        }
+
+    </div>
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-lg-6">
+
+            <div class="card panel-card border-0 shadow-sm h-100">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h5 class="mb-0">
+                            Últimos ingresos
+                        </h5>
+
+                        <small class="text-muted">
+                            Ventas registradas recientemente.
+                        </small>
+                    </div>
+
+                    <a routerLink="/app/ingresos" class="btn btn-outline-success btn-sm">
+                        Ver ingresos
+                    </a>
+
+                </div>
+
+                <div class="card-body">
+
+                    @if(datos.ultimos_ingresos.length === 0) {
+
+                    <div class="empty-state-small">
+                        <i class="bi bi-graph-up-arrow"></i>
+
+                        <p class="mb-0">
+                            No hay ingresos registrados.
+                        </p>
+                    </div>
+
+                    }
+
+                    @for(ingreso of datos.ultimos_ingresos; track ingreso.id_ingreso) {
+
+                    <div class="list-item-dashboard">
+
+                        <div class="list-icon green">
+                            <i class="bi bi-cash-coin"></i>
+                        </div>
+
+                        <div class="list-content">
+                            <strong>
+                                {{ ingreso.descripcion }}
+                            </strong>
+
+                            <div class="text-muted small">
+                                {{ ingreso.cultivo?.nombre || 'Sin cultivo' }}
+                                ·
+                                {{ ingreso.fecha }}
+
+                                @if(esAdministrador()) {
+                                ·
+                                {{ ingreso.usuario?.nombre }} {{ ingreso.usuario?.apellidos }}
+                                }
+                            </div>
+                        </div>
+
+                        <div class="list-badges">
+                            <span class="badge bg-success">
+                                {{ formatoMoneda(ingreso.monto_total) }}
+                            </span>
+                        </div>
+
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="card panel-card border-0 shadow-sm h-100">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h5 class="mb-0">
+                            Últimos costos
+                        </h5>
+
+                        <small class="text-muted">
+                            Gastos registrados recientemente.
+                        </small>
+                    </div>
+
+                    <a routerLink="/app/costos" class="btn btn-outline-danger btn-sm">
+                        Ver costos
+                    </a>
+
+                </div>
+
+                <div class="card-body">
+
+                    @if(datos.ultimos_costos.length === 0) {
+
+                    <div class="empty-state-small">
+                        <i class="bi bi-cash-stack"></i>
+
+                        <p class="mb-0">
+                            No hay costos registrados.
+                        </p>
+                    </div>
+
+                    }
+
+                    @for(costo of datos.ultimos_costos; track costo.id_costo) {
+
+                    <div class="list-item-dashboard">
+
+                        <div class="list-icon red">
+                            <i class="bi bi-cash-stack"></i>
+                        </div>
+
+                        <div class="list-content">
+                            <strong>
+                                {{ costo.descripcion }}
+                            </strong>
+
+                            <div class="text-muted small">
+                                {{ costo.tipo_costo }}
+                                ·
+                                {{ costo.fecha }}
+                            </div>
+                        </div>
+
+                        <div class="list-badges">
+                            <span class="badge bg-danger">
+                                {{ formatoMoneda(costo.monto) }}
+                            </span>
+                        </div>
+
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-lg-6">
+
+            <div class="card panel-card border-0 shadow-sm h-100">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h5 class="mb-0">
+                            Próximas actividades
+                        </h5>
+
+                        <small class="text-muted">
+                            Actividades pendientes o programadas.
+                        </small>
+                    </div>
+
+                    <a routerLink="/app/actividades" class="btn btn-outline-success btn-sm">
+                        Ver todas
+                    </a>
+
+                </div>
+
+                <div class="card-body">
+
+                    @if(datos.proximas_actividades.length === 0) {
+
+                    <div class="empty-state-small">
+                        <i class="bi bi-calendar2-check"></i>
+
+                        <p class="mb-0">
+                            No hay actividades próximas.
+                        </p>
+                    </div>
+
+                    }
+
+                    @for(actividad of datos.proximas_actividades; track actividad.id_actividad) {
+
+                    <div class="list-item-dashboard">
+
+                        <div class="list-icon green">
+                            <i class="bi bi-list-task"></i>
+                        </div>
+
+                        <div class="list-content">
+                            <strong>
+                                {{ actividad.tipo_actividad }}
+                            </strong>
+
+                            <div class="text-muted small">
+                                {{ actividad.cultivo?.nombre || 'Sin cultivo' }}
+                                ·
+                                {{ actividad.fecha_programada }}
+                            </div>
+                        </div>
+
+                        <div class="list-badges">
+                            <span class="badge" [class]="claseEstadoActividad(actividad.estado_actividad)">
+                                {{ actividad.estado_actividad }}
+                            </span>
+
+                            <span class="badge" [class]="clasePrioridad(actividad.prioridad)">
+                                {{ actividad.prioridad }}
+                            </span>
+                        </div>
+
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="card panel-card border-0 shadow-sm h-100">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h5 class="mb-0">
+                            Productos por vencer
+                        </h5>
+
+                        <small class="text-muted">
+                            Productos que requieren revisión.
+                        </small>
+                    </div>
+
+                    <a routerLink="/app/inventario" class="btn btn-outline-success btn-sm">
+                        Ver inventario
+                    </a>
+
+                </div>
+
+                <div class="card-body">
+
+                    @if(datos.productos_vencen_pronto.length === 0) {
+
+                    <div class="empty-state-small">
+                        <i class="bi bi-box-seam"></i>
+
+                        <p class="mb-0">
+                            No hay productos próximos a vencer.
+                        </p>
+                    </div>
+
+                    }
+
+                    @for(producto of datos.productos_vencen_pronto; track producto.id_inventario) {
+
+                    <div class="list-item-dashboard">
+
+                        <div class="list-icon red">
+                            <i class="bi bi-exclamation-triangle"></i>
+                        </div>
+
+                        <div class="list-content">
+                            <strong>
+                                {{ nombreProducto(producto) }}
+                            </strong>
+
+                            <div class="text-muted small">
+                                {{ producto.finca?.nombre || 'Sin finca' }}
+                                · Vence:
+                                {{ producto.fecha_vencimiento }}
+                            </div>
+                        </div>
+
+                        <div class="list-badges">
+                            <span class="badge bg-danger">
+                                Revisar
+                            </span>
+                        </div>
+
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="card panel-card border-0 shadow-sm h-100">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h5 class="mb-0">
+                            Últimas producciones
+                        </h5>
+
+                        <small class="text-muted">
+                            Producción agrícola registrada recientemente.
+                        </small>
+                    </div>
+
+                    <a routerLink="/app/produccion" class="btn btn-outline-success btn-sm">
+                        Ver producción
+                    </a>
+
+                </div>
+
+                <div class="card-body">
+
+                    @if(datos.ultimas_producciones.length === 0) {
+
+                    <div class="empty-state-small">
+                        <i class="bi bi-basket"></i>
+
+                        <p class="mb-0">
+                            No hay producción registrada.
+                        </p>
+                    </div>
+
+                    }
+
+                    @for(produccion of datos.ultimas_producciones; track produccion.id_produccion) {
+
+                    <div class="list-item-dashboard">
+
+                        <div class="list-icon green">
+                            <i class="bi bi-basket"></i>
+                        </div>
+
+                        <div class="list-content">
+                            <strong>
+                                {{ produccion.cultivo?.nombre || 'Producción agrícola' }}
+                            </strong>
+
+                            <div class="text-muted small">
+                                {{ produccion.fecha }}
+                                ·
+                                {{ produccion.finca?.nombre || 'Sin finca' }}
+                            </div>
+                        </div>
+
+                        <div class="list-badges">
+                            <span class="badge bg-success">
+                                {{ produccion.cantidad }} {{ produccion.unidad_medida }}
+                            </span>
+                        </div>
+
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="card panel-card border-0 shadow-sm h-100">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h5 class="mb-0">
+                            Plagas críticas
+                        </h5>
+
+                        <small class="text-muted">
+                            Registros con mayor nivel de riesgo.
+                        </small>
+                    </div>
+
+                    <a routerLink="/app/plagas" class="btn btn-outline-success btn-sm">
+                        Ver plagas
+                    </a>
+
+                </div>
+
+                <div class="card-body">
+
+                    @if(datos.plagas_criticas.length === 0) {
+
+                    <div class="empty-state-small">
+                        <i class="bi bi-shield-check"></i>
+
+                        <p class="mb-0">
+                            No hay plagas críticas registradas.
+                        </p>
+                    </div>
+
+                    }
+
+                    @for(plaga of datos.plagas_criticas; track plaga.id_plaga_cultivo) {
+
+                    <div class="list-item-dashboard">
+
+                        <div class="list-icon red">
+                            <i class="bi bi-virus"></i>
+                        </div>
+
+                        <div class="list-content">
+                            <strong>
+                                {{ nombrePlaga(plaga) }}
+                            </strong>
+
+                            <div class="text-muted small">
+                                {{ plaga.cultivo?.nombre || 'Sin cultivo' }}
+                                ·
+                                {{ plaga.fecha_deteccion }}
+                            </div>
+                        </div>
+
+                        <div class="list-badges">
+                            <span class="badge bg-danger">
+                                Crítico
+                            </span>
+                        </div>
+
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    }
+
+</div>

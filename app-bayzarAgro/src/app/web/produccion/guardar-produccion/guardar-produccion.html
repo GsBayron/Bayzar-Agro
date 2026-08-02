@@ -1,0 +1,250 @@
+<div class="module-page">
+
+    <div class="module-header mb-4">
+
+        <div>
+            <div class="header-badge mb-2">
+                <i class="bi bi-basket"></i>
+                Producción agrícola
+            </div>
+
+            <h3 class="fw-bold mb-1">
+                Nueva producción
+            </h3>
+
+            <p class="text-muted mb-0">
+                Registre la producción obtenida por finca y cultivo.
+            </p>
+        </div>
+
+        <button type="button" class="btn btn-outline-secondary btn-sm" routerLink="/app/produccion">
+
+            <i class="bi bi-arrow-left me-1"></i>
+            Volver
+
+        </button>
+
+    </div>
+
+    <div class="card module-card border-0 shadow-sm">
+
+        <div class="card-body p-4">
+
+            <form [formGroup]="form" (ngSubmit)="guardar()">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Finca
+                        </label>
+
+                        <select class="form-select" formControlName="id_finca" (change)="cambiarFinca()"
+                            [class.is-invalid]="f['id_finca'].touched && f['id_finca'].invalid">
+
+                            <option [ngValue]="null">
+                                Seleccione una finca
+                            </option>
+
+                            @for(finca of fincas; track finca.id_finca) {
+                            <option [ngValue]="finca.id_finca">
+                                {{ finca.nombre }}
+                            </option>
+                            }
+
+                        </select>
+
+                        @if(f['id_finca'].touched && f['id_finca'].invalid) {
+                        <small class="text-danger">
+                            La finca es requerida.
+                        </small>
+                        }
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Cultivo
+                        </label>
+
+                        <select class="form-select" formControlName="id_cultivo" (change)="cambiarCultivo()"
+                            [class.is-invalid]="f['id_cultivo'].touched && f['id_cultivo'].invalid">
+
+                            <option [ngValue]="null">
+                                Seleccione un cultivo
+                            </option>
+
+                            @for(cultivo of cultivosFiltrados; track cultivo.id_cultivo) {
+                            <option [ngValue]="cultivo.id_cultivo">
+                                {{ cultivo.nombre }}
+                            </option>
+                            }
+
+                        </select>
+
+                        @if(f['id_cultivo'].touched && f['id_cultivo'].invalid) {
+                        <small class="text-danger">
+                            El cultivo es requerido.
+                        </small>
+                        }
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">
+                            Fecha
+                        </label>
+
+                        <input type="date" class="form-control" formControlName="fecha"
+                            [class.is-invalid]="f['fecha'].touched && f['fecha'].invalid">
+
+                        @if(f['fecha'].touched && f['fecha'].invalid) {
+                        <small class="text-danger">
+                            La fecha es requerida.
+                        </small>
+                        }
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">
+                            Cantidad producida
+                        </label>
+
+                        <input type="number" class="form-control" formControlName="cantidad" min="0" step="0.01"
+                            placeholder="Ej: 85" [class.is-invalid]="f['cantidad'].touched && f['cantidad'].invalid">
+
+                        @if(f['cantidad'].touched && f['cantidad'].invalid) {
+                        <small class="text-danger">
+                            La cantidad es requerida.
+                        </small>
+                        }
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">
+                            Unidad de medida
+                        </label>
+
+                        <select class="form-select" formControlName="unidad_medida"
+                            [class.is-invalid]="f['unidad_medida'].touched && f['unidad_medida'].invalid">
+
+                            <option value="">
+                                Seleccione una unidad
+                            </option>
+
+                            @for(unidad of unidadesMedida; track unidad) {
+                            <option [value]="unidad">
+                                {{ unidad }}
+                            </option>
+                            }
+
+                        </select>
+
+                        @if(f['unidad_medida'].touched && f['unidad_medida'].invalid) {
+                        <small class="text-danger">
+                            La unidad de medida es requerida.
+                        </small>
+                        }
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">
+                            Cantidad de plantas
+                        </label>
+
+                        <input type="number" class="form-control" formControlName="cantidad_plantas" min="0" step="1"
+                            placeholder="Ej: 120 (Puede dejarlo vacío si no aplica)">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">
+                            Calidad
+                        </label>
+
+                        <select class="form-select" formControlName="calidad">
+
+                            <option value="">
+                                Seleccione calidad
+                            </option>
+
+                            @for(calidad of calidades; track calidad) {
+                            <option [value]="calidad">
+                                {{ calidad }}
+                            </option>
+                            }
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">
+                            Destino
+                        </label>
+
+                        <select class="form-select" formControlName="destino">
+
+                            <option value="">
+                                Seleccione destino
+                            </option>
+
+                            @for(destino of destinos; track destino) {
+                            <option [value]="destino">
+                                {{ destino }}
+                            </option>
+                            }
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">
+                            Estado
+                        </label>
+
+                        <select class="form-select" formControlName="estado">
+
+                            <option [ngValue]="true">
+                                Activa
+                            </option>
+
+                            <option [ngValue]="false">
+                                Inactiva
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">
+                            Observaciones
+                        </label>
+
+                        <textarea class="form-control" rows="3" formControlName="observaciones"
+                            placeholder="Observaciones adicionales de la producción">
+                        </textarea>
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+
+                    <button type="button" class="btn btn-outline-secondary" routerLink="/app/produccion">
+
+                        Cancelar
+
+                    </button>
+
+                    <button type="submit" class="btn btn-success px-4">
+
+                        <i class="bi bi-save me-1"></i>
+                        Guardar
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

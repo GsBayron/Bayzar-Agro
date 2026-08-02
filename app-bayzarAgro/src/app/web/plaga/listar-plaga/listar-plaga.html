@@ -1,0 +1,165 @@
+﻿<div class="module-page">
+<div class="module-header mb-4">
+
+    <div>
+        <div class="header-badge mb-2"><i class="bi bi-bug"></i>Modulo de plagas</div>
+<h3 class="fw-bold mb-1">
+            Plagas
+        </h3>
+
+        <p class="text-muted mb-0">
+            Administraciónn de plagas detectadas en cultivos.
+        </p>
+    </div>
+
+    <a class="btn btn-success" routerLink="/app/plagas/guardar">
+
+        Nueva plaga
+
+    </a>
+
+</div>
+
+<div class="card module-card border-0 shadow-sm">
+
+    <div class="card-body p-4">
+
+        <div class="filters-panel mb-4"><div class="search-box"><i class="bi bi-search"></i>
+
+                <input type="text" class="form-control" placeholder="Buscar plaga..." (keyup)="filtrar($event)"></div></div><div class="table-responsive module-table-wrapper">
+
+            <table mat-table [dataSource]="datos" matSort class="table table-hover align-middle mb-0 module-table">
+
+                <ng-container matColumnDef="id_plaga_cultivo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        ID
+                    </th>
+                    <td mat-cell *matCellDef="let item">
+                        {{ item.id_plaga_cultivo }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cultivo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Cultivo
+                    </th>
+                    <td mat-cell *matCellDef="let item">
+                        {{ item.cultivo?.nombre || '-' }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="plaga">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Plaga
+                    </th>
+                    <td mat-cell *matCellDef="let item">
+                        {{ obtenerNombrePlaga(item) }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fecha_deteccion">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Fecha detección
+                    </th>
+                    <td mat-cell *matCellDef="let item">
+                        {{ item.fecha_deteccion }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nivel_riesgo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Riesgo
+                    </th>
+                    <td mat-cell *matCellDef="let item">
+
+                        @if(item.nivel_riesgo === 'Crítico') {
+                        <span class="badge bg-danger">
+                            {{ item.nivel_riesgo }}
+                        </span>
+                        } @else if(item.nivel_riesgo === 'Alto') {
+                        <span class="badge bg-warning text-dark">
+                            {{ item.nivel_riesgo }}
+                        </span>
+                        } @else if(item.nivel_riesgo === 'Medio') {
+                        <span class="badge bg-primary">
+                            {{ item.nivel_riesgo }}
+                        </span>
+                        } @else {
+                        <span class="badge bg-success">
+                            {{ item.nivel_riesgo }}
+                        </span>
+                        }
+
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="estado_plaga">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Estado plaga
+                    </th>
+                    <td mat-cell *matCellDef="let item">
+                        {{ item.estado_plaga }}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="estado">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Estado
+                    </th>
+                    <td mat-cell *matCellDef="let item">
+
+                        @if(item.estado === 1) {
+                        <span class="badge bg-success">
+                            Activo
+                        </span>
+                        } @else {
+                        <span class="badge bg-secondary">
+                            Inactivo
+                        </span>
+                        }
+
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef class="text-center">
+                        Acciones
+                    </th>
+
+                    <td mat-cell *matCellDef="let item" class="text-center">
+
+                        <div class="acciones-cell">
+
+                            <a class="btn-action edit" title="Editar registro" [routerLink]="[
+                                    '/app/plagas/actualizar',
+                                    item.id_plaga_cultivo
+                                ]">
+
+                                <i class="bi bi-pencil-square"></i>
+
+                            </a>
+
+                            <button type="button" class="btn-action delete" title="Eliminar registro"
+                                (click)="eliminar(item.id_plaga_cultivo!)">
+
+                                <i class="bi bi-trash"></i>
+
+                            </button>
+
+                        </div>
+
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+
+                <tr mat-row *matRowDef="let row; columns: columnas;" class="module-row">
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div class="paginator-wrapper mt-3"><mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons>
+        </mat-paginator></div>
+</div></div></div>

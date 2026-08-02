@@ -1,0 +1,185 @@
+<div class="module-page">
+
+    <div class="module-header mb-4">
+
+        <div>
+            <div class="header-badge mb-2">
+                <i class="bi bi-shield-check"></i>
+                Catálogo agrícola
+            </div>
+
+            <h3 class="fw-bold mb-1">
+                Actualizar plaguicida registrado
+            </h3>
+
+            <p class="text-muted mb-0">
+                Registre la información del plaguicida.
+            </p>
+        </div>
+
+        <button type="button" class="btn btn-outline-secondary btn-sm" routerLink="/app/plaguicidas-registrados">
+
+            <i class="bi bi-arrow-left me-1"></i>
+            Volver
+
+        </button>
+
+    </div>
+
+    <div class="card module-card border-0 shadow-sm">
+
+        <div class="card-body p-4">
+
+            <form [formGroup]="form" (ngSubmit)="actualizar()">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <label class="form-label">
+                            Número de registro
+                        </label>
+
+                        <input type="text" class="form-control" formControlName="numero_registro"
+                            placeholder="Ej: CR-001">
+                    </div>
+
+                    <div class="col-md-8">
+                        <label class="form-label">
+                            Nombre comercial
+                        </label>
+
+                        <input type="text" class="form-control" formControlName="nombre_comercial"
+                            placeholder="Nombre comercial del producto"
+                            [class.is-invalid]="f['nombre_comercial'].touched && f['nombre_comercial'].invalid">
+
+                        @if(f['nombre_comercial'].touched && f['nombre_comercial'].invalid) {
+                        <small class="text-danger">
+                            El nombre comercial es requerido.
+                        </small>
+                        }
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Ingrediente activo
+                        </label>
+
+                        <input type="text" class="form-control" formControlName="ingrediente_activo"
+                            placeholder="Ingrediente activo">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Tipo de plaguicida
+                        </label>
+
+                        <input type="text" class="form-control" formControlName="tipo_plaguicida"
+                            placeholder="Ej: Insecticida, Fungicida, Herbicida">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Cultivo autorizado
+                        </label>
+
+                        <input type="text" class="form-control" formControlName="cultivo_autorizado"
+                            placeholder="Ej: Tomate, café, chile">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Plaga objetivo
+                        </label>
+
+                        <input type="text" class="form-control" formControlName="plaga_objetivo"
+                            placeholder="Ej: Mosca blanca, roya">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Titular
+                        </label>
+
+                        <input type="text" class="form-control" formControlName="titular"
+                            placeholder="Empresa o registrante">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">
+                            Estado registro
+                        </label>
+
+                        <select class="form-select" formControlName="estado_registro">
+
+                            <option value="Vigente">
+                                Vigente
+                            </option>
+
+                            <option value="Vencido">
+                                Vencido
+                            </option>
+
+                            <option value="Cancelado">
+                                Cancelado
+                            </option>
+
+                            <option value="Suspendido">
+                                Suspendido
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">
+                            Estado del sistema
+                        </label>
+
+                        <select class="form-select" formControlName="estado">
+
+                            <option [ngValue]="true">
+                                Activo
+                            </option>
+
+                            <option [ngValue]="false">
+                                Inactivo
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="form-label">
+                            Fuente
+                        </label>
+
+                        <input type="text" class="form-control" formControlName="fuente"
+                            placeholder="Fuente de información">
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+
+                    <button type="button" class="btn btn-outline-secondary" routerLink="/app/plaguicidas-registrados">
+
+                        Cancelar
+
+                    </button>
+
+                    <button type="submit" class="btn btn-success px-4">
+
+                        <i class="bi bi-save me-1"></i>
+                        Actualizar
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

@@ -20,6 +20,8 @@ class Cultivo extends Model
         'fecha_siembra',
         'fecha_estimada_cosecha',
         'area_sembrada',
+        'cantidad_plantas',
+        'distancia_siembra',
         'unidad_area',
         'estado_cultivo',
         'descripcion',

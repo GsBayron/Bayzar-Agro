@@ -1,0 +1,247 @@
+@use './variables' as *;
+
+.table-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.filters-panel {
+    padding: 1rem;
+    border-radius: $radius-md;
+    background-color: $agro-gray-50;
+    border: 1px solid $agro-border;
+}
+
+.filters-panel .form-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: $agro-gray-700;
+}
+
+.filters-panel .form-control,
+.filters-panel .form-select {
+    border-radius: 0.85rem;
+    border-color: $agro-gray-300;
+}
+
+.filters-panel .form-control:focus,
+.filters-panel .form-select:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 0.2rem rgba(34, 197, 94, 0.15);
+}
+
+.search-box {
+    position: relative;
+    width: 100%;
+}
+
+.search-box i {
+    position: absolute;
+    left: 0.95rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $agro-gray-500;
+}
+
+.search-box .form-control {
+    padding-left: 2.6rem;
+    border-radius: 0.9rem;
+}
+
+.module-table-wrapper {
+    border: 1px solid $agro-border;
+    border-radius: $radius-md;
+    overflow: auto;
+}
+
+.module-table {
+    min-width: 1050px;
+}
+
+.module-table th {
+    background-color: $agro-gray-50;
+    color: $agro-gray-700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 700;
+    border-bottom: 1px solid $agro-gray-200;
+    padding: 1rem;
+}
+
+.module-table td {
+    padding: 1rem;
+    color: $agro-gray-700;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.module-row {
+    transition: background-color 0.2s ease;
+}
+
+.module-row:hover {
+    background-color: $agro-gray-50;
+}
+
+.entity-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.entity-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $agro-primary-soft;
+    color: $agro-primary-dark;
+    font-size: 1.1rem;
+}
+
+.main-cell-text {
+    font-weight: 600;
+    color: $agro-gray-900;
+}
+
+.icon-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: $agro-gray-600;
+}
+
+.icon-cell i {
+    color: $agro-primary;
+}
+
+.action-cell {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.paginator-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.fila-expandida {
+    background-color: #f0fdf4 !important;
+}
+
+.detalle-row {
+    height: 0;
+}
+
+.detalle-cell {
+    padding: 0 !important;
+    border-bottom: none !important;
+    background-color: $agro-gray-50;
+}
+
+.detail-panel {
+    margin: 0.5rem 1rem 1rem;
+    padding: 1.25rem;
+    border-radius: $radius-md;
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    border: 1px solid $agro-gray-200;
+    animation: detailFade 0.2s ease-in-out;
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid $agro-border;
+}
+
+.detail-box {
+    height: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 0.9rem;
+    background-color: #ffffff;
+    border: 1px solid $agro-border;
+}
+
+.detail-box small {
+    display: block;
+    color: $agro-gray-500;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+}
+
+.detail-box strong {
+    color: $agro-gray-900;
+}
+
+.detail-text p {
+    color: $agro-gray-700;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.detail-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.mat-mdc-paginator {
+    border-radius: $radius-md;
+    background-color: #ffffff;
+}
+
+.module-table-wrapper + .paginator-wrapper {
+    padding-top: 0.75rem;
+}
+
+.module-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.module-table th:first-child,
+.module-table td:first-child {
+    padding-left: 1.25rem;
+}
+
+.module-table th:last-child,
+.module-table td:last-child {
+    padding-right: 1.25rem;
+}
+
+.table-empty-message {
+    padding: 2rem;
+    text-align: center;
+    color: $agro-gray-500;
+}
+
+@media (max-width: 768px) {
+    .table-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .paginator-wrapper {
+        justify-content: center;
+    }
+
+    .detail-header {
+        flex-direction: column;
+    }
+
+    .detail-actions {
+        flex-direction: column;
+    }
+
+    .detail-actions .btn {
+        width: 100%;
+    }
+}

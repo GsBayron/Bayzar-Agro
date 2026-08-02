@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use App\Models\Actividad;
 use App\Models\Cultivo;
 use App\Models\Inventario;
+use Illuminate\Http\Request;
 
 class ActividadController extends Controller
 {
@@ -22,7 +21,7 @@ class ActividadController extends Controller
                 Actividad::with([
                     'cultivo.finca',
                     'inventario.plaguicida',
-                    'inventario.fertilizante'
+                    'inventario.fertilizante',
                 ])
                     ->orderBy('fecha_programada', 'asc')
                     ->get()
@@ -41,7 +40,7 @@ class ActividadController extends Controller
                 ->with([
                     'cultivo.finca',
                     'inventario.plaguicida',
-                    'inventario.fertilizante'
+                    'inventario.fertilizante',
                 ])
                 ->orderBy('fecha_programada', 'asc')
                 ->get()
@@ -55,26 +54,26 @@ class ActividadController extends Controller
 
         $actividad = Actividad::with([
             'cultivo.finca',
-            'inventario'
+            'inventario',
         ])
             ->whereKey($id)
             ->first();
 
-        if (!$actividad) {
+        if (! $actividad) {
 
             return response()->json([
-                'message' => 'Actividad no encontrada'
+                'message' => 'Actividad no encontrada',
             ], 404);
         }
 
         if (
-            $usuario->rol === 'Agricultor'
+            $usuario->rol !== 'Administrador'
             &&
-            $actividad->cultivo->finca->id_usuario !== $usuario->id_usuario
+            $actividad->cultivo?->finca?->id_usuario !== $usuario->id_usuario
         ) {
 
             return response()->json([
-                'message' => 'No autorizado'
+                'message' => 'No autorizado',
             ], 403);
         }
 
@@ -86,15 +85,15 @@ class ActividadController extends Controller
     {
         $request->validate([
 
-            'id_cultivo' => 'required|integer',
+            'id_cultivo' => 'required|integer|exists:tbl_cultivo,id_cultivo',
 
-            'id_inventario' => 'nullable|integer',
+            'id_inventario' => 'nullable|integer|exists:tbl_inventario,id_inventario',
 
             'tipo_actividad' => 'required|max:50',
 
             'fecha_programada' => 'required|date',
 
-            'fecha_realizacion' => 'nullable|date',
+            'fecha_realizacion' => 'nullable|date|after_or_equal:fecha_programada',
 
             'estado_actividad' => 'required|max:30',
 
@@ -102,7 +101,7 @@ class ActividadController extends Controller
 
             'descripcion' => 'nullable|max:255',
 
-            'cantidad_producto' => 'nullable|numeric',
+            'cantidad_producto' => 'nullable|numeric|min:0',
 
             'unidad_producto' => 'nullable|max:30',
 
@@ -110,7 +109,7 @@ class ActividadController extends Controller
 
             'observaciones' => 'nullable|max:255',
 
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
 
         $usuario = request()->user();
@@ -119,21 +118,21 @@ class ActividadController extends Controller
             ->whereKey($request->id_cultivo)
             ->first();
 
-        if (!$cultivo) {
+        if (! $cultivo) {
 
             return response()->json([
-                'message' => 'Cultivo no encontrado'
+                'message' => 'Cultivo no encontrado',
             ], 404);
         }
 
         if (
-            $usuario->rol === 'Agricultor'
+            $usuario->rol !== 'Administrador'
             &&
-            $cultivo->finca->id_usuario !== $usuario->id_usuario
+            $cultivo->finca?->id_usuario !== $usuario->id_usuario
         ) {
 
             return response()->json([
-                'message' => 'No autorizado'
+                'message' => 'No autorizado',
             ], 403);
         }
 
@@ -143,21 +142,21 @@ class ActividadController extends Controller
                 $request->id_inventario
             )->first();
 
-            if (!$inventario) {
+            if (! $inventario) {
 
                 return response()->json([
-                    'message' => 'Producto de inventario no encontrado'
+                    'message' => 'Producto de inventario no encontrado',
                 ], 404);
             }
 
             if (
-                $usuario->rol === 'Agricultor'
+                $usuario->rol !== 'Administrador'
                 &&
                 $inventario->id_usuario !== $usuario->id_usuario
             ) {
 
                 return response()->json([
-                    'message' => 'No autorizado'
+                    'message' => 'No autorizado',
                 ], 403);
             }
         }
@@ -188,12 +187,12 @@ class ActividadController extends Controller
 
             'observaciones' => $request->observaciones,
 
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Actividad guardada correctamente',
-            'actividad' => $actividad
+            'actividad' => $actividad,
         ]);
     }
 
@@ -202,15 +201,15 @@ class ActividadController extends Controller
     {
         $request->validate([
 
-            'id_cultivo' => 'required|integer',
+            'id_cultivo' => 'required|integer|exists:tbl_cultivo,id_cultivo',
 
-            'id_inventario' => 'nullable|integer',
+            'id_inventario' => 'nullable|integer|exists:tbl_inventario,id_inventario',
 
             'tipo_actividad' => 'required|max:50',
 
             'fecha_programada' => 'required|date',
 
-            'fecha_realizacion' => 'nullable|date',
+            'fecha_realizacion' => 'nullable|date|after_or_equal:fecha_programada',
 
             'estado_actividad' => 'required|max:30',
 
@@ -218,7 +217,7 @@ class ActividadController extends Controller
 
             'descripcion' => 'nullable|max:255',
 
-            'cantidad_producto' => 'nullable|numeric',
+            'cantidad_producto' => 'nullable|numeric|min:0',
 
             'unidad_producto' => 'nullable|max:30',
 
@@ -226,7 +225,7 @@ class ActividadController extends Controller
 
             'observaciones' => 'nullable|max:255',
 
-            'estado' => 'required|boolean'
+            'estado' => 'required|boolean',
         ]);
 
         $usuario = request()->user();
@@ -235,21 +234,21 @@ class ActividadController extends Controller
             ->whereKey($id)
             ->first();
 
-        if (!$actividad) {
+        if (! $actividad) {
 
             return response()->json([
-                'message' => 'Actividad no encontrada'
+                'message' => 'Actividad no encontrada',
             ], 404);
         }
 
         if (
-            $usuario->rol === 'Agricultor'
+            $usuario->rol !== 'Administrador'
             &&
-            $actividad->cultivo->finca->id_usuario !== $usuario->id_usuario
+            $actividad->cultivo?->finca?->id_usuario !== $usuario->id_usuario
         ) {
 
             return response()->json([
-                'message' => 'No autorizado'
+                'message' => 'No autorizado',
             ], 403);
         }
 
@@ -257,21 +256,21 @@ class ActividadController extends Controller
             ->whereKey($request->id_cultivo)
             ->first();
 
-        if (!$cultivo) {
+        if (! $cultivo) {
 
             return response()->json([
-                'message' => 'Cultivo no encontrado'
+                'message' => 'Cultivo no encontrado',
             ], 404);
         }
 
         if (
-            $usuario->rol === 'Agricultor'
+            $usuario->rol !== 'Administrador'
             &&
-            $cultivo->finca->id_usuario !== $usuario->id_usuario
+            $cultivo->finca?->id_usuario !== $usuario->id_usuario
         ) {
 
             return response()->json([
-                'message' => 'No autorizado'
+                'message' => 'No autorizado',
             ], 403);
         }
 
@@ -281,21 +280,21 @@ class ActividadController extends Controller
                 $request->id_inventario
             )->first();
 
-            if (!$inventario) {
+            if (! $inventario) {
 
                 return response()->json([
-                    'message' => 'Producto de inventario no encontrado'
+                    'message' => 'Producto de inventario no encontrado',
                 ], 404);
             }
 
             if (
-                $usuario->rol === 'Agricultor'
+                $usuario->rol !== 'Administrador'
                 &&
                 $inventario->id_usuario !== $usuario->id_usuario
             ) {
 
                 return response()->json([
-                    'message' => 'No autorizado'
+                    'message' => 'No autorizado',
                 ], 403);
             }
         }
@@ -326,12 +325,12 @@ class ActividadController extends Controller
 
             'observaciones' => $request->observaciones,
 
-            'estado' => $request->estado
+            'estado' => $request->estado,
         ]);
 
         return response()->json([
             'message' => 'Actividad actualizada correctamente',
-            'actividad' => $actividad
+            'actividad' => $actividad,
         ]);
     }
 
@@ -340,32 +339,30 @@ class ActividadController extends Controller
     {
         $usuario = request()->user();
 
-        $actividad = Actividad::querry()
-            ->whereKey($id)
-            ->delete();
+        $actividad = Actividad::with('cultivo.finca')->whereKey($id)->first();
 
-        if (!$actividad) {
+        if (! $actividad) {
 
             return response()->json([
-                'message' => 'Actividad no encontrada'
+                'message' => 'Actividad no encontrada',
             ], 404);
         }
 
         if (
-            $usuario->rol === 'Agricultor'
+            $usuario->rol !== 'Administrador'
             &&
-            $actividad->cultivo->finca->id_usuario !== $usuario->id_usuario
+            $actividad->cultivo?->finca?->id_usuario !== $usuario->id_usuario
         ) {
 
             return response()->json([
-                'message' => 'No autorizado'
+                'message' => 'No autorizado',
             ], 403);
         }
 
         $actividad->delete();
 
         return response()->json([
-            'message' => 'Actividad eliminada correctamente'
+            'message' => 'Actividad eliminada correctamente',
         ]);
     }
 }

@@ -1,0 +1,378 @@
+<!-- Botón para abrir el menú en dispositivos móviles -->
+<button type="button" class="mobile-menu-btn" [class.hide-btn]="menuMovilAbierto" (click)="abrirMenuMovil()">
+
+    <i class="bi bi-list"></i>
+    <span>Menú</span>
+
+</button>
+
+<!-- Fondo oscuro del menú móvil -->
+<div class="sidebar-backdrop" [class.show]="menuMovilAbierto" (click)="cerrarMenuMovil()">
+</div>
+
+<!-- Sidebar -->
+<aside class="sidebar" [class.sidebar-open]="menuMovilAbierto">
+
+    <!-- Encabezado móvil -->
+    <div class="mobile-sidebar-header">
+
+        <div>
+            <h5 class="mb-0">
+                BayzarAgro
+            </h5>
+
+            <small>
+                Menú principal
+            </small>
+        </div>
+
+        <button type="button" class="btn-close-sidebar" aria-label="Cerrar menú" (click)="cerrarMenuMovil()">
+
+            <i class="bi bi-x-lg"></i>
+
+        </button>
+
+    </div>
+
+    
+
+    <!-- Navegación -->
+    <nav class="sidebar-menu">
+
+        <!-- General -->
+        <div class="menu-section">
+            General
+        </div>
+
+        <ul class="nav flex-column">
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/inicio" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: true }" (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-grid"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Inicio
+                    </span>
+
+                </a>
+
+            </li>
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/alertas" routerLinkActive="active" (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-bell"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Alertas
+                    </span>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        <!-- Administración -->
+        @if (esAdministrador()) {
+
+        <div class="menu-section">
+            Administración
+        </div>
+
+        <ul class="nav flex-column">
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/usuarios" routerLinkActive="active" (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-people"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Usuarios
+                    </span>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        <!-- Catálogos agrícolas -->
+        <div class="menu-section">
+            Catálogos agrícolas
+        </div>
+
+        <ul class="nav flex-column">
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/plaguicidas-registrados" routerLinkActive="active"
+                    (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Plaguicidas registrados
+                    </span>
+
+                </a>
+
+            </li>
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/fertilizantes-registrados" routerLinkActive="active"
+                    (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-droplet-half"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Fertilizantes registrados
+                    </span>
+
+                </a>
+
+            </li>
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/plagas-registradas" routerLinkActive="active"
+                    (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-bug"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Plagas registradas
+                    </span>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        }
+
+        <!-- Gestión de fincas -->
+        <div class="menu-section">
+            Gestión de fincas
+        </div>
+
+        <ul class="nav flex-column">
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/fincas" routerLinkActive="active" (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-map"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Fincas
+                    </span>
+
+                </a>
+
+            </li>
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/cultivos" routerLinkActive="active" (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-flower1"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Cultivos
+                    </span>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        <!-- Operación agrícola -->
+        <div class="menu-section">
+            Operación agrícola
+        </div>
+
+        <ul class="nav flex-column">
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/actividades" routerLinkActive="active" (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-list-task"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Actividades
+                    </span>
+
+                </a>
+
+            </li>
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/produccion" routerLinkActive="active" (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-basket"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Producción
+                    </span>
+
+                </a>
+
+            </li>
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/plagas" routerLinkActive="active" (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-virus"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Control de plagas
+                    </span>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        <!-- Recursos -->
+        <div class="menu-section">
+            Recursos
+        </div>
+
+        <ul class="nav flex-column">
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/inventario" routerLinkActive="active" (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-box-seam"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Inventario
+                    </span>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        <!-- Finanzas -->
+        <div class="menu-section">
+            Finanzas
+        </div>
+
+        <ul class="nav flex-column">
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/costos" routerLinkActive="active" (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-cash-coin"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Costos
+                    </span>
+
+                </a>
+
+            </li>
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/ingresos" routerLinkActive="active" (click)="cerrarMenuMovil()">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Ingresos
+                    </span>
+
+                </a>
+
+            </li>
+
+            <li class="nav-item">
+
+                <a class="nav-link" routerLink="/app/reportes/financiero" routerLinkActive="active">
+
+                    <span class="nav-icon">
+                        <i class="bi bi-bar-chart-line"></i>
+                    </span>
+
+                    <span class="nav-text">
+                        Reporte financiero
+                    </span>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </nav>
+
+    <!-- Pie del sidebar -->
+    <div class="sidebar-footer">
+
+        <div class="footer-box">
+
+            <i class="bi bi-shield-check"></i>
+
+            <div>
+
+                <strong>
+                    Datos protegidos
+                </strong>
+
+                <small>
+                    Información privada por agricultor
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>

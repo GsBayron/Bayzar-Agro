@@ -1,0 +1,292 @@
+<div class="module-page">
+
+    <div class="module-header mb-4">
+
+        <div>
+            <div class="header-badge mb-2">
+                <i class="bi bi-droplet-half"></i>
+                Catálogo agrícola
+            </div>
+
+            <h3 class="fw-bold mb-1">
+                Fertilizantes registrados
+            </h3>
+
+            <p class="text-muted mb-0">
+                Administración de fertilizantes registrados en el sistema.
+            </p>
+        </div>
+
+        <button type="button" class="btn btn-success btn-sm" routerLink="/app/fertilizantes-registrados/guardar">
+
+            <i class="bi bi-plus-circle me-1"></i>
+            Nuevo fertilizante
+
+        </button>
+
+    </div>
+
+    <div class="card module-card border-0 shadow-sm">
+
+        <div class="card-body p-4">
+
+            <div class="table-toolbar mb-4">
+
+                <div>
+                    <h5 class="fw-bold mb-1">
+                        Listado de fertilizantes
+                    </h5>
+
+                    <small class="text-muted">
+                        Consulte, edite o elimine fertilizantes registrados.
+                    </small>
+                </div>
+
+                <div class="search-box">
+
+                    <i class="bi bi-search"></i>
+
+                    <input type="text" class="form-control"
+                        placeholder="Buscar por registro, nombre, composición o fabricante..."
+                        (keyup)="aplicarFiltro($event)">
+
+                </div>
+
+            </div>
+
+            @if(cargando) {
+
+            <div class="alert-dashboard info mb-4">
+
+                <i class="bi bi-hourglass-split"></i>
+
+                <div>
+                    <strong>Cargando información</strong>
+                    <span>Cargando fertilizantes registrados...</span>
+                </div>
+
+            </div>
+
+            }
+
+            <div class="table-responsive module-table-wrapper">
+
+                <table mat-table [dataSource]="dataSource" matSort
+                    class="table table-hover align-middle mb-0 module-table">
+
+                    <ng-container matColumnDef="numero_registro">
+
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Registro
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+
+                            <span class="registro-pill">
+                                {{ item.numero_registro || '-' }}
+                            </span>
+
+                        </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="nombre_comercial">
+
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Nombre comercial
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+
+                            <div class="producto-cell">
+
+                                <div class="producto-icon">
+                                    <i class="bi bi-droplet-half"></i>
+                                </div>
+
+                                <div>
+                                    <strong>
+                                        {{ item.nombre_comercial }}
+                                    </strong>
+
+                                    <small class="text-muted d-block">
+                                        Fertilizante registrado
+                                    </small>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="composicion">
+
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Composición
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            {{ item.composicion || '-' }}
+                        </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="tipo_fertilizante">
+
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Tipo
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+
+                            <span class="tipo-pill">
+                                {{ item.tipo_fertilizante || 'Sin tipo' }}
+                            </span>
+
+                        </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="fabricante">
+
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Fabricante
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            {{ item.fabricante || '-' }}
+                        </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="estado_registro">
+
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Estado registro
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+
+                            <span class="estado-registro-pill" [class.vigente]="item.estado_registro === 'Vigente'"
+                                [class.vencido]="item.estado_registro === 'Vencido'"
+                                [class.cancelado]="item.estado_registro === 'Cancelado'"
+                                [class.suspendido]="item.estado_registro === 'Suspendido'">
+
+                                {{ item.estado_registro || '-' }}
+
+                            </span>
+
+                        </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="estado">
+
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Estado
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+
+                            @if(item.estado === 1 || item.estado === true) {
+
+                            <span class="registro-estado activo">
+                                <i class="bi bi-check-circle"></i>
+                                Activo
+                            </span>
+
+                            } @else {
+
+                            <span class="registro-estado inactivo">
+                                <i class="bi bi-x-circle"></i>
+                                Inactivo
+                            </span>
+
+                            }
+
+                        </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="acciones">
+
+                        <th mat-header-cell *matHeaderCellDef class="text-center">
+
+                            Acciones
+
+                        </th>
+
+                        <td mat-cell *matCellDef="let item" class="text-center">
+
+                            <div class="acciones-cell">
+
+                                <button type="button" class="btn-action edit" title="Editar fertilizante"
+                                    (click)="actualizar(item.id_fertilizante_registrado)">
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                </button>
+
+                                <button type="button" class="btn-action delete" title="Eliminar fertilizante"
+                                    (click)="eliminar(item)">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+
+                    <tr mat-row *matRowDef="let row; columns: columnas;" class="module-row">
+                    </tr>
+
+                </table>
+
+            </div>
+
+            @if(dataSource.filteredData.length === 0 && !cargando) {
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    <i class="bi bi-inbox"></i>
+                </div>
+
+                <h5 class="fw-bold mb-1">
+                    No hay fertilizantes para mostrar
+                </h5>
+
+                <p class="text-muted mb-3">
+                    No se encontraron registros con el filtro ingresado.
+                </p>
+
+                <button type="button" class="btn btn-success btn-sm"
+                    routerLink="/app/fertilizantes-registrados/guardar">
+
+                    <i class="bi bi-plus-circle me-1"></i>
+                    Registrar fertilizante
+
+                </button>
+
+            </div>
+
+            }
+
+            <div class="paginator-wrapper mt-3">
+
+                <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons>
+                </mat-paginator>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

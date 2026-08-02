@@ -1,0 +1,60 @@
+<div class="bienvenida-page">
+
+    <div class="bienvenida-card shadow-sm">
+
+        <div class="success-icon" [class.warning]="esPagoPendiente()">
+
+            @if(esPagoPendiente()) {
+            <i class="bi bi-credit-card"></i>
+            } @else {
+            <i class="bi bi-check-circle"></i>
+            }
+
+        </div>
+
+        @if(esPagoPendiente()) {
+
+        <h1>
+            Cuenta creada, pago pendiente
+        </h1>
+
+        <p>
+            Su cuenta fue registrada correctamente. Para activar el acceso,
+            debe completar el proceso de pago del plan seleccionado.
+        </p>
+
+        <div class="alert alert-warning text-start">
+            <strong>Próximo paso:</strong>
+            en una siguiente etapa integraremos el proceso de cobro con
+            SINPE, tarjeta o Stripe.
+        </div>
+
+        } @else {
+
+        <h1>
+            ¡Bienvenido a BayzarAgro!
+        </h1>
+
+        <p>
+            Su cuenta gratuita fue creada correctamente. Ya puede iniciar
+            sesión y comenzar a gestionar su información agrícola.
+        </p>
+
+        }
+
+        <div class="actions">
+
+            <a routerLink="/login" class="btn btn-success btn-lg">
+                <i class="bi bi-box-arrow-in-right me-1"></i>
+                Iniciar sesión
+            </a>
+
+            <a routerLink="/" class="btn btn-outline-success btn-lg">
+                Volver al inicio
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

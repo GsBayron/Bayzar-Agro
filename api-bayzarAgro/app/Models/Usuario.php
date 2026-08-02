@@ -15,6 +15,7 @@ class Usuario extends Authenticatable
     public $timestamps = false;
 
     protected $fillable = [
+        'id_plan',
         'nombre',
         'apellidos',
         'correo',
@@ -22,7 +23,9 @@ class Usuario extends Authenticatable
         'acceso',
         'secreto',
         'rol',
-        'estado'
+        'estado',
+        'estado_pago'
+
     ];
 
     protected $hidden = [
@@ -43,9 +46,28 @@ class Usuario extends Authenticatable
         );
     }
 
-    public function inventario() {
-        return $this -> hasMany(
-        Inventario::class,
+    public function inventario()
+    {
+        return $this->hasMany(
+            Inventario::class,
+            'id_usuario',
+            'id_usuario'
+        );
+    }
+
+    public function plan()
+    {
+        return $this->belongsTo(
+            Plan::class,
+            'id_plan',
+            'id_plan'
+        );
+    }
+
+    public function suscripciones()
+    {
+        return $this->hasMany(
+            Suscripcion::class,
             'id_usuario',
             'id_usuario'
         );
