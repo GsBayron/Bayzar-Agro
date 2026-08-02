@@ -1,0 +1,624 @@
+<div class="module-page">
+
+    <div class="module-header mb-4">
+
+        <div>
+            <div class="header-badge mb-2">
+                <i class="bi bi-bar-chart-line"></i>
+                Informes
+            </div>
+
+            <h3 class="fw-bold mb-1">
+                Reporte financiero
+            </h3>
+
+            <p class="text-muted mb-0">
+                Consulte ingresos, costos, producción y ganancia estimada del sistema agrícola.
+            </p>
+        </div>
+
+        <div class="d-flex gap-2 no-print">
+
+            <button type="button" class="btn btn-outline-success btn-sm" (click)="consultar()">
+
+                <i class="bi bi-arrow-clockwise me-1"></i>
+                Actualizar
+
+            </button>
+
+            <button type="button" class="btn btn-outline-primary btn-sm" (click)="exportarPDF()" [disabled]="!datos">
+
+                <i class="bi bi-file-earmark-pdf me-1"></i>
+                PDF
+
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="exportarCSV()" [disabled]="!datos">
+
+                <i class="bi bi-file-earmark-spreadsheet me-1"></i>
+                Excel
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="card module-card border-0 shadow-sm mb-4 no-print">
+
+        <div class="card-body">
+
+            <form [formGroup]="form" class="row g-3 align-items-end" (ngSubmit)="consultar()">
+
+                @if(esAdministrador()) {
+
+                <div class="col-md-3">
+                    <label class="form-label">
+                        Agricultor
+                    </label>
+
+                    <select class="form-select" formControlName="id_usuario">
+
+                        <option [ngValue]="null">
+                            Todos los agricultores
+                        </option>
+
+                        @for(usuario of usuarios; track usuario.id_usuario) {
+                        <option [ngValue]="usuario.id_usuario">
+                            {{ usuario.nombre }} {{ usuario.apellidos }}
+                        </option>
+                        }
+
+                    </select>
+                </div>
+
+                @if(form.hasError('rangoFechasInvalido')) {
+                <div class="col-12">
+                    <div class="alert alert-danger py-2 mb-0">
+                        La fecha final debe ser igual o posterior a la fecha inicial.
+                    </div>
+                </div>
+                }
+
+                }
+
+                <div class="col-md-3">
+                    <label class="form-label">
+                        Finca
+                    </label>
+
+                    <select class="form-select" formControlName="id_finca" (change)="cambiarFinca()">
+
+                        <option [ngValue]="null">
+                            Todas las fincas
+                        </option>
+
+                        @for(finca of fincas; track finca.id_finca) {
+                        <option [ngValue]="finca.id_finca">
+                            {{ finca.nombre }}
+                        </option>
+                        }
+
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">
+                        Cultivo
+                    </label>
+
+                    <select class="form-select" formControlName="id_cultivo">
+
+                        <option [ngValue]="null">
+                            Todos los cultivos
+                        </option>
+
+                        @for(cultivo of cultivosFiltrados; track cultivo.id_cultivo) {
+                        <option [ngValue]="cultivo.id_cultivo">
+                            {{ cultivo.nombre }}
+                        </option>
+                        }
+
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">
+                        Fecha inicio
+                    </label>
+
+                    <input type="date" class="form-control" formControlName="fecha_inicio">
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">
+                        Fecha fin
+                    </label>
+
+                    <input type="date" class="form-control" formControlName="fecha_fin">
+                </div>
+
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-success w-100" (click)="consultar()">
+
+                        <i class="bi bi-search me-1"></i>
+                        Consultar
+
+                    </button>
+                </div>
+
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-outline-secondary w-100" (click)="limpiarFiltros()">
+
+                        <i class="bi bi-eraser me-1"></i>
+                        Limpiar
+
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    @if(cargando) {
+
+    <div class="alert alert-info">
+        Cargando reporte financiero...
+    </div>
+
+    }
+
+    @if(error) {
+
+    <div class="alert alert-danger">
+        {{ error }}
+    </div>
+
+    }
+
+    @if(datos) {
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <div class="card reporte-card border-0 shadow-sm">
+                <div class="card-body">
+                    <small class="text-muted">
+                        Total ingresos
+                    </small>
+
+                    <h4 class="fw-bold text-success mb-0">
+                        {{ formatoMoneda(datos.resumen.total_ingresos) }}
+                    </h4>
+
+                    <span class="badge bg-light text-dark border mt-2">
+                        {{ datos.resumen.cantidad_ingresos }} registros
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card reporte-card border-0 shadow-sm">
+                <div class="card-body">
+                    <small class="text-muted">
+                        Total costos
+                    </small>
+
+                    <h4 class="fw-bold text-danger mb-0">
+                        {{ formatoMoneda(datos.resumen.total_costos) }}
+                    </h4>
+
+                    <span class="badge bg-light text-dark border mt-2">
+                        {{ datos.resumen.cantidad_costos }} registros
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card reporte-card border-0 shadow-sm">
+                <div class="card-body">
+                    <small class="text-muted">
+                        Ganancia estimada
+                    </small>
+
+                    <h4 class="fw-bold mb-0" [ngClass]="claseGanancia()">
+
+                        {{ formatoMoneda(datos.resumen.ganancia_estimada) }}
+
+                    </h4>
+
+                    <span class="badge bg-light text-dark border mt-2">
+                        Margen {{ datos.resumen.margen_ganancia || 0 }} %
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card reporte-card border-0 shadow-sm">
+                <div class="card-body">
+                    <small class="text-muted">
+                        Producciones
+                    </small>
+
+                    <h4 class="fw-bold text-primary mb-0">
+                        {{ datos.resumen.cantidad_producciones || 0 }}
+                    </h4>
+
+                    <span class="badge bg-light text-dark border mt-2">
+                        Registros de producción
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-lg-6">
+            <div class="card module-card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-1">
+                        Ingresos por cultivo
+                    </h5>
+
+                    <p class="text-muted mb-3">
+                        Ventas agrupadas por cultivo y finca.
+                    </p>
+
+                    @if(datos.ingresos_por_cultivo.length === 0) {
+
+                    <div class="alert alert-light border mb-0">
+                        No hay ingresos para los filtros seleccionados.
+                    </div>
+
+                    }
+
+                    @for(item of datos.ingresos_por_cultivo; track item.id_cultivo) {
+
+                    <div class="reporte-list-item">
+                        <div>
+                            <strong>
+                                {{ item.cultivo || 'Sin cultivo' }}
+                            </strong>
+
+                            <small class="text-muted d-block">
+                                {{ item.finca || 'Sin finca' }}
+                                ·
+                                {{ item.cantidad_ingresos }} ingresos
+                            </small>
+                        </div>
+
+                        <span class="fw-bold text-success">
+                            {{ formatoMoneda(item.total_ingresos) }}
+                        </span>
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card module-card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-1">
+                        Costos por cultivo
+                    </h5>
+
+                    <p class="text-muted mb-3">
+                        Costos registrados por cultivo y finca.
+                    </p>
+
+                    @if(datos.costos_por_cultivo.length === 0) {
+
+                    <div class="alert alert-light border mb-0">
+                        No hay costos para los filtros seleccionados.
+                    </div>
+
+                    }
+
+                    @for(item of datos.costos_por_cultivo; track item.id_cultivo) {
+
+                    <div class="reporte-list-item">
+                        <div>
+                            <strong>
+                                {{ item.cultivo || 'Sin cultivo' }}
+                            </strong>
+
+                            <small class="text-muted d-block">
+                                {{ item.finca || 'Sin finca' }}
+                                ·
+                                {{ item.cantidad_costos }} costos
+                            </small>
+                        </div>
+
+                        <span class="fw-bold text-danger">
+                            {{ formatoMoneda(item.total_costos) }}
+                        </span>
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-4 mb-4">
+
+        <div class="col-lg-6">
+            <div class="card module-card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-1">
+                        Costos por tipo
+                    </h5>
+
+                    <p class="text-muted mb-3">
+                        Distribución de gastos por categoría.
+                    </p>
+
+                    @if(datos.costos_por_tipo.length === 0) {
+
+                    <div class="alert alert-light border mb-0">
+                        No hay costos registrados.
+                    </div>
+
+                    }
+
+                    @for(item of datos.costos_por_tipo; track item.tipo_costo) {
+
+                    <div class="reporte-list-item">
+                        <div>
+                            <strong>
+                                {{ item.tipo_costo }}
+                            </strong>
+
+                            <small class="text-muted d-block">
+                                {{ item.cantidad_costos }} registros
+                            </small>
+                        </div>
+
+                        <span class="fw-bold text-danger">
+                            {{ formatoMoneda(item.total_costos) }}
+                        </span>
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card module-card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-1">
+                        Producción por cultivo
+                    </h5>
+
+                    <p class="text-muted mb-3">
+                        Cantidad producida agrupada por cultivo.
+                    </p>
+
+                    @if(datos.produccion_por_cultivo.length === 0) {
+
+                    <div class="alert alert-light border mb-0">
+                        No hay producción registrada.
+                    </div>
+
+                    }
+
+                    @for(item of datos.produccion_por_cultivo; track item.id_cultivo) {
+
+                    <div class="reporte-list-item">
+                        <div>
+                            <strong>
+                                {{ item.cultivo || 'Sin cultivo' }}
+                            </strong>
+
+                            <small class="text-muted d-block">
+                                {{ item.finca || 'Sin finca' }}
+                                ·
+                                {{ item.cantidad_registros }} registros
+                            </small>
+                        </div>
+
+                        <span class="fw-bold text-primary">
+                            {{ formatoNumero(item.total_producido) }} {{ item.unidad_medida }}
+                        </span>
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-lg-4">
+            <div class="card module-card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-1">
+                        Últimos ingresos
+                    </h5>
+
+                    <p class="text-muted mb-3">
+                        Ventas recientes.
+                    </p>
+
+                    @if(datos.ultimos_ingresos.length === 0) {
+
+                    <div class="alert alert-light border mb-0">
+                        No hay ingresos recientes.
+                    </div>
+
+                    }
+
+                    @for(item of datos.ultimos_ingresos; track item.id_ingreso) {
+
+                    <div class="reporte-list-item">
+                        <div>
+                            <strong>
+                                {{ item.descripcion }}
+                            </strong>
+
+                            <small class="text-muted d-block">
+                                {{ item.fecha }}
+                                ·
+                                {{ item.cultivo?.nombre || 'Sin cultivo' }}
+
+                                @if(esAdministrador()) {
+                                ·
+                                {{ item.usuario?.nombre }} {{ item.usuario?.apellidos }}
+                                }
+                            </small>
+                        </div>
+
+                        <span class="fw-bold text-success">
+                            {{ formatoMoneda(item.monto_total) }}
+                        </span>
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card module-card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-1">
+                        Últimos costos
+                    </h5>
+
+                    <p class="text-muted mb-3">
+                        Costos recientes.
+                    </p>
+
+                    @if(datos.ultimos_costos.length === 0) {
+
+                    <div class="alert alert-light border mb-0">
+                        No hay costos recientes.
+                    </div>
+
+                    }
+
+                    @for(item of datos.ultimos_costos; track item.id_costo) {
+
+                    <div class="reporte-list-item">
+                        <div>
+                            <strong>
+                                {{ item.descripcion }}
+                            </strong>
+
+                            <small class="text-muted d-block">
+                                {{ item.fecha }}
+                                ·
+                                {{ item.tipo_costo }}
+
+                                @if(esAdministrador()) {
+                                ·
+                                {{ item.usuario?.nombre }} {{ item.usuario?.apellidos }}
+                                }
+                            </small>
+                        </div>
+
+                        <span class="fw-bold text-danger">
+                            {{ formatoMoneda(item.monto) }}
+                        </span>
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card module-card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-1">
+                        Últimas producciones
+                    </h5>
+
+                    <p class="text-muted mb-3">
+                        Producción reciente.
+                    </p>
+
+                    @if(datos.ultimas_producciones.length === 0) {
+
+                    <div class="alert alert-light border mb-0">
+                        No hay producción reciente.
+                    </div>
+
+                    }
+
+                    @for(item of datos.ultimas_producciones; track item.id_produccion) {
+
+                    <div class="reporte-list-item">
+                        <div>
+                            <strong>
+                                {{ item.cultivo?.nombre || 'Producción agrícola' }}
+                            </strong>
+
+                            <small class="text-muted d-block">
+                                {{ item.fecha }}
+                                ·
+                                {{ item.finca?.nombre || 'Sin finca' }}
+
+                                @if(esAdministrador()) {
+                                ·
+                                {{ item.usuario?.nombre }} {{ item.usuario?.apellidos }}
+                                }
+                            </small>
+                        </div>
+
+                        <span class="fw-bold text-primary">
+                            {{ item.cantidad }} {{ item.unidad_medida }}
+                        </span>
+                    </div>
+
+                    }
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    }
+
+</div>

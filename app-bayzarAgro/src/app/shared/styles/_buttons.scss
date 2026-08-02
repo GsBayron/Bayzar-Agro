@@ -1,0 +1,130 @@
+@use './variables' as *;
+
+.btn.btn-agro,
+.btn-agro {
+    --bs-btn-color: #ffffff;
+    --bs-btn-bg: #{$agro-primary};
+    --bs-btn-border-color: #{$agro-primary};
+
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: #{$agro-primary-dark};
+    --bs-btn-hover-border-color: #{$agro-primary-dark};
+
+    --bs-btn-active-color: #ffffff;
+    --bs-btn-active-bg: #{$agro-primary-dark};
+    --bs-btn-active-border-color: #{$agro-primary-dark};
+
+    --bs-btn-disabled-color: #ffffff;
+    --bs-btn-disabled-bg: #{$agro-primary};
+    --bs-btn-disabled-border-color: #{$agro-primary};
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    border-radius: $radius-sm;
+    font-weight: 600;
+    box-shadow: $shadow-sm;
+    transition: all $transition-fast;
+}
+
+.btn.btn-agro:hover,
+.btn-agro:hover {
+    transform: translateY(-1px);
+    box-shadow: $shadow-md;
+}
+
+.btn.btn-agro-secondary,
+.btn-agro-secondary {
+    --bs-btn-color: #{$agro-gray-700};
+    --bs-btn-bg: #ffffff;
+    --bs-btn-border-color: #{$agro-gray-300};
+
+    --bs-btn-hover-color: #{$agro-gray-900};
+    --bs-btn-hover-bg: #{$agro-gray-100};
+    --bs-btn-hover-border-color: #{$agro-gray-400};
+
+    --bs-btn-active-color: #{$agro-gray-900};
+    --bs-btn-active-bg: #{$agro-gray-200};
+    --bs-btn-active-border-color: #{$agro-gray-400};
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    border-radius: $radius-sm;
+    font-weight: 600;
+    transition: all $transition-fast;
+}
+
+.btn.btn-agro-danger,
+.btn-agro-danger {
+    --bs-btn-color: #ffffff;
+    --bs-btn-bg: #{$agro-red};
+    --bs-btn-border-color: #{$agro-red};
+
+    --bs-btn-hover-color: #ffffff;
+    --bs-btn-hover-bg: #991b1b;
+    --bs-btn-hover-border-color: #991b1b;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    border-radius: $radius-sm;
+    font-weight: 600;
+}
+
+.btn:disabled,
+.btn.disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.btn-action {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all $transition-fast;
+}
+
+.btn-action:hover {
+    transform: translateY(-1px);
+}
+
+.btn-action.view {
+    background-color: $agro-gray-100;
+    color: $agro-gray-700;
+}
+
+.btn-action.view:hover {
+    background-color: $agro-gray-200;
+    color: $agro-gray-900;
+}
+
+.btn-action.edit {
+    background-color: $agro-blue-soft;
+    color: $agro-blue;
+}
+
+.btn-action.edit:hover {
+    background-color: #bfdbfe;
+    color: #1e40af;
+}
+
+.btn-action.delete {
+    background-color: $agro-red-soft;
+    color: $agro-red;
+}
+
+.btn-action.delete:hover {
+    background-color: #fecaca;
+    color: #991b1b;
+}

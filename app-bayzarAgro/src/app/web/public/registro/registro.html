@@ -1,0 +1,502 @@
+<div class="registro-page">
+
+    <header class="registro-navbar">
+
+        <div class="navbar-container">
+
+            <a class="brand" routerLink="/" aria-label="Ir al inicio de BayzarAgro">
+
+                <span class="brand-logo-wrapper">
+                    <img src="/Logo4.png" alt="Logo de BayzarAgro" class="brand-logo">
+                </span>
+
+                <span class="brand-copy">
+                    <strong>BayzarAgro</strong>
+                    <small>Gestión agrícola digital</small>
+                </span>
+
+            </a>
+
+            <div class="navbar-access">
+                <span>¿Ya tiene una cuenta?</span>
+
+                <a routerLink="/login" class="login-link">
+                    Iniciar sesión
+                    <i class="bi bi-arrow-up-right"></i>
+                </a>
+            </div>
+
+        </div>
+
+    </header>
+
+    <main class="registro-main">
+
+        <div class="registro-shell">
+
+            <aside class="registro-info">
+
+                <div class="info-content">
+
+                    <div class="registro-badge">
+                        <span></span>
+                        Cree su cuenta agrícola
+                    </div>
+
+                    <h1>
+                        Tome mejores decisiones para su finca desde el primer día
+                    </h1>
+
+                    <p class="info-description">
+                        Registre su cuenta, seleccione el plan que mejor se adapta
+                        a su operación y centralice la gestión de fincas, cultivos,
+                        actividades, inventario, costos y producción.
+                    </p>
+
+                    <div class="info-list">
+
+                        <div class="info-item">
+                            <span class="info-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+
+                            <div>
+                                <strong>Registro simple</strong>
+                                <small>Configure su cuenta en pocos minutos.</small>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <span class="info-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+
+                            <div>
+                                <strong>Plan gratuito disponible</strong>
+                                <small>Empiece sin compromisos ni cobros iniciales.</small>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <span class="info-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+
+                            <div>
+                                <strong>Información centralizada</strong>
+                                <small>Administre toda su operación desde un solo lugar.</small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="info-summary">
+
+                    <div class="summary-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+
+                    <div>
+                        <strong>Sus datos, siempre protegidos</strong>
+                        <span>
+                            BayzarAgro utiliza controles de acceso para mantener
+                            segura la información de su finca.
+                        </span>
+                    </div>
+
+                </div>
+
+                <span class="info-decoration info-decoration-one"></span>
+                <span class="info-decoration info-decoration-two"></span>
+
+            </aside>
+
+            <section class="registro-card" aria-labelledby="registro-title">
+
+                <div class="form-heading">
+
+                    <span class="form-step">Paso 1 de 2</span>
+
+                    <h2 id="registro-title">
+                        Crear cuenta
+                    </h2>
+
+                    <p>
+                        Complete sus datos personales y seleccione el plan para
+                        comenzar a utilizar BayzarAgro.
+                    </p>
+
+                </div>
+
+                @if(error) {
+
+                <div class="status-message status-message-error" role="alert">
+                    <i class="bi bi-exclamation-circle"></i>
+                    <span>{{ error }}</span>
+                </div>
+
+                }
+
+                <form class="registro-form" [formGroup]="form" (ngSubmit)="registrar()">
+
+                    <section class="form-section" aria-labelledby="datos-personales-title">
+
+                        <div class="form-section-heading">
+                            <span class="section-number">01</span>
+
+                            <div>
+                                <h3 id="datos-personales-title">Datos personales</h3>
+                                <p>Información básica para identificar su cuenta.</p>
+                            </div>
+                        </div>
+
+                        <div class="fields-grid">
+
+                            <div class="form-field">
+                                <label for="registro-nombre">
+                                    Nombre
+                                    <span>*</span>
+                                </label>
+
+                                <input id="registro-nombre" type="text" formControlName="nombre"
+                                    placeholder="Ingrese su nombre" autocomplete="given-name"
+                                    [class.is-invalid]="f['nombre'].touched && f['nombre'].invalid">
+
+                                @if(f['nombre'].touched && f['nombre'].invalid) {
+                                <small class="field-error">
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    El nombre es requerido.
+                                </small>
+                                }
+                            </div>
+
+                            <div class="form-field">
+                                <label for="registro-apellidos">
+                                    Apellidos
+                                </label>
+
+                                <input id="registro-apellidos" type="text" formControlName="apellidos"
+                                    placeholder="Ingrese sus apellidos" autocomplete="family-name">
+                            </div>
+
+                            <div class="form-field">
+                                <label for="registro-correo">
+                                    Correo electrónico
+                                    <span>*</span>
+                                </label>
+
+                                <input id="registro-correo" type="email" formControlName="correo"
+                                    placeholder="correo@ejemplo.com" autocomplete="email"
+                                    [class.is-invalid]="f['correo'].touched && f['correo'].invalid">
+
+                                @if(f['correo'].touched && f['correo'].invalid) {
+                                <small class="field-error">
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    Ingrese un correo válido.
+                                </small>
+                                }
+                            </div>
+
+                            <div class="form-field">
+                                <label for="registro-telefono">
+                                    Teléfono
+                                </label>
+
+                                <input id="registro-telefono" type="tel" formControlName="telefono"
+                                    placeholder="Ejemplo: 8888 8888" autocomplete="tel" inputmode="tel">
+                            </div>
+
+                            <div class="form-field">
+                                <label for="registro-contrasena">
+                                    Contraseña
+                                    <span>*</span>
+                                </label>
+
+                                <input id="registro-contrasena" type="password" formControlName="secreto"
+                                    placeholder="Mínimo 6 caracteres" autocomplete="new-password"
+                                    [class.is-invalid]="f['secreto'].touched && f['secreto'].invalid">
+
+                                @if(f['secreto'].touched && f['secreto'].invalid) {
+                                <small class="field-error">
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    La contraseña debe tener al menos 6 caracteres.
+                                </small>
+                                }
+                            </div>
+
+                            <div class="form-field">
+                                <label for="registro-confirmar-contrasena">
+                                    Confirmar contraseña
+                                    <span>*</span>
+                                </label>
+
+                                <input id="registro-confirmar-contrasena" type="password"
+                                    formControlName="confirmar_secreto" placeholder="Repita su contraseña"
+                                    autocomplete="new-password"
+                                    [class.is-invalid]="f['confirmar_secreto'].touched && f['confirmar_secreto'].invalid">
+
+                                @if(f['confirmar_secreto'].touched && f['confirmar_secreto'].invalid) {
+                                <small class="field-error">
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    Confirme la contraseña.
+                                </small>
+                                }
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                    <section class="form-section plans-section" aria-labelledby="planes-title">
+
+                        <div class="form-section-heading">
+                            <span class="section-number">02</span>
+
+                            <div>
+                                <h3 id="planes-title">Seleccione un plan</h3>
+                                <p>Puede cambiar de plan cuando lo necesite.</p>
+                            </div>
+                        </div>
+
+                        @if(cargandoPlanes && planes.length === 0) {
+
+                        <div class="status-message status-message-info" role="status">
+                            <span class="loading-spinner"></span>
+                            <span>Cargando planes disponibles...</span>
+                        </div>
+
+                        }
+
+                        <div class="planes-grid">
+
+                            @for(plan of planes; track plan.id_plan) {
+
+                            <button type="button" class="plan-option" [class.active]="planSeleccionado(plan.codigo)"
+                                [class.recommended]="plan.destacado === 1"
+                                [attr.aria-pressed]="planSeleccionado(plan.codigo)"
+                                (click)="seleccionarPlan(plan.codigo)">
+
+                                <div class="plan-option-top">
+
+                                    <span class="plan-radio" aria-hidden="true">
+                                        @if(planSeleccionado(plan.codigo)) {
+                                        <i class="bi bi-check-lg"></i>
+                                        }
+                                    </span>
+
+                                    @if(plan.destacado === 1) {
+                                    <span class="plan-badge">
+                                        Recomendado
+                                    </span>
+                                    }
+
+                                </div>
+
+                                <div class="plan-title">
+                                    {{ plan.nombre }}
+                                </div>
+
+                                <div class="plan-price">
+                                    {{ formatoPrecio(plan.precio_mensual) }}
+
+                                    @if(tienePrecio(plan.precio_mensual)) {
+                                    <small>/ mes</small>
+                                    }
+                                </div>
+
+                                <p>
+                                    {{ plan.descripcion }}
+                                </p>
+
+                                <ul>
+                                    @for(item of beneficiosPlan(plan.codigo); track item) {
+                                    <li>
+                                        <i class="bi bi-check2"></i>
+                                        <span>{{ item }}</span>
+                                    </li>
+                                    }
+                                </ul>
+
+                                <span class="plan-select-label">
+                                    @if(planSeleccionado(plan.codigo)) {
+                                    Plan seleccionado
+                                    } @else {
+                                    Seleccionar plan
+                                    }
+                                </span>
+
+                            </button>
+
+                            }
+
+                        </div>
+
+                    </section>
+
+                    @if(esPlanPago()) {
+
+                    <section class="payment-simulation" aria-labelledby="pago-title">
+
+                        <div class="payment-header">
+
+                            <div class="payment-heading">
+                                <span class="payment-label">
+                                    <i class="bi bi-credit-card-2-front"></i>
+                                    Pago simulado
+                                </span>
+
+                                <h3 id="pago-title">
+                                    Información de pago
+                                </h3>
+
+                                <p>
+                                    Esta sección es únicamente demostrativa.
+                                    No se realizará ningún cobro real.
+                                </p>
+                            </div>
+
+                            <div class="payment-amount">
+                                <small>Plan seleccionado</small>
+                                <strong>{{ nombrePlanSeleccionado() }}</strong>
+                                <span>{{ precioPlanSeleccionado() }} / mes</span>
+                            </div>
+
+                        </div>
+
+                        <div class="payment-methods" role="radiogroup" aria-label="Método de pago">
+
+                            <label class="payment-method active">
+                                <input type="radio" name="metodo_pago" value="tarjeta" checked>
+
+                                <span class="payment-method-icon">
+                                    <i class="bi bi-credit-card"></i>
+                                </span>
+
+                                <span>
+                                    <strong>Tarjeta</strong>
+                                    <small>Crédito o débito</small>
+                                </span>
+                            </label>
+
+                            <label class="payment-method">
+                                <input type="radio" name="metodo_pago" value="sinpe">
+
+                                <span class="payment-method-icon">
+                                    <i class="bi bi-phone"></i>
+                                </span>
+
+                                <span>
+                                    <strong>SINPE Móvil</strong>
+                                    <small>Pago desde su teléfono</small>
+                                </span>
+                            </label>
+
+                        </div>
+
+                        <div class="fields-grid payment-fields">
+
+                            <div class="form-field field-full">
+                                <label for="nombre-tarjeta">
+                                    Nombre en la tarjeta
+                                </label>
+
+                                <input id="nombre-tarjeta" type="text" placeholder="Ejemplo: Bayron González"
+                                    autocomplete="cc-name">
+                            </div>
+
+                            <div class="form-field field-full">
+                                <label for="numero-tarjeta">
+                                    Número de tarjeta
+                                </label>
+
+                                <div class="input-with-icon">
+                                    <i class="bi bi-credit-card"></i>
+
+                                    <input id="numero-tarjeta" type="text" placeholder="0000 0000 0000 0000"
+                                        maxlength="19" inputmode="numeric" autocomplete="cc-number">
+                                </div>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="vencimiento-tarjeta">
+                                    Fecha de vencimiento
+                                </label>
+
+                                <input id="vencimiento-tarjeta" type="text" placeholder="MM/AA" maxlength="5"
+                                    inputmode="numeric" autocomplete="cc-exp">
+                            </div>
+
+                            <div class="form-field">
+                                <label for="cvv-tarjeta">
+                                    CVV
+                                </label>
+
+                                <input id="cvv-tarjeta" type="password" placeholder="•••" maxlength="4"
+                                    inputmode="numeric" autocomplete="cc-csc">
+                            </div>
+
+                        </div>
+
+                        <div class="payment-note">
+                            <i class="bi bi-info-circle"></i>
+
+                            <span>
+                                En producción, este formulario podrá conectarse
+                                con una pasarela como Stripe, una entidad bancaria
+                                o un servicio compatible con SINPE Móvil.
+                            </span>
+                        </div>
+
+                    </section>
+
+                    }
+
+                    <div class="form-actions">
+
+                        <button type="submit" class="submit-button" [disabled]="guardando">
+
+                            @if(guardando) {
+                            <span class="button-spinner"></span>
+                            Creando cuenta...
+                            } @else {
+                            @if(esPlanPago()) {
+                            Crear cuenta y simular pago
+                            } @else {
+                            Crear cuenta gratis
+                            }
+
+                            <i class="bi bi-arrow-right"></i>
+                            }
+
+                        </button>
+
+                        <p class="login-mobile">
+                            ¿Ya tiene una cuenta?
+                            <a routerLink="/login">Inicie sesión aquí</a>
+                        </p>
+
+                        <small class="text-muted">
+                            Al crear una cuenta, acepta los
+                            <a routerLink="/terminos-condiciones">
+                                términos y condiciones
+                            </a>
+                            y la
+                            <a routerLink="/politicas-privacidad">
+                                política de privacidad
+                            </a>
+                            de BayzarAgro.
+                        </small>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>

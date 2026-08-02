@@ -1,0 +1,235 @@
+﻿<div class="module-page">
+<div class="module-header mb-4">
+
+    <div>
+        <div class="header-badge mb-2"><i class="bi bi-box-seam"></i>Modulo de inventario</div>
+<h3 class="fw-bold mb-1">
+            Inventario
+        </h3>
+
+        <p class="text-muted mb-0">
+            Administración de productos agricolas.
+        </p>
+    </div>
+
+    <a class="btn btn-success" routerLink="/app/inventario/guardar">
+
+        <i class="bi bi-plus-circle me-1"></i>Nuevo producto
+
+    </a>
+
+</div>
+
+<div class="card module-card border-0 shadow-sm">
+
+    <div class="card-body p-4">
+
+        <div class="filters-panel mb-4"><div class="search-box"><i class="bi bi-search"></i>
+
+                <input type="text" class="form-control" placeholder="Buscar producto..." (keyup)="filtrar($event)"></div></div><div class="table-responsive module-table-wrapper">
+
+            <table mat-table [dataSource]="datos" matSort class="table table-hover align-middle mb-0 module-table">
+
+                <!-- ID -->
+                <ng-container matColumnDef="id_inventario">
+
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        ID
+                    </th>
+
+                    <td mat-cell *matCellDef="let item">
+                        {{ item.id_inventario }}
+                    </td>
+
+                </ng-container>
+
+                <!-- PRODUCTO -->
+                <ng-container matColumnDef="producto">
+
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Producto
+                    </th>
+
+                    <td mat-cell *matCellDef="let item">
+
+                        @if(item.plaguicida) {
+
+                        {{ item.plaguicida.nombre_comercial }}
+
+                        } @else if(item.fertilizante) {
+
+                        {{ item.fertilizante.nombre_comercial }}
+
+                        } @else {
+
+                        {{ item.nombre_manual || '-' }}
+
+                        }
+
+                    </td>
+
+                </ng-container>
+
+                <!-- TIPO -->
+                <ng-container matColumnDef="tipo_producto">
+
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Tipo
+                    </th>
+
+                    <td mat-cell *matCellDef="let item">
+                        {{ item.tipo_producto }}
+                    </td>
+
+                </ng-container>
+
+                <!-- FINCA -->
+                <ng-container matColumnDef="finca">
+
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Finca
+                    </th>
+
+                    <td mat-cell *matCellDef="let item">
+                        {{ item.finca?.nombre || '-' }}
+                    </td>
+
+                </ng-container>
+
+                <!-- CANTIDAD -->
+                <ng-container matColumnDef="cantidad">
+
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Cantidad
+                    </th>
+
+                    <td mat-cell *matCellDef="let item">
+                        {{ item.cantidad }}
+                        {{ item.unidad_medida }}
+                    </td>
+
+                </ng-container>
+
+                <!-- FECHA VENCIMIENTO -->
+                <ng-container matColumnDef="fecha_vencimiento">
+
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Vencimiento
+                    </th>
+
+                    <td mat-cell *matCellDef="let item">
+                        {{ item.fecha_vencimiento || '-' }}
+
+                                    @if(
+                                    obtenerEstadoVencimiento(
+                                    item.fecha_vencimiento
+                                    ) === 'VENCIDO'
+                                    ) {
+
+                                    <span class="badge bg-danger ms-2">
+                                        Vencido
+                                    </span>
+
+                                    }
+
+                                    @if(
+                                    obtenerEstadoVencimiento(
+                                    item.fecha_vencimiento
+                                    ) === 'POR_VENCER'
+                                    ) {
+
+                                    <span class="badge bg-warning text-dark ms-2">
+                                        Vence pronto
+                                    </span>
+
+                                    }
+
+                                    @if(
+                                    obtenerEstadoVencimiento(
+                                    item.fecha_vencimiento
+                                    ) === 'VIGENTE'
+                                    ) {
+
+                                    <span class="badge bg-success ms-2">
+                                        Vigente
+                                    </span>
+
+                                    }
+                    </td>
+
+                </ng-container>
+
+                <!-- ESTADO -->
+                <ng-container matColumnDef="estado">
+
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Estado
+                    </th>
+
+                    <td mat-cell *matCellDef="let item">
+
+                        @if(item.estado === 1) {
+
+                        <span class="badge bg-success">
+                            Activo
+                        </span>
+
+                        } @else {
+
+                        <span class="badge bg-secondary">
+                            Inactivo
+                        </span>
+
+                        }
+
+                    </td>
+
+                </ng-container>
+
+                <!-- ACCIONES -->
+                <ng-container matColumnDef="acciones">
+
+                    <th mat-header-cell *matHeaderCellDef class="text-center">
+
+                        Acciones
+
+                    </th>
+
+                    <td mat-cell *matCellDef="let item" class="text-center">
+
+                        <div class="acciones-cell">
+
+                            <a class="btn-action edit" title="Editar registro" [routerLink]="[
+                                    '/app/inventario/actualizar',
+                                    item.id_inventario
+                                ]">
+
+                                <i class="bi bi-pencil-square"></i>
+
+                            </a>
+
+                            <button type="button" class="btn-action delete" title="Eliminar registro"
+                                (click)="eliminar(item.id_inventario!)">
+
+                                <i class="bi bi-trash"></i>
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+
+                <tr mat-row *matRowDef="let row; columns: columnas;" class="module-row">
+                </tr>
+
+            </table>
+
+        </div>
+
+        <div class="paginator-wrapper mt-3"><mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons>
+        </mat-paginator></div>
+</div></div></div>

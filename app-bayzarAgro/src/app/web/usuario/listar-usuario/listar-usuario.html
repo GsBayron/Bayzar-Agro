@@ -1,0 +1,117 @@
+<div class="usuarios-page">
+    <div class="usuarios-header mb-4">
+        <div>
+            <div class="header-badge mb-2"><i class="bi bi-people"></i>Módulo de usuarios</div>
+            <h3 class="fw-bold mb-1">Usuarios</h3>
+            <p class="text-muted mb-0">Administración de usuarios, accesos y permisos del sistema.</p>
+        </div>
+        <a class="btn btn-success" routerLink="/app/usuarios/guardar">
+            <i class="bi bi-person-plus me-1"></i>Nuevo usuario
+        </a>
+    </div>
+
+    <div class="card usuarios-card border-0 shadow-sm">
+        <div class="card-body p-4">
+            <div class="table-toolbar mb-4">
+                <div>
+                    <h5 class="fw-bold mb-1">Listado de usuarios</h5>
+                    <small class="text-muted">Consulte, filtre y administre los usuarios registrados.</small>
+                </div>
+            </div>
+
+            <div class="filters-panel mb-4">
+                <div class="search-box">
+                    <i class="bi bi-search"></i>
+                    <input type="text" class="form-control" placeholder="Buscar por nombre, correo, acceso o rol..."
+                        (keyup)="filtrar($event)">
+                </div>
+            </div>
+
+            <div class="table-responsive usuarios-table-wrapper">
+                <table mat-table [dataSource]="datos" matSort class="table table-hover align-middle mb-0 usuarios-table">
+                    <ng-container matColumnDef="id_usuario">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+                        <td mat-cell *matCellDef="let usuario"><span class="id-pill">#{{ usuario.id_usuario }}</span></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nombre">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+                        <td mat-cell *matCellDef="let usuario">
+                            <div class="usuario-cell">
+                                <div class="usuario-icon"><i class="bi bi-person"></i></div>
+                                <div>
+                                    <span class="fw-semibold">{{ usuario.nombre }} {{ usuario.apellidos }}</span>
+                                    <small class="text-muted d-block">Usuario del sistema</small>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="correo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Correo</th>
+                        <td mat-cell *matCellDef="let usuario">
+                            <div class="info-cell"><i class="bi bi-envelope"></i><span>{{ usuario.correo }}</span></div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="acceso">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Acceso</th>
+                        <td mat-cell *matCellDef="let usuario">
+                            <div class="info-cell"><i class="bi bi-person-badge"></i><span>{{ usuario.acceso }}</span></div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="rol">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Rol</th>
+                        <td mat-cell *matCellDef="let usuario"><span class="rol-pill">{{ usuario.rol }}</span></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="estado">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+                        <td mat-cell *matCellDef="let usuario">
+                            @if(usuario.estado) {
+                            <span class="registro-pill activo"><i class="bi bi-check-circle"></i>Activo</span>
+                            } @else {
+                            <span class="registro-pill inactivo"><i class="bi bi-x-circle"></i>Inactivo</span>
+                            }
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef class="text-center">Acciones</th>
+                        <td mat-cell *matCellDef="let usuario" class="text-center">
+                            <div class="acciones-cell">
+                                <a class="btn-action edit" title="Editar usuario"
+                                    [routerLink]="['/app/usuarios/actualizar', usuario.id_usuario]">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <button type="button" class="btn-action delete" title="Eliminar usuario"
+                                    (click)="eliminar(usuario.id_usuario!)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnas;" class="usuario-row"></tr>
+                </table>
+            </div>
+
+            @if(datos.filteredData.length === 0) {
+            <div class="empty-state">
+                <div class="empty-icon"><i class="bi bi-person-x"></i></div>
+                <h5 class="fw-bold mb-1">No hay usuarios para mostrar</h5>
+                <p class="text-muted mb-3">No se encontraron registros con el filtro ingresado.</p>
+                <a class="btn btn-success btn-sm" routerLink="/app/usuarios/guardar">
+                    <i class="bi bi-person-plus me-1"></i>Registrar usuario
+                </a>
+            </div>
+            }
+
+            <div class="paginator-wrapper mt-3">
+                <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

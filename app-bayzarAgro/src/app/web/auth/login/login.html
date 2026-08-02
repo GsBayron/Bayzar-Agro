@@ -1,0 +1,239 @@
+<div class="login-page">
+
+    <header class="login-navbar">
+
+        <div class="navbar-container">
+
+            <a
+                class="brand"
+                routerLink="/"
+                aria-label="Ir al inicio de BayzarAgro">
+
+                <span class="brand-logo-wrapper">
+                    <img
+                        src="/Logo4.png"
+                        alt="Logo de BayzarAgro"
+                        class="brand-logo">
+                </span>
+
+                <span class="brand-copy">
+                    <strong>BayzarAgro</strong>
+                    <small>Gestión agrícola digital</small>
+                </span>
+
+            </a>
+
+            <div class="navbar-access">
+                <span>¿Todavía no tiene una cuenta?</span>
+
+                <a
+                    routerLink="/registro"
+                    [queryParams]="{ plan: 'gratuito' }"
+                    class="register-link">
+                    Crear cuenta gratis
+                    <i class="bi bi-arrow-up-right"></i>
+                </a>
+            </div>
+
+        </div>
+
+    </header>
+
+    <main class="login-main">
+
+        <div class="login-shell">
+
+            <aside class="login-info">
+
+                <div class="info-content">
+
+                    <div class="info-badge">
+                        <span></span>
+                        Acceso a BayzarAgro
+                    </div>
+
+                    <h1>
+                        Toda la gestión de su finca en un solo lugar
+                    </h1>
+
+                    <p class="info-description">
+                        Ingrese a su cuenta para consultar fincas, cultivos,
+                        actividades, inventario, plagas y reportes desde una
+                        plataforma clara y segura.
+                    </p>
+
+                    <div class="info-list">
+
+                        <div class="info-item">
+                            <span class="info-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+
+                            <div>
+                                <strong>Control agrícola centralizado</strong>
+                                <small>Organice la información de su operación.</small>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <span class="info-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+
+                            <div>
+                                <strong>Seguimiento oportuno</strong>
+                                <small>Revise actividades, inventario y cultivos.</small>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <span class="info-icon">
+                                <i class="bi bi-check-lg"></i>
+                            </span>
+
+                            <div>
+                                <strong>Información protegida</strong>
+                                <small>Acceso seguro según su usuario y rol.</small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="info-summary">
+                    <span class="summary-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </span>
+
+                    <div>
+                        <strong>Acceso seguro</strong>
+                        <span>
+                            Sus datos se mantienen protegidos dentro del sistema.
+                        </span>
+                    </div>
+                </div>
+
+                <span class="info-decoration info-decoration-one"></span>
+                <span class="info-decoration info-decoration-two"></span>
+
+            </aside>
+
+            <section class="login-card" aria-labelledby="login-title">
+
+                <div class="form-heading">
+
+                    <a routerLink="/" class="back-link">
+                        <i class="bi bi-arrow-left"></i>
+                        Volver al inicio
+                    </a>
+
+                    <span class="form-step">Acceso al sistema</span>
+
+                    <h2 id="login-title">
+                        Iniciar sesión
+                    </h2>
+
+                    <p>
+                        Ingrese sus credenciales para continuar al panel de
+                        control agrícola de BayzarAgro.
+                    </p>
+
+                </div>
+
+                @if(mensajeSesion) {
+
+                    <div class="status-message status-message-warning" role="alert">
+                        <i class="bi bi-exclamation-circle"></i>
+                        <span>{{ mensajeSesion }}</span>
+                    </div>
+
+                }
+
+                <form
+                    class="login-form"
+                    [formGroup]="formulario"
+                    (ngSubmit)="ingresar()">
+
+                    <div class="form-field">
+                        <label for="login-usuario">
+                            Usuario
+                        </label>
+
+                        <div class="input-with-icon">
+                            <i class="bi bi-person"></i>
+
+                            <input
+                                id="login-usuario"
+                                type="text"
+                                formControlName="acceso"
+                                placeholder="Ingrese su usuario"
+                                autocomplete="username">
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="login-contrasena">
+                            Contraseña
+                        </label>
+
+                        <div class="input-with-icon">
+                            <i class="bi bi-lock"></i>
+
+                            <input
+                                id="login-contrasena"
+                                type="password"
+                                formControlName="secreto"
+                                placeholder="Ingrese su contraseña"
+                                autocomplete="current-password">
+                        </div>
+                    </div>
+
+                    @if(error()) {
+
+                        <div class="status-message status-message-error" role="alert">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <span>{{ error() }}</span>
+                        </div>
+
+                    }
+
+                    <button
+                        type="submit"
+                        class="login-button"
+                        [disabled]="cargando()">
+
+                        @if(cargando()) {
+                            <span class="button-spinner" aria-hidden="true"></span>
+                            Ingresando...
+                        } @else {
+                            Ingresar
+                            <i class="bi bi-arrow-right"></i>
+                        }
+
+                    </button>
+
+                    <div class="account-access">
+                        <span>¿Todavía no tiene una cuenta?</span>
+
+                        <a
+                            routerLink="/registro"
+                            [queryParams]="{ plan: 'gratuito' }">
+                            Crear cuenta gratis
+                        </a>
+                    </div>
+
+                </form>
+
+                <div class="security-note">
+                    <i class="bi bi-lock"></i>
+                    <span>Conexión segura para acceder a su información agrícola.</span>
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>

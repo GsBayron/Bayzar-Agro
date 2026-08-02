@@ -1,0 +1,369 @@
+<div class="module-page">
+
+    <div class="module-header mb-4">
+
+        <div>
+            <div class="header-badge mb-2">
+                <i class="bi bi-calendar2-check"></i>
+                Gestión de actividades
+            </div>
+
+            <h3 class="fw-bold mb-1">
+                Actualizar actividad agrícola
+            </h3>
+
+            <p class="text-muted mb-0">
+                Planifique, controle y registre las labores realizadas en sus cultivos.
+            </p>
+        </div>
+
+        <button type="button" class="btn btn-agro-secondary btn-sm" routerLink="/app/actividades">
+            <i class="bi bi-arrow-left me-1"></i>
+            Volver
+        </button>
+
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="actualizar()">
+
+        <div class="row g-4">
+
+            <div class="col-lg-8">
+
+                <div class="card form-card border-0 shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="section-title mb-4">
+                            <div class="section-icon">
+                                <i class="bi bi-info-circle"></i>
+                            </div>
+
+                            <div>
+                                <h5 class="mb-0 fw-bold">Información principal</h5>
+                                <small class="text-muted">Datos básicos de la actividad agrícola.</small>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Cultivo</label>
+
+                                <select class="form-select" formControlName="id_cultivo"
+                                    [class.is-invalid]="f['id_cultivo'].touched && f['id_cultivo'].invalid">
+
+                                    <option [ngValue]="null">Seleccione un cultivo</option>
+
+                                    @for(cultivo of cultivos; track cultivo.id_cultivo) {
+                                    <option [ngValue]="cultivo.id_cultivo">
+                                        {{ cultivo.nombre }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                                @if(f['id_cultivo'].touched && f['id_cultivo'].invalid) {
+                                <small class="form-error">
+                                    El cultivo es requerido.
+                                </small>
+                                }
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Tipo de actividad</label>
+
+                                <select class="form-select" formControlName="tipo_actividad"
+                                    (change)="cambiarTipoActividad()"
+                                    [class.is-invalid]="f['tipo_actividad'].touched && f['tipo_actividad'].invalid">
+
+                                    <option value="">Seleccione una actividad</option>
+
+                                    @for(tipo of tiposActividad; track tipo) {
+                                    <option [value]="tipo">
+                                        {{ tipo }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                                @if(f['tipo_actividad'].touched && f['tipo_actividad'].invalid) {
+                                <small class="form-error">
+                                    El tipo de actividad es requerido.
+                                </small>
+                                }
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha programada</label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-calendar-event"></i>
+
+                                    <input type="date" class="form-control" formControlName="fecha_programada"
+                                        [class.is-invalid]="f['fecha_programada'].touched && f['fecha_programada'].invalid">
+                                </div>
+
+                                @if(f['fecha_programada'].touched && f['fecha_programada'].invalid) {
+                                <small class="form-error">
+                                    La fecha programada es requerida.
+                                </small>
+                                }
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Estado de actividad</label>
+
+                                <select class="form-select" formControlName="estado_actividad"
+                                    (change)="cambiarEstadoActividad()">
+
+                                    @for(estado of estadosActividad; track estado) {
+                                    <option [value]="estado">
+                                        {{ estado }}
+                                    </option>
+                                    }
+
+                                </select>
+                            </div>
+
+                            @if(mostrarFechaRealizacion()) {
+
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha de realización</label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-calendar-check"></i>
+
+                                    <input type="date" class="form-control" formControlName="fecha_realizacion">
+                                </div>
+                            </div>
+
+                            }
+
+                            <div class="col-md-6">
+                                <label class="form-label">Prioridad</label>
+
+                                <select class="form-select" formControlName="prioridad">
+
+                                    @for(prioridad of prioridades; track prioridad) {
+                                    <option [value]="prioridad">
+                                        {{ prioridad }}
+                                    </option>
+                                    }
+
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                @if(mostrarProducto()) {
+
+                <div class="card form-card border-0 shadow-sm mt-4">
+
+                    <div class="card-body p-4">
+
+                        <div class="section-title mb-4">
+                            <div class="section-icon section-icon-product">
+                                <i class="bi bi-box-seam"></i>
+                            </div>
+
+                            <div>
+                                <h5 class="mb-0 fw-bold">Producto utilizado</h5>
+                                <small class="text-muted">
+                                    Registre el producto aplicado desde el inventario.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Producto del inventario</label>
+
+                                <select class="form-select" formControlName="id_inventario">
+                                    <option [ngValue]="null">
+                                        Seleccione un producto
+                                    </option>
+
+                                    @for(item of inventarios; track item.id_inventario) {
+                                    <option [ngValue]="item.id_inventario">
+                                        {{ nombreProducto(item) }} - {{ item.cantidad }} {{ item.unidad_medida }}
+                                    </option>
+                                    }
+                                </select>
+
+                                <small class="form-help">
+                                    Se mostrará la cantidad disponible actualmente.
+                                </small>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Cantidad utilizada</label>
+
+                                <input type="number" class="form-control" formControlName="cantidad_producto" min="0"
+                                    step="0.01" placeholder="Ej: 2.5">
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label">Unidad</label>
+
+                                <select class="form-select" formControlName="unidad_producto">
+                                    <option value="">Seleccione unidad</option>
+
+                                    @for(unidad of unidadesMedida; track unidad) {
+                                    <option [value]="unidad">
+                                        {{ unidad }}
+                                    </option>
+                                    }
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                }
+
+                <div class="card form-card border-0 shadow-sm mt-4">
+
+                    <div class="card-body p-4">
+
+                        <div class="section-title mb-4">
+                            <div class="section-icon section-icon-detail">
+                                <i class="bi bi-journal-text"></i>
+                            </div>
+
+                            <div>
+                                <h5 class="mb-0 fw-bold">Detalles adicionales</h5>
+                                <small class="text-muted">
+                                    Responsable, descripción y observaciones de la actividad.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Responsable</label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-person"></i>
+
+                                    <input type="text" class="form-control" formControlName="responsable"
+                                        placeholder="Ej: Juan Pérez">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Estado del registro</label>
+
+                                <select class="form-select" formControlName="estado">
+                                    <option [ngValue]="true">Activo</option>
+                                    <option [ngValue]="false">Inactivo</option>
+                                </select>
+                            </div>
+
+                            @if(mostrarDescripcion()) {
+
+                            <div class="col-md-12">
+                                <label class="form-label">Descripción</label>
+
+                                <textarea class="form-control" rows="3" formControlName="descripcion"
+                                    placeholder="Describa brevemente la actividad realizada o programada"></textarea>
+                            </div>
+
+                            }
+
+                            <div class="col-md-12">
+                                <label class="form-label">Observaciones</label>
+
+                                <textarea class="form-control" rows="3" formControlName="observaciones"
+                                    placeholder="Ej: Revisar nuevamente en 7 días"></textarea>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="card summary-card border-0 shadow-sm sticky-lg-top">
+
+                    <div class="card-body p-4">
+
+                        <div class="summary-icon mb-3">
+                            <i class="bi bi-clipboard-check"></i>
+                        </div>
+
+                        <h5 class="fw-bold mb-2">
+                            Resumen de actualización
+                        </h5>
+
+                        <p class="text-muted small mb-4">
+                            Revise la información necesaria para actualizar la actividad agrícola.
+                        </p>
+
+                        <div class="summary-item">
+                            <span>
+                                <i class="bi bi-check-circle"></i>
+                                Cultivo
+                            </span>
+                            <small>Requerido</small>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>
+                                <i class="bi bi-check-circle"></i>
+                                Actividad
+                            </span>
+                            <small>Requerido</small>
+                        </div>
+
+                        <div class="summary-item">
+                            <span>
+                                <i class="bi bi-check-circle"></i>
+                                Fecha
+                            </span>
+                            <small>Requerido</small>
+                        </div>
+
+                        <div class="alert alert-success border-0 mt-4 mb-0">
+                            <i class="bi bi-lightbulb me-1"></i>
+                            Puede actualizar actividades programadas o realizadas.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-actions mt-4">
+
+            <button type="button" class="btn btn-agro-secondary" routerLink="/app/actividades">
+                <i class="bi bi-x-circle me-1"></i>
+                Cancelar
+            </button>
+
+            <button type="submit" class="btn btn-agro px-4" [disabled]="form.invalid">
+                <i class="bi bi-check-circle me-1"></i>
+                Actualizar actividad
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

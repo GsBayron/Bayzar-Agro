@@ -1,0 +1,53 @@
+<div class="usuario-page">
+    <div class="usuario-header mb-4">
+        <div>
+            <div class="header-badge mb-2"><i class="bi bi-people"></i>Gestión de usuarios</div>
+            <h3 class="fw-bold mb-1">Actualizar usuario</h3>
+            <p class="text-muted mb-0">Actualice la información personal y los permisos de acceso al sistema.</p>
+        </div>
+        <button type="button" class="btn btn-outline-secondary btn-sm" routerLink="/app/usuarios"><i class="bi bi-arrow-left me-1"></i>Volver</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="actualizar()">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="card usuario-card border-0 shadow-sm"><div class="card-body p-4">
+                    <div class="section-title mb-4"><div class="section-icon"><i class="bi bi-person-vcard"></i></div><div><h5 class="mb-0 fw-bold">Información personal</h5><small class="text-muted">Datos de identificación y contacto del usuario.</small></div></div>
+                    <div class="row g-3">
+                        <div class="col-md-6"><label class="form-label">Nombre</label><div class="input-icon"><i class="bi bi-person"></i><input type="text" class="form-control" formControlName="nombre" placeholder="Nombre" [class.is-invalid]="f['nombre'].touched && f['nombre'].invalid"></div>@if(f['nombre'].touched && f['nombre'].invalid) { <small class="text-danger">El nombre es requerido.</small> }</div>
+                        <div class="col-md-6"><label class="form-label">Apellidos</label><div class="input-icon"><i class="bi bi-person"></i><input type="text" class="form-control" formControlName="apellidos" placeholder="Apellidos" [class.is-invalid]="f['apellidos'].touched && f['apellidos'].invalid"></div></div>
+                        <div class="col-md-6"><label class="form-label">Correo</label><div class="input-icon"><i class="bi bi-envelope"></i><input type="email" class="form-control" formControlName="correo" placeholder="correo@ejemplo.com" [class.is-invalid]="f['correo'].touched && f['correo'].invalid"></div></div>
+                        <div class="col-md-6"><label class="form-label">Teléfono</label><div class="input-icon"><i class="bi bi-telephone"></i><input type="text" class="form-control" formControlName="telefono" placeholder="Número telefónico"></div></div>
+                    </div>
+                </div></div>
+
+                <div class="card usuario-card border-0 shadow-sm mt-4"><div class="card-body p-4">
+                    <div class="section-title mb-4"><div class="section-icon access-icon"><i class="bi bi-shield-lock"></i></div><div><h5 class="mb-0 fw-bold">Acceso y permisos</h5><small class="text-muted">Credenciales, rol y estado del usuario.</small></div></div>
+                    <div class="row g-3">
+                        <div class="col-md-6"><label class="form-label">Usuario</label><div class="input-icon"><i class="bi bi-person-badge"></i><input type="text" class="form-control" formControlName="acceso" placeholder="Nombre de acceso" [class.is-invalid]="f['acceso'].touched && f['acceso'].invalid"></div></div>
+                        <div class="col-md-6"><label class="form-label">Contraseña</label><div class="input-icon"><i class="bi bi-key"></i><input type="password" class="form-control" formControlName="secreto" placeholder="Nueva contraseña"></div><small class="text-muted">Dejar vacío para mantener la contraseña actual.</small></div>
+                        <div class="col-md-6"><label class="form-label">Rol</label><select class="form-select" formControlName="rol"><option value="Administrador">Administrador</option><option value="Agricultor">Agricultor</option></select></div>
+                        <div class="col-md-6"><label class="form-label">Estado del registro</label><select class="form-select" formControlName="estado"><option [ngValue]="true">Activo</option><option [ngValue]="false">Inactivo</option></select></div>
+                    </div>
+                </div></div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card resumen-card border-0 shadow-sm sticky-lg-top"><div class="card-body p-4">
+                    <div class="resumen-icon mb-3"><i class="bi bi-pencil-square"></i></div>
+                    <h5 class="fw-bold mb-2">Resumen de actualización</h5>
+                    <p class="text-muted small mb-4">Revise los datos y permisos antes de actualizar este usuario.</p>
+                    <div class="resumen-item"><span><i class="bi bi-check-circle"></i>Datos personales</span><small>Requerido</small></div>
+                    <div class="resumen-item"><span><i class="bi bi-check-circle"></i>Correo</span><small>Requerido</small></div>
+                    <div class="resumen-item"><span><i class="bi bi-shield-check"></i>Permisos</span><small>Verificar</small></div>
+                    <div class="alert alert-success border-0 mt-4 mb-0"><i class="bi bi-lightbulb me-1"></i>Verifique el rol antes de guardar cambios.</div>
+                </div></div>
+            </div>
+        </div>
+
+        <div class="acciones-form mt-4">
+            <button type="button" class="btn btn-outline-secondary" routerLink="/app/usuarios"><i class="bi bi-x-circle me-1"></i>Cancelar</button>
+            <button type="submit" class="btn btn-success px-4"><i class="bi bi-save me-1"></i>Actualizar usuario</button>
+        </div>
+    </form>
+</div>

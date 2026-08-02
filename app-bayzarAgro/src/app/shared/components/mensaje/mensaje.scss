@@ -1,0 +1,104 @@
+/* CRÍTICO: sin esto el host no llena el surface de MatDialog y aparece el gris */
+:host {
+    display: block;
+    width: 100%;
+}
+
+.msg-card {
+    background: #fff;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+/* Barra de acento superior */
+.msg-bar {
+    height: 4px;
+    width: 100%;
+}
+
+.msg-bar--exito        { background: #198754; }
+.msg-bar--error        { background: #dc3545; }
+.msg-bar--advertencia  { background: #f59e0b; }
+.msg-bar--confirmacion,
+.msg-bar--info         { background: #3b82f6; }
+
+/* Cuerpo */
+.msg-body {
+    padding: 2rem 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+}
+
+/* Icono en círculo */
+.msg-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.msg-icon i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.msg-icon--exito        { background: #dcfce7; color: #16a34a; }
+.msg-icon--error        { background: #fee2e2; color: #dc2626; }
+.msg-icon--advertencia  { background: #fef9c3; color: #ca8a04; }
+.msg-icon--confirmacion,
+.msg-icon--info         { background: #dbeafe; color: #2563eb; }
+
+.msg-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.msg-text {
+    font-size: 0.9375rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Footer */
+.msg-footer {
+    display: flex;
+    justify-content: center;
+    gap: 0.625rem;
+    padding: 0 2rem 1.75rem;
+}
+
+.msg-footer .btn {
+    min-width: 110px;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.5rem;
+}
+
+@media (max-width: 576px) {
+    .msg-body {
+        padding: 1.5rem 1.25rem 1.15rem;
+    }
+
+    .msg-footer {
+        flex-direction: column-reverse;
+        padding: 0 1.25rem 1.35rem;
+    }
+
+    .msg-footer .btn {
+        width: 100%;
+    }
+}

@@ -1,0 +1,569 @@
+﻿<div class="module-page">
+
+    <div class="module-header mb-4">
+
+        <div>
+            <div class="header-badge mb-2">
+                <i class="bi bi-box-seam"></i>
+                Gestión de inventario
+            </div>
+
+            <h3 class="fw-bold mb-1">
+                Nuevo producto
+            </h3>
+
+            <p class="text-muted mb-0">
+                Registro de productos, insumos y existencias por finca.
+            </p>
+        </div>
+
+        <button type="button" class="btn btn-outline-secondary btn-sm" routerLink="/app/inventario">
+
+            <i class="bi bi-arrow-left me-1"></i>
+            Volver
+
+        </button>
+
+    </div>
+
+    <form [formGroup]="form">
+
+        <div class="row g-4">
+
+            <div class="col-lg-8">
+
+                <div class="card module-card border-0 shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="section-title mb-4">
+
+                            <div class="section-icon product-icon">
+                                <i class="bi bi-box-seam"></i>
+                            </div>
+
+                            <div>
+                                <h5 class="mb-0 fw-bold">
+                                    Información del producto
+                                </h5>
+
+                                <small class="text-muted">
+                                    Seleccione el origen del producto y complete sus datos principales.
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Finca
+                                </label>
+
+                                <select class="form-select" formControlName="id_finca">
+
+                                    <option [ngValue]="null">
+                                        Seleccione una finca
+                                    </option>
+
+                                    @for(finca of fincas; track finca.id_finca) {
+                                    <option [ngValue]="finca.id_finca">
+                                        {{ finca.nombre }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Tipo de producto
+                                </label>
+
+                                <select class="form-select" formControlName="tipo_producto"
+                                    (change)="cambiarTipoProducto()"
+                                    [class.is-invalid]="f['tipo_producto'].touched && f['tipo_producto'].invalid">
+
+                                    <option value="">
+                                        Seleccione un tipo de producto
+                                    </option>
+
+                                    @for(tipo of origenProducto; track tipo) {
+                                    <option [value]="tipo">
+                                        {{ tipo }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                                @if(f['tipo_producto'].touched && f['tipo_producto'].invalid) {
+                                <small class="text-danger">
+                                    El tipo de producto es requerido.
+                                </small>
+                                }
+
+                            </div>
+
+                            @if(form.value.tipo_producto === 'Plaguicida registrado') {
+
+                            <div class="col-md-12">
+
+                                <label class="form-label">
+                                    Plaguicida registrado
+                                </label>
+
+                                <select class="form-select" formControlName="id_plaguicida_registrado">
+
+                                    <option [ngValue]="null">
+                                        Seleccione un plaguicida registrado
+                                    </option>
+
+                                    @for(item of plaguicidas; track item.id_plaguicida_registrado) {
+                                    <option [ngValue]="item.id_plaguicida_registrado">
+
+                                        {{ item.nombre_comercial }}
+
+                                        @if(item.ingrediente_activo) {
+                                        ({{ item.ingrediente_activo }})
+                                        }
+
+                                    </option>
+                                    }
+
+                                </select>
+
+                                <small class="text-muted">
+                                    Producto tomado del catálogo de plaguicidas registrados.
+                                </small>
+
+                            </div>
+
+                            }
+
+                            @if(form.value.tipo_producto === 'Fertilizante registrado') {
+
+                            <div class="col-md-12">
+
+                                <label class="form-label">
+                                    Fertilizante registrado
+                                </label>
+
+                                <select class="form-select" formControlName="id_fertilizante_registrado">
+
+                                    <option [ngValue]="null">
+                                        Seleccione un fertilizante registrado
+                                    </option>
+
+                                    @for(item of fertilizantes; track item.id_fertilizante_registrado) {
+                                    <option [ngValue]="item.id_fertilizante_registrado">
+
+                                        {{ item.nombre_comercial }}
+
+                                        @if(item.composicion) {
+                                        ({{ item.composicion }})
+                                        }
+
+                                    </option>
+                                    }
+
+                                </select>
+
+                                <small class="text-muted">
+                                    Producto tomado del catálogo de fertilizantes registrados.
+                                </small>
+
+                            </div>
+
+                            }
+
+                            @if(form.value.tipo_producto === 'Producto manual') {
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Nombre del producto
+                                </label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-tag"></i>
+
+                                    <input type="text" class="form-control" formControlName="nombre_manual"
+                                        placeholder="Ejemplo: Semilla de tomate, herramienta, abono orgánico">
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-12">
+
+                                <label class="form-label">
+                                    Descripción manual
+                                </label>
+
+                                <textarea class="form-control" rows="3" formControlName="descripcion_manual"
+                                    placeholder="Describa brevemente el producto ingresado manualmente."></textarea>
+
+                            </div>
+
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card module-card border-0 shadow-sm mt-4">
+
+                    <div class="card-body p-4">
+
+                        <div class="section-title mb-4">
+
+                            <div class="section-icon stock-icon">
+                                <i class="bi bi-clipboard-data"></i>
+                            </div>
+
+                            <div>
+                                <h5 class="mb-0 fw-bold">
+                                    Existencia y ubicación
+                                </h5>
+
+                                <small class="text-muted">
+                                    Cantidad disponible, unidad de medida, ubicación y fechas importantes.
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Cantidad
+                                </label>
+
+                                <input type="number" class="form-control" formControlName="cantidad" min="0" step="0.01"
+                                    placeholder="Ejemplo: 25"
+                                    [class.is-invalid]="f['cantidad'].touched && f['cantidad'].invalid">
+
+                                @if(f['cantidad'].touched && f['cantidad'].invalid) {
+                                <small class="text-danger">
+                                    La cantidad es requerida.
+                                </small>
+                                }
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Unidad de medida
+                                </label>
+
+                                <select class="form-select" formControlName="unidad_medida"
+                                    [class.is-invalid]="f['unidad_medida'].touched && f['unidad_medida'].invalid">
+
+                                    <option value="">
+                                        Seleccione una unidad de medida
+                                    </option>
+
+                                    @for(unidad of unidadesMedida; track unidad) {
+                                    <option [value]="unidad">
+                                        {{ unidad }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                                @if(f['unidad_medida'].touched && f['unidad_medida'].invalid) {
+                                <small class="text-danger">
+                                    La unidad es requerida.
+                                </small>
+                                }
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Ubicación
+                                </label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-geo-alt"></i>
+
+                                    <input type="text" class="form-control" formControlName="ubicacion"
+                                        placeholder="Ejemplo: Bodega principal, estante 2">
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Fecha de compra
+                                </label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-calendar-event"></i>
+
+                                    <input type="date" class="form-control" formControlName="fecha_compra">
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Fecha de vencimiento
+                                </label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-calendar-x"></i>
+
+                                    <input type="date" class="form-control" formControlName="fecha_vencimiento">
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Estado
+                                </label>
+
+                                <select class="form-select" formControlName="estado">
+
+                                    <option [ngValue]="true">
+                                        Activo
+                                    </option>
+
+                                    <option [ngValue]="false">
+                                        Inactivo
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-12">
+
+                                <label class="form-label">
+                                    Observaciones
+                                </label>
+
+                                <textarea class="form-control" rows="3" formControlName="observaciones"
+                                    placeholder="Ejemplo: Producto almacenado en lugar seco, revisar vencimiento antes de aplicar."></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="card resumen-card border-0 shadow-sm sticky-lg-top">
+
+                    <div class="card-body p-4">
+
+                        <div class="resumen-icon mb-3">
+                            <i class="bi bi-boxes"></i>
+                        </div>
+
+                        <h5 class="fw-bold mb-2">
+                            Control de inventario
+                        </h5>
+
+                        <p class="text-muted small mb-4">
+                            Puede agregar uno o varios productos antes de guardarlos definitivamente.
+                        </p>
+
+                        <div class="resumen-item">
+                            <span>
+                                <i class="bi bi-check-circle"></i>
+                                Producto
+                            </span>
+                            <small>Requerido</small>
+                        </div>
+
+                        <div class="resumen-item">
+                            <span>
+                                <i class="bi bi-check-circle"></i>
+                                Cantidad
+                            </span>
+                            <small>Requerido</small>
+                        </div>
+
+                        <div class="resumen-item">
+                            <span>
+                                <i class="bi bi-check-circle"></i>
+                                Unidad
+                            </span>
+                            <small>Requerido</small>
+                        </div>
+
+                        <div class="alert alert-success border-0 mt-4 mb-0">
+                            <i class="bi bi-lightbulb me-1"></i>
+                            Use fechas de vencimiento para generar alertas de productos próximos a vencer.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="acciones-form mt-4">
+
+            <button type="button" class="btn btn-outline-secondary" routerLink="/app/inventario">
+
+                <i class="bi bi-x-circle me-1"></i>
+                Cancelar
+
+            </button>
+
+            <button type="button" class="btn btn-primary" (click)="agregarProducto()">
+
+                <i class="bi bi-plus-circle me-1"></i>
+                Agregar producto
+
+            </button>
+
+        </div>
+
+    </form>
+
+    @if(productos.length > 0) {
+
+    <div class="card productos-card border-0 shadow-sm mt-4">
+
+        <div class="card-header productos-header">
+
+            <div>
+                <h5 class="mb-0 fw-bold">
+                    Productos por guardar
+                </h5>
+
+                <small class="text-muted">
+                    Revise la lista antes de guardar los productos en inventario.
+                </small>
+            </div>
+
+            <span class="contador-productos">
+                {{ productos.length }} producto(s)
+            </span>
+
+        </div>
+
+        <div class="card-body p-4">
+
+            <div class="table-responsive productos-table-wrapper">
+
+                <table class="table table-hover align-middle mb-0 productos-table">
+
+                    <thead>
+
+                        <tr>
+                            <th>Producto</th>
+                            <th>Tipo</th>
+                            <th>Cantidad</th>
+                            <th>Unidad</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @for(producto of productos; track $index) {
+
+                        <tr>
+
+                            <td>
+
+                                <div class="producto-info">
+
+                                    <div class="producto-icon">
+                                        <i class="bi bi-box-seam"></i>
+                                    </div>
+
+                                    <div>
+                                        <strong>
+                                            {{ obtenerNombreProducto(producto) }}
+                                        </strong>
+
+                                        <small class="text-muted d-block">
+                                            Producto pendiente de guardar
+                                        </small>
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                <span class="tipo-pill">
+                                    {{ producto.tipo_producto }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <strong>
+                                    {{ producto.cantidad }}
+                                </strong>
+                            </td>
+
+                            <td>
+                                {{ producto.unidad_medida }}
+                            </td>
+
+                            <td class="text-center">
+
+                                <button type="button" class="btn btn-outline-danger btn-sm" title="Eliminar producto"
+                                    (click)="eliminarProducto($index)">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+
+                <button type="button" class="btn btn-success px-4" (click)="guardar()">
+
+                    <i class="bi bi-save me-1"></i>
+                    Guardar todos
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    }
+
+</div>

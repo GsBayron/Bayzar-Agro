@@ -1,0 +1,37 @@
+@use './variables' as *;
+
+.form-control,
+.form-select {
+    transition: border-color $transition-fast, box-shadow $transition-fast;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: $agro-primary;
+    box-shadow: $focus-ring;
+}
+
+.form-control.ng-invalid.ng-touched,
+.form-select.ng-invalid.ng-touched {
+    border-color: $agro-red;
+}
+
+.form-control.ng-invalid.ng-touched:focus,
+.form-select.ng-invalid.ng-touched:focus {
+    box-shadow: 0 0 0 0.2rem rgba(185, 28, 28, 0.12);
+}
+
+.form-help {
+    display: block;
+    margin-top: 0.25rem;
+    color: $agro-gray-500;
+    font-size: 0.8rem;
+}
+
+.form-error {
+    display: block;
+    margin-top: 0.25rem;
+    color: $agro-red;
+    font-size: 0.8rem;
+    font-weight: 500;
+}

@@ -1,0 +1,450 @@
+﻿<div class="module-page">
+
+    <div class="module-header mb-4">
+
+        <div>
+            <div class="header-badge mb-2">
+                <i class="bi bi-bug"></i>
+                Gestión de plagas
+            </div>
+
+            <h3 class="fw-bold mb-1">
+                Nueva plaga
+            </h3>
+
+            <p class="text-muted mb-0">
+                Actualizar plagas detectadas en cultivos.
+            </p>
+        </div>
+
+        <button
+            type="button"
+            class="btn btn-outline-secondary btn-sm"
+            routerLink="/app/plagas">
+
+            <i class="bi bi-arrow-left me-1"></i>
+            Volver
+
+        </button>
+
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="actualizar()">
+
+        <div class="row g-4">
+
+            <div class="col-lg-8">
+
+                <div class="card module-card border-0 shadow-sm">
+
+                    <div class="card-body p-4">
+
+                        <div class="section-title mb-4">
+
+                            <div class="section-icon danger-icon">
+                                <i class="bi bi-exclamation-triangle"></i>
+                            </div>
+
+                            <div>
+                                <h5 class="mb-0 fw-bold">
+                                    Información principal
+                                </h5>
+
+                                <small class="text-muted">
+                                    Datos generales de la plaga detectada.
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Cultivo
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    formControlName="id_cultivo"
+                                    [class.is-invalid]="f['id_cultivo'].touched && f['id_cultivo'].invalid">
+
+                                    <option [ngValue]="null">
+                                        Seleccione el cultivo afectado
+                                    </option>
+
+                                    @for(cultivo of cultivos; track cultivo.id_cultivo) {
+                                    <option [ngValue]="cultivo.id_cultivo">
+                                        {{ cultivo.nombre }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                                @if(f['id_cultivo'].touched && f['id_cultivo'].invalid) {
+                                <small class="text-danger">
+                                    El cultivo es requerido.
+                                </small>
+                                }
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Origen de la plaga
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    formControlName="origen_plaga"
+                                    (change)="cambiarOrigenPlaga()"
+                                    [class.is-invalid]="f['origen_plaga'].touched && f['origen_plaga'].invalid">
+
+                                    <option value="">
+                                        Seleccione si es plaga registrada o manual
+                                    </option>
+
+                                    @for(origen of origenPlaga; track origen) {
+                                    <option [value]="origen">
+                                        {{ origen }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                                @if(f['origen_plaga'].touched && f['origen_plaga'].invalid) {
+                                <small class="text-danger">
+                                    El origen de la plaga es requerido.
+                                </small>
+                                }
+
+                            </div>
+
+                            @if(form.value.origen_plaga === 'Plaga registrada') {
+
+                            <div class="col-md-12">
+
+                                <label class="form-label">
+                                    Plaga registrada
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    formControlName="id_plaga_registrada">
+
+                                    <option [ngValue]="null">
+                                        Seleccione una plaga registrada
+                                    </option>
+
+                                    @for(plaga of plagasRegistradas; track plaga.id_plaga_registrada) {
+                                    <option [ngValue]="plaga.id_plaga_registrada">
+                                        {{ plaga.nombre_comun }}
+
+                                        @if(plaga.nombre_cientifico) {
+                                        ({{ plaga.nombre_cientifico }})
+                                        }
+                                    </option>
+                                    }
+
+                                </select>
+
+                                <small class="text-muted">
+                                    Seleccione una plaga del catálogo registrado.
+                                </small>
+
+                            </div>
+
+                            }
+
+                            @if(form.value.origen_plaga === 'Plaga manual') {
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Nombre manual
+                                </label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-bug"></i>
+
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        formControlName="nombre_manual"
+                                        placeholder="Ejemplo: Mosca blanca, Roya, Trips">
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Tipo de plaga
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    formControlName="tipo_plaga_manual">
+
+                                    <option value="">
+                                        Seleccione un tipo de plaga
+                                    </option>
+
+                                    @for(tipo of tiposPlagaManual; track tipo) {
+                                    <option [value]="tipo">
+                                        {{ tipo }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                            </div>
+
+                            }
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Fecha de detección
+                                </label>
+
+                                <div class="input-icon">
+                                    <i class="bi bi-calendar-event"></i>
+
+                                    <input
+                                        type="date"
+                                        class="form-control"
+                                        formControlName="fecha_deteccion"
+                                        [class.is-invalid]="f['fecha_deteccion'].touched && f['fecha_deteccion'].invalid">
+                                </div>
+
+                                @if(f['fecha_deteccion'].touched && f['fecha_deteccion'].invalid) {
+                                <small class="text-danger">
+                                    La fecha de detección es requerida.
+                                </small>
+                                }
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Nivel de riesgo
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    formControlName="nivel_riesgo"
+                                    [class.is-invalid]="f['nivel_riesgo'].touched && f['nivel_riesgo'].invalid">
+
+                                    <option value="">
+                                        Seleccione un nivel de riesgo
+                                    </option>
+
+                                    @for(nivel of nivelesRiesgo; track nivel) {
+                                    <option [value]="nivel">
+                                        {{ nivel }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                                @if(f['nivel_riesgo'].touched && f['nivel_riesgo'].invalid) {
+                                <small class="text-danger">
+                                    El nivel de riesgo es requerido.
+                                </small>
+                                }
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Estado de la plaga
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    formControlName="estado_plaga">
+
+                                    @for(estado of estadosPlaga; track estado) {
+                                    <option [value]="estado">
+                                        {{ estado }}
+                                    </option>
+                                    }
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label class="form-label">
+                                    Estado del registro
+                                </label>
+
+                                <select
+                                    class="form-select"
+                                    formControlName="estado">
+
+                                    <option [ngValue]="true">
+                                        Activo
+                                    </option>
+
+                                    <option [ngValue]="false">
+                                        Inactivo
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card module-card border-0 shadow-sm mt-4">
+
+                    <div class="card-body p-4">
+
+                        <div class="section-title mb-4">
+
+                            <div class="section-icon note-icon">
+                                <i class="bi bi-journal-text"></i>
+                            </div>
+
+                            <div>
+                                <h5 class="mb-0 fw-bold">
+                                    Detalles y seguimiento
+                                </h5>
+
+                                <small class="text-muted">
+                                    Agregue síntomas, daños observados y acciones de seguimiento.
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-12">
+
+                                <label class="form-label">
+                                    Descripción
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    rows="3"
+                                    formControlName="descripcion"
+                                    placeholder="Describa los síntomas observados, daños en hojas, tallos o frutos."></textarea>
+
+                            </div>
+
+                            <div class="col-md-12">
+
+                                <label class="form-label">
+                                    Observaciones
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    rows="3"
+                                    formControlName="observaciones"
+                                    placeholder="Ejemplo: Se detecta en la parte baja del cultivo, revisar nuevamente en 7 días."></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="card resumen-card border-0 shadow-sm sticky-lg-top">
+
+                    <div class="card-body p-4">
+
+                        <div class="resumen-icon mb-3">
+                            <i class="bi bi-shield-exclamation"></i>
+                        </div>
+
+                        <h5 class="fw-bold mb-2">
+                            Registro fitosanitario
+                        </h5>
+
+                        <p class="text-muted small mb-4">
+                            Complete los datos de la plaga para dar seguimiento al cultivo afectado.
+                        </p>
+
+                        <div class="resumen-item">
+                            <span>
+                                <i class="bi bi-check-circle"></i>
+                                Cultivo afectado
+                            </span>
+                            <small>Requerido</small>
+                        </div>
+
+                        <div class="resumen-item">
+                            <span>
+                                <i class="bi bi-check-circle"></i>
+                                Origen de plaga
+                            </span>
+                            <small>Requerido</small>
+                        </div>
+
+                        <div class="resumen-item">
+                            <span>
+                                <i class="bi bi-check-circle"></i>
+                                Nivel de riesgo
+                            </span>
+                            <small>Requerido</small>
+                        </div>
+
+                        <div class="alert alert-warning border-0 mt-4 mb-0">
+                            <i class="bi bi-lightbulb me-1"></i>
+                            Registre observaciones claras para facilitar el seguimiento.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="acciones-form mt-4">
+
+            <button
+                type="button"
+                class="btn btn-outline-secondary"
+                routerLink="/app/plagas">
+
+                <i class="bi bi-x-circle me-1"></i>
+                Cancelar
+
+            </button>
+
+            <button
+                type="submit"
+                class="btn btn-success px-4">
+
+                <i class="bi bi-save me-1"></i>
+                Actualizar plaga
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

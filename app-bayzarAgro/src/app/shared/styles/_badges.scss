@@ -1,0 +1,106 @@
+@use './variables' as *;
+
+.header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background-color: $agro-primary-soft;
+    color: #166534;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.id-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    background-color: $agro-gray-100;
+    color: $agro-gray-700;
+    font-weight: 700;
+    font-size: 0.82rem;
+}
+
+.estado-pill,
+.prioridad-pill,
+.registro-pill,
+.vencida-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.vencida-pill {
+    background-color: $agro-red-soft;
+    color: $agro-red;
+}
+
+.registro-pill.activo,
+.estado-pill.activo {
+    background-color: $agro-primary-soft;
+    color: #166534;
+}
+
+.registro-pill.inactivo,
+.estado-pill.inactivo {
+    background-color: $agro-gray-100;
+    color: $agro-gray-600;
+}
+
+.prioridad-pill.alta {
+    background-color: $agro-red-soft;
+    color: $agro-red;
+}
+
+.prioridad-pill.media {
+    background-color: $agro-yellow-soft;
+    color: $agro-yellow;
+}
+
+.prioridad-pill.baja {
+    background-color: $agro-primary-soft;
+    color: #166534;
+}
+
+.badge-agro {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.badge-agro.success {
+    background-color: $agro-primary-soft;
+    color: #166534;
+}
+
+.badge-agro.warning {
+    background-color: $agro-yellow-soft;
+    color: $agro-yellow;
+}
+
+.badge-agro.danger {
+    background-color: $agro-red-soft;
+    color: $agro-red;
+}
+
+.badge-agro.info {
+    background-color: $agro-blue-soft;
+    color: $agro-blue;
+}
+
+.badge-agro.neutral {
+    background-color: $agro-gray-100;
+    color: $agro-gray-600;
+}
+

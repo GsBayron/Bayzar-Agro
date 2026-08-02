@@ -1,0 +1,191 @@
+<div class="module-page">
+
+    <div class="module-header mb-4">
+
+        <div>
+            <div class="header-badge mb-2">
+                <i class="bi bi-cash-coin"></i>
+                Control financiero
+            </div>
+
+            <h3 class="fw-bold mb-1">
+                Costos de la finca
+            </h3>
+
+            <p class="text-muted mb-0">
+                Registro de mano de obra, insumos, transporte y otros gastos agrícolas.
+            </p>
+        </div>
+
+        <button type="button" class="btn btn-success btn-sm" routerLink="/app/costos/guardar">
+
+            <i class="bi bi-plus-circle me-1"></i>
+            Nuevo costo
+
+        </button>
+
+    </div>
+
+    <div class="card module-card border-0 shadow-sm">
+
+        <div class="card-body">
+
+            <div class="row g-3 align-items-center mb-3">
+
+                <div class="col-md-6">
+
+                    <div class="input-group">
+
+                        <span class="input-group-text bg-white">
+                            <i class="bi bi-search"></i>
+                        </span>
+
+                        <input type="text" class="form-control" placeholder="Buscar costo..."
+                            (keyup)="aplicarFiltro($event)">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            @if(cargando) {
+
+            <div class="alert alert-info">
+                Cargando costos registrados...
+            </div>
+
+            }
+
+            <div class="table-responsive">
+
+                <table mat-table [dataSource]="dataSource" matSort class="table align-middle mb-0">
+
+                    <ng-container matColumnDef="fecha">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Fecha
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            {{ item.fecha }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tipo_costo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Tipo
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            <span class="badge bg-light text-dark border">
+                                {{ item.tipo_costo }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="descripcion">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Descripción
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            <strong>
+                                {{ item.descripcion }}
+                            </strong>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="finca">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Finca
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            {{ item.finca?.nombre || '-' }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="cultivo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Cultivo
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            {{ item.cultivo?.nombre || '-' }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="monto">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Monto
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+                            <strong class="text-success">
+                                {{ formatoMoneda(item.monto) }}
+                            </strong>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="estado">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Estado
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+
+                            @if(item.estado === 1) {
+                            <span class="badge bg-success">
+                                Activo
+                            </span>
+                            } @else {
+                            <span class="badge bg-secondary">
+                                Inactivo
+                            </span>
+                            }
+
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Acciones
+                        </th>
+
+                        <td mat-cell *matCellDef="let item">
+
+                            <div class="d-flex gap-2">
+
+                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                    (click)="actualizar(item.id_costo)">
+
+                                    <i class="bi bi-pencil"></i>
+
+                                </button>
+
+                                <button type="button" class="btn btn-outline-danger btn-sm" (click)="eliminar(item)">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </button>
+
+                            </div>
+
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+
+                </table>
+
+            </div>
+
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons>
+            </mat-paginator>
+
+        </div>
+
+    </div>
+
+</div>

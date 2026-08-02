@@ -1,0 +1,136 @@
+<nav class="top-navbar">
+
+    <div class="navbar-left">
+
+        <a
+            class="brand-link"
+            routerLink="/app/inicio"
+            aria-label="Ir al inicio de BayzarAgro">
+
+            <div class="div-logo">
+
+                <img
+                    class="logo"
+                    src="/Logo3.png"
+                    alt="Logo de BayzarAgro">
+
+            </div>
+
+            <div class="brand-text">
+
+                <strong>
+                    BayzarAgro
+                </strong>
+
+                <small>
+                    Gestión agrícola digital
+                </small>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <div class="navbar-right">
+
+        <div class="profile-menu-container">
+
+            <button
+                type="button"
+                class="profile-button"
+                (click)="toggleMenuPerfil()"
+                [attr.aria-expanded]="menuPerfilAbierto"
+                aria-haspopup="menu">
+
+                <div class="welcome-icon">
+                    {{ usuario?.nombre?.charAt(0) || 'U' }}
+                </div>
+
+                <div class="welcome-text">
+
+                    <span>
+                        {{ usuario?.nombre || 'Usuario' }}
+                    </span>
+
+                    <small>
+                        {{ usuario?.rol || 'Sesión activa' }}
+                    </small>
+
+                </div>
+
+                <i
+                    class="bi profile-arrow"
+                    [class.bi-chevron-down]="!menuPerfilAbierto"
+                    [class.bi-chevron-up]="menuPerfilAbierto">
+                </i>
+
+            </button>
+
+            @if(menuPerfilAbierto) {
+
+                <div
+                    class="profile-dropdown"
+                    role="menu">
+
+                    <div class="profile-dropdown-header">
+
+                        <div class="dropdown-avatar">
+                            {{ usuario?.nombre?.charAt(0) || 'U' }}
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                {{ usuario?.nombre || 'Usuario' }}
+                            </strong>
+
+                            <small>
+                                {{ usuario?.rol || 'Sesión activa' }}
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div class="profile-dropdown-divider"></div>
+
+                    <button
+                        type="button"
+                        class="profile-dropdown-item"
+                        routerLink="/app/perfil"
+                        (click)="cerrarMenuPerfil()"
+                        role="menuitem">
+
+                        <i class="bi bi-person-gear"></i>
+
+                        <span>
+                            Administrar perfil
+                        </span>
+
+                    </button>
+
+                </div>
+
+            }
+
+        </div>
+
+        <button
+            type="button"
+            class="btn-logout"
+            (click)="cerrarSesion()"
+            title="Cerrar sesión"
+            aria-label="Cerrar sesión">
+
+            <i class="bi bi-box-arrow-right"></i>
+
+            <span>
+                Cerrar sesión
+            </span>
+
+        </button>
+
+    </div>
+
+</nav>

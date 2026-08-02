@@ -1,0 +1,55 @@
+<div class="msg-card">
+
+  <!-- Barra superior -->
+  <div class="msg-bar"
+       [ngClass]="{
+         'msg-bar--exito': tipo === 'exito',
+         'msg-bar--error': tipo === 'error',
+         'msg-bar--advertencia': tipo === 'advertencia',
+         'msg-bar--confirmacion': tipo === 'confirmacion',
+         'msg-bar--info': tipo === 'info'
+       }">
+  </div>
+
+  <!-- Cuerpo -->
+  <div class="msg-body">
+
+    <!-- Icono -->
+    <div class="msg-icon"
+         [ngClass]="{
+           'msg-icon--exito': tipo === 'exito',
+           'msg-icon--error': tipo === 'error',
+           'msg-icon--advertencia': tipo === 'advertencia',
+           'msg-icon--confirmacion': tipo === 'confirmacion',
+           'msg-icon--info': tipo === 'info'
+         }">
+      <i [class]="icono"></i>
+    </div>
+
+    <!-- Título -->
+    <h2 class="msg-title">{{ titulo }}</h2>
+
+    <!-- Mensaje -->
+    <p class="msg-text">{{ mensaje }}</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="msg-footer">
+    <ng-container *ngIf="confirmacion; else soloAceptar">
+      <button type="button" class="btn btn-outline-secondary" (click)="cancelar()">
+        No
+      </button>
+
+      <button type="button" class="btn btn-primary" (click)="aceptar()">
+        Sí
+      </button>
+    </ng-container>
+
+    <ng-template #soloAceptar>
+      <button type="button" class="btn" [ngClass]="btnClass" (click)="aceptar()">
+        Aceptar
+      </button>
+    </ng-template>
+  </div>
+
+</div>
