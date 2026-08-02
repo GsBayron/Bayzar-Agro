@@ -1,6 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { finalize } from 'rxjs';
 
 import { Publico } from '../../../shared/services/publico';
 import { IPlan } from '../../../shared/interfaces/iplan';
@@ -18,6 +19,7 @@ import { IPlan } from '../../../shared/interfaces/iplan';
 export class Home implements OnInit {
 
   private servicioPublico = inject(Publico);
+  private cd = inject(ChangeDetectorRef);
 
   public planes: IPlan[] = [];
   public cargandoPlanes = false;
@@ -100,14 +102,17 @@ export class Home implements OnInit {
 
     this.cargandoPlanes = true;
 
-    this.servicioPublico.listarPlanes().subscribe({
+    this.servicioPublico.listarPlanes().pipe(
+      finalize(() => {
+        this.cargandoPlanes = false;
+        this.cd.detectChanges();
+      })
+    ).subscribe({
       next: (resp: IPlan[]) => {
         this.planes = resp;
-        this.cargandoPlanes = false;
       },
       error: (err) => {
         console.error(err);
-        this.cargandoPlanes = false;
         this.planes = [];
       }
     });
