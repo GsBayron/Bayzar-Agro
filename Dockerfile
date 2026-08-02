@@ -5,7 +5,8 @@ FROM node:22-bookworm-slim AS frontend
 WORKDIR /build/frontend
 
 COPY app-bayzarAgro/package.json app-bayzarAgro/package-lock.json ./
-RUN npm ci --no-audit --no-fund
+RUN npm install --global npm@11.6.2 \
+    && npm ci --no-audit --no-fund
 
 COPY app-bayzarAgro/ ./
 RUN npm run build -- --configuration production
