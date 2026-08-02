@@ -25,7 +25,7 @@ class PlanSeeder extends Seeder
             [
                 'codigo' => 'emprendedor',
                 'nombre' => 'Emprendedor',
-                'precio_mensual' => 3000,
+                'precio_mensual' => 5000,
                 'descripcion' => 'Plan para productores que necesitan más control y reportes.',
                 'limite_usuarios' => 3,
                 'limite_fincas' => 5,
@@ -37,7 +37,7 @@ class PlanSeeder extends Seeder
             [
                 'codigo' => 'profesional',
                 'nombre' => 'Profesional',
-                'precio_mensual' => 5000,
+                'precio_mensual' => 10000,
                 'descripcion' => 'Plan completo para gestión agrícola avanzada.',
                 'limite_usuarios' => 10,
                 'limite_fincas' => 20,
