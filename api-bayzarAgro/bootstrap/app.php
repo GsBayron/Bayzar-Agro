@@ -18,6 +18,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
 
+        // Cloud Run termina TLS antes de enviar la solicitud al contenedor.
+        // Confiar en su proxy permite detectar HTTPS y generar URLs seguras.
+        $middleware->trustProxies(at: '*');
+
         $middleware->append(SecurityHeadersMiddleware::class);
 
         $middleware->alias([
