@@ -229,7 +229,7 @@ gcloud run deploy "$SERVICE_NAME" \
   --allow-unauthenticated \
   --add-cloudsql-instances="$CONNECTION_NAME" \
   --set-env-vars="APP_NAME=BayzarAgro,APP_ENV=production,APP_DEBUG=false,APP_URL=https://example.invalid,APP_LOCALE=es,APP_FALLBACK_LOCALE=es,CORS_ALLOWED_ORIGINS=https://example.invalid,LOG_CHANNEL=stderr,LOG_LEVEL=warning,DB_CONNECTION=mysql,DB_HOST=127.0.0.1,DB_PORT=3306,DB_SOCKET=/cloudsql/${CONNECTION_NAME},DB_DATABASE=${DB_NAME},DB_USERNAME=${DB_USER},SESSION_DRIVER=database,SESSION_LIFETIME=120,SESSION_ENCRYPT=true,SESSION_SECURE_COOKIE=true,SESSION_SAME_SITE=lax,CACHE_STORE=database,QUEUE_CONNECTION=sync" \
-  --set-secrets="APP_KEY=bayzar-app-key:latest,DB_PASSWORD=bayzar-db-password:latest,/var/www/html/storage/oauth-private.key=bayzar-oauth-private:latest,/var/www/html/storage/oauth-public.key=bayzar-oauth-public:latest" \
+  --set-secrets="APP_KEY=bayzar-app-key:latest,DB_PASSWORD=bayzar-db-password:latest,PASSPORT_PRIVATE_KEY=bayzar-oauth-private:latest,PASSPORT_PUBLIC_KEY=bayzar-oauth-public:latest" \
   --port=8080 \
   --cpu=1 \
   --memory=512Mi \
