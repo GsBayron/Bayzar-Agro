@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
@@ -29,6 +29,7 @@ export class Registro implements OnInit {
   private ruta = inject(ActivatedRoute);
   private router = inject(Router);
   private publico = inject(Publico);
+  private cd = inject(ChangeDetectorRef);
 
   public planes: IPlan[] = [];
   public cargandoPlanes = false;
@@ -77,6 +78,7 @@ export class Registro implements OnInit {
       }),
       finalize(() => {
         this.cargandoPlanes = false;
+        this.cd.detectChanges();
       })
     ).subscribe({
       next: (resp: IPlan[]) => {
@@ -149,10 +151,13 @@ export class Registro implements OnInit {
       plan: datos.plan || 'gratuito'
     };
 
-    this.publico.registrar(payload).subscribe({
-      next: (resp: IRespuestaRegistro) => {
+    this.publico.registrar(payload).pipe(
+      finalize(() => {
         this.guardando = false;
-
+        this.cd.detectChanges();
+      })
+    ).subscribe({
+      next: (resp: IRespuestaRegistro) => {
         if (resp.redirect) {
           this.router.navigateByUrl(resp.redirect);
           return;
@@ -166,8 +171,6 @@ export class Registro implements OnInit {
       },
       error: (err) => {
         console.error(err);
-
-        this.guardando = false;
 
         if (err.status === 422) {
           this.error = 'Revise la información ingresada. El correo podría estar registrado o el plan no es válido.';
