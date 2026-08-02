@@ -1,0 +1,4 @@
+deploy/cloud-run/*.sh text eol=lf
+deploy/cloud-run/*.conf text eol=lf
+deploy/cloud-run/*.ini text eol=lf
+Dockerfile text eol=lf
