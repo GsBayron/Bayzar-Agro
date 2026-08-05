@@ -1,0 +1,20 @@
+{
+  "hosting": {
+    "target": "bayzaragro",
+    "public": "firebase-public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "bayzar-agro",
+          "region": "us-central1"
+        }
+      }
+    ]
+  }
+}

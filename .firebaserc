@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "project-1fb7b71a-febc-43d6-b28"
+  },
+  "targets": {
+    "project-1fb7b71a-febc-43d6-b28": {
+      "hosting": {
+        "bayzaragro": [
+          "bayzaragro"
+        ]
+      }
+    }
+  }
+}
