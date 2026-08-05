@@ -1,5 +1,50 @@
 $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
+/* =========================================================
+   MIXINS
+   ========================================================= */
+
+@mixin flex-center {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin card-base {
+    border: 1px solid var(--agro-border);
+    border-radius: var(--agro-radius-md);
+    background: #ffffff;
+    box-shadow: var(--agro-shadow-sm);
+}
+
+@mixin icon-box($size: 48px, $radius: 11px) {
+    width: $size;
+    height: $size;
+    border-radius: $radius;
+    background: var(--agro-primary-soft);
+    color: var(--agro-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin hover-lift($distance: -3px) {
+    transition:
+        transform var(--agro-transition),
+        border-color var(--agro-transition),
+        background-color var(--agro-transition),
+        color var(--agro-transition),
+        box-shadow var(--agro-transition);
+
+    &:hover {
+        transform: translateY($distance);
+    }
+}
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
 :host {
     display: block;
 }
@@ -53,13 +98,22 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     cursor: pointer;
 }
 
-.section-container {
+/* =========================================================
+   ELEMENTOS GENERALES
+   ========================================================= */
+
+.section-container,
+.navbar-container {
     width: min(1180px, calc(100% - 48px));
     margin: 0 auto;
 }
 
 .section-block {
     padding: 112px 0;
+}
+
+.section-block[id] {
+    scroll-margin-top: 92px;
 }
 
 .section-kicker {
@@ -101,24 +155,14 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     padding: 12px 20px;
     border: 1px solid transparent;
     border-radius: var(--agro-radius-sm);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     gap: 10px;
     text-decoration: none;
     font-size: 0.93rem;
     font-weight: 700;
     line-height: 1;
-    transition:
-        transform var(--agro-transition),
-        border-color var(--agro-transition),
-        background-color var(--agro-transition),
-        color var(--agro-transition),
-        box-shadow var(--agro-transition);
 
-    &:hover {
-        transform: translateY(-2px);
-    }
+    @include flex-center;
+    @include hover-lift(-2px);
 
     i {
         font-size: 1rem;
@@ -160,7 +204,84 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 }
 
-/* Navbar */
+.text-link {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--agro-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    &:hover {
+        color: var(--agro-primary-dark);
+
+        i {
+            transform: translateX(3px);
+        }
+    }
+
+    i {
+        transition: transform var(--agro-transition);
+    }
+}
+
+/* =========================================================
+   ÍCONOS REUTILIZABLES
+   ========================================================= */
+
+.benefit-icon,
+.feature-icon,
+.insight-icon {
+    @include icon-box(48px, 11px);
+
+    i {
+        font-size: 1.28rem;
+    }
+}
+
+.feature-icon {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+}
+
+.metric-icon {
+    @include icon-box(34px, 8px);
+    margin-bottom: 13px;
+}
+
+.step-icon {
+    @include icon-box(54px, 14px);
+    border: 1px solid #d6e7db;
+
+    i {
+        font-size: 1.35rem;
+    }
+}
+
+.comparison-icon {
+    width: 50px;
+    height: 50px;
+    flex: 0 0 auto;
+    border: 1px solid var(--agro-border);
+    border-radius: 12px;
+    background: var(--agro-background);
+    color: var(--agro-muted);
+
+    @include flex-center;
+
+    i {
+        font-size: 1.35rem;
+    }
+}
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
 .public-navbar {
     position: sticky;
     top: 0;
@@ -171,9 +292,7 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
 }
 
 .navbar-container {
-    width: min(1180px, calc(100% - 48px));
     min-height: 78px;
-    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -195,10 +314,9 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     border: 1px solid var(--agro-border);
     border-radius: 12px;
     background: #ffffff;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
+
+    @include flex-center;
 }
 
 .brand-logo {
@@ -304,7 +422,10 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 }
 
-/* Hero */
+/* =========================================================
+   HERO
+   ========================================================= */
+
 .hero-section {
     position: relative;
     padding: 100px 0 92px;
@@ -431,6 +552,10 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     border: 1px solid rgba(13, 79, 43, 0.12);
 }
 
+/* =========================================================
+   DASHBOARD MOCKUP
+   ========================================================= */
+
 .dashboard-card {
     position: relative;
     z-index: 2;
@@ -536,22 +661,10 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     em {
         color: var(--agro-primary-dark);
     }
-}
 
-.metric-icon {
-    width: 34px;
-    height: 34px;
-    margin-bottom: 13px;
-    border-radius: 8px;
-    background: var(--agro-primary-soft);
-    color: var(--agro-primary);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.metric-card-highlight .metric-icon {
-    background: #ccebd7;
+    .metric-icon {
+        background: #ccebd7;
+    }
 }
 
 .dashboard-body {
@@ -566,6 +679,11 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     border: 1px solid var(--agro-border);
     border-radius: var(--agro-radius-md);
     background: #ffffff;
+}
+
+.production-panel {
+    display: flex;
+    flex-direction: column;
 }
 
 .panel-heading {
@@ -642,11 +760,6 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 }
 
-.production-panel {
-    display: flex;
-    flex-direction: column;
-}
-
 .mini-chart {
     height: 104px;
     padding-top: 10px;
@@ -696,14 +809,7 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     gap: 11px;
 
     > span {
-        width: 38px;
-        height: 38px;
-        border-radius: 9px;
-        background: var(--agro-primary-soft);
-        color: var(--agro-primary);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        @include icon-box(38px, 9px);
     }
 
     > div {
@@ -733,7 +839,10 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     bottom: 48px;
 }
 
-/* Horizontal statistics banner */
+/* =========================================================
+   ESTADÍSTICAS
+   ========================================================= */
+
 .quick-stats-section {
     position: relative;
     z-index: 5;
@@ -788,33 +897,48 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 }
 
-/* Benefits */
+/* =========================================================
+   BENEFICIOS
+   ========================================================= */
+
 .benefits-section {
     background: var(--agro-background);
 }
 
-.benefits-grid {
+.benefits-grid,
+.features-grid,
+.plans-grid,
+.testimonials-grid,
+.insights-grid,
+.comparison-grid,
+.steps-grid {
     display: grid;
+}
+
+.benefits-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
+}
+
+.benefit-card,
+.feature-card,
+.plan-card,
+.testimonial-card,
+.insight-card,
+.step-card,
+.comparison-card {
+    @include card-base;
 }
 
 .benefit-card {
     position: relative;
     min-height: 260px;
     padding: 28px;
-    border: 1px solid var(--agro-border);
-    border-radius: var(--agro-radius-md);
-    background: var(--agro-surface);
-    box-shadow: var(--agro-shadow-sm);
     overflow: hidden;
-    transition:
-        transform var(--agro-transition),
-        box-shadow var(--agro-transition),
-        border-color var(--agro-transition);
+
+    @include hover-lift(-5px);
 
     &:hover {
-        transform: translateY(-5px);
         border-color: #cfdcd3;
         box-shadow: var(--agro-shadow-md);
     }
@@ -835,23 +959,6 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 }
 
-.benefit-icon,
-.feature-icon {
-    width: 48px;
-    height: 48px;
-    border: 1px solid #dce8df;
-    border-radius: 11px;
-    background: var(--agro-primary-soft);
-    color: var(--agro-primary);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    i {
-        font-size: 1.28rem;
-    }
-}
-
 .card-accent {
     position: absolute;
     right: 0;
@@ -861,7 +968,10 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     background: var(--agro-accent);
 }
 
-/* Features */
+/* =========================================================
+   FUNCIONES
+   ========================================================= */
+
 .features-section {
     background: #ffffff;
 }
@@ -894,32 +1004,7 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 }
 
-.text-link {
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: var(--agro-primary);
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    font-size: 0.9rem;
-    font-weight: 700;
-
-    &:hover {
-        color: var(--agro-primary-dark);
-
-        i {
-            transform: translateX(3px);
-        }
-    }
-
-    i {
-        transition: transform var(--agro-transition);
-    }
-}
-
 .features-grid {
-    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
 }
@@ -927,19 +1012,14 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
 .feature-card {
     min-height: 190px;
     padding: 25px;
-    border: 1px solid var(--agro-border);
-    border-radius: var(--agro-radius-md);
     background: #fbfcfb;
     display: flex;
     align-items: flex-start;
     gap: 17px;
-    transition:
-        transform var(--agro-transition),
-        background-color var(--agro-transition),
-        box-shadow var(--agro-transition);
+
+    @include hover-lift(-3px);
 
     &:hover {
-        transform: translateY(-3px);
         background: #ffffff;
         box-shadow: var(--agro-shadow-sm);
     }
@@ -960,13 +1040,10 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 }
 
-.feature-icon {
-    width: 44px;
-    height: 44px;
-    flex: 0 0 auto;
-}
+/* =========================================================
+   PLANES
+   ========================================================= */
 
-/* Plans */
 .plans-section {
     background:
         radial-gradient(circle at 100% 0%, rgba(166, 213, 47, 0.08), transparent 25%),
@@ -1004,7 +1081,6 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
 }
 
 .plans-grid {
-    display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 22px;
     align-items: stretch;
@@ -1014,10 +1090,6 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     position: relative;
     min-height: 580px;
     padding: 34px 30px 30px;
-    border: 1px solid var(--agro-border);
-    border-radius: var(--agro-radius-md);
-    background: #ffffff;
-    box-shadow: var(--agro-shadow-sm);
     display: flex;
     flex-direction: column;
 
@@ -1124,13 +1196,15 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     margin-top: auto;
 }
 
-/* Testimonials */
+/* =========================================================
+   TESTIMONIOS
+   ========================================================= */
+
 .testimonials-section {
     background: #ffffff;
 }
 
 .testimonials-grid {
-    display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
 }
@@ -1138,18 +1212,13 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
 .testimonial-card {
     min-height: 320px;
     padding: 30px;
-    border: 1px solid var(--agro-border);
-    border-radius: var(--agro-radius-md);
     background: #fbfcfb;
     display: flex;
     flex-direction: column;
-    transition:
-        transform var(--agro-transition),
-        box-shadow var(--agro-transition),
-        background-color var(--agro-transition);
+
+    @include hover-lift(-4px);
 
     &:hover {
-        transform: translateY(-4px);
         background: #ffffff;
         box-shadow: var(--agro-shadow-sm);
     }
@@ -1220,7 +1289,10 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     font-weight: 700;
 }
 
-/* CTA */
+/* =========================================================
+   CTA FINAL
+   ========================================================= */
+
 .final-cta-section {
     padding: 24px 0 112px;
     background: #ffffff;
@@ -1293,99 +1365,235 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 }
 
-/* Footer */
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
 .public-footer {
-    padding: 76px 0 28px;
-    background: #123524;
+    position: relative;
+    padding: 82px 0 28px;
+    background:
+        radial-gradient(circle at 8% 10%, rgba(22, 163, 74, 0.22), transparent 28%),
+        radial-gradient(circle at 92% 100%, rgba(220, 252, 231, 0.12), transparent 26%),
+        linear-gradient(135deg, #123524 0%, #0f2f20 55%, #082719 100%);
     color: #ffffff;
+    overflow: hidden;
+}
+
+.footer-decoration {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.footer-decoration-one {
+    top: -120px;
+    right: -120px;
+    width: 320px;
+    height: 320px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.footer-decoration-two {
+    left: -90px;
+    bottom: -130px;
+    width: 260px;
+    height: 260px;
+    background: rgba(22, 163, 74, 0.1);
 }
 
 .footer-grid {
+    position: relative;
+    z-index: 2;
     padding-bottom: 54px;
     display: grid;
-    grid-template-columns: minmax(280px, 1.6fr) repeat(3, minmax(140px, 0.6fr));
-    gap: 56px;
+    grid-template-columns: minmax(280px, 1.55fr) repeat(3, minmax(150px, 0.7fr));
+    gap: 54px;
 }
 
-.footer-brand {
-    p {
-        max-width: 390px;
-        margin: 22px 0 0;
-        color: rgba(255, 255, 255, 0.58);
-        font-size: 0.84rem;
-        line-height: 1.7;
-    }
+.footer-brand p {
+    max-width: 420px;
+    margin: 22px 0 0;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.88rem;
+    line-height: 1.75;
 }
 
 .footer-logo-link {
     color: #ffffff;
+    text-decoration: none;
+}
 
-    .brand-copy strong {
-        color: #ffffff;
-    }
+.footer-logo-link .brand-copy strong {
+    color: #ffffff;
+}
 
-    .brand-copy small {
-        color: rgba(255, 255, 255, 0.56);
-    }
+.footer-logo-link .brand-copy small {
+    color: rgba(255, 255, 255, 0.62);
 }
 
 .footer-logo-wrapper {
-    border-color: rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+}
+
+.footer-social {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-social a {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: #dcfce7;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.footer-social a:hover {
+    background: #dcfce7;
+    color: #166534;
+    transform: translateY(-2px);
 }
 
 .footer-column {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 9px;
+    gap: 11px;
+}
 
-    h3 {
-        margin-bottom: 9px;
-        color: #ffffff;
-        font-size: 0.84rem;
-        font-weight: 700;
-    }
+.footer-column h3 {
+    margin-bottom: 10px;
+    color: #ffffff;
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
 
-    button,
-    a,
-    span {
-        padding: 0;
-        border: 0;
-        background: transparent;
-        color: rgba(255, 255, 255, 0.58);
-        text-align: left;
-        text-decoration: none;
-        font-size: 0.79rem;
-        line-height: 1.45;
-    }
+.footer-column button,
+.footer-column a,
+.footer-column span {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.66);
+    text-align: left;
+    text-decoration: none;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    transition: all 0.2s ease;
+}
 
-    button:hover,
-    a:hover {
-        color: var(--agro-accent);
-    }
+.footer-column button:hover,
+.footer-column a:hover {
+    color: #dcfce7;
+    transform: translateX(3px);
+}
+
+.footer-column i {
+    width: 27px;
+    height: 27px;
+    min-width: 27px;
+    border-radius: 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: #dcfce7;
+    font-size: 0.9rem;
+}
+
+.footer-column a:hover i {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.footer-legal a {
+    font-weight: 600;
 }
 
 .footer-bottom {
+    position: relative;
+    z-index: 2;
     padding-top: 24px;
-    border-top: 1px solid rgba(255, 255, 255, 0.09);
+    border-top: 1px solid rgba(255, 255, 255, 0.11);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    color: rgba(255, 255, 255, 0.42);
-    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.75rem;
+}
+
+/* Responsive Footer */
+@media (max-width: 1100px) {
+    .footer-grid {
+        grid-template-columns: 1.4fr repeat(2, 1fr);
+        gap: 40px;
+    }
+
+    .footer-legal {
+        grid-column: 2;
+    }
+}
+
+@media (max-width: 860px) {
+    .public-footer {
+        padding-top: 64px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+
+    .footer-legal {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 680px) {
+    .public-footer {
+        padding-top: 58px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding-bottom: 38px;
+    }
+
+    .footer-brand p {
+        max-width: 100%;
+    }
+
+    .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
 }
 
 /* =========================================================
-   SECCIONES DE VALOR AGREGADO
+   VALIDACIÓN DEL MERCADO
    ========================================================= */
-
-.section-block[id] {
-    scroll-margin-top: 92px;
-}
-
-/* Validación del mercado */
 
 .market-validation-heading {
     max-width: 720px;
@@ -1446,7 +1654,9 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     text-align: center;
 }
 
-/* Problema y solución */
+/* =========================================================
+   PROBLEMA Y SOLUCIÓN
+   ========================================================= */
 
 .problem-solution-section {
     padding-top: 132px;
@@ -1454,7 +1664,6 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
 }
 
 .comparison-grid {
-    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 24px;
 }
@@ -1462,10 +1671,7 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
 .comparison-card {
     min-height: 420px;
     padding: 34px;
-    border: 1px solid var(--agro-border);
     border-radius: var(--agro-radius-lg);
-    background: #ffffff;
-    box-shadow: var(--agro-shadow-sm);
 }
 
 .comparison-card-manual {
@@ -1478,6 +1684,17 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     background:
         linear-gradient(180deg, rgba(233, 247, 239, 0.8), #ffffff 48%);
     box-shadow: 0 24px 60px rgba(25, 135, 84, 0.1);
+
+    .comparison-icon {
+        border-color: #cfe7d7;
+        background: var(--agro-primary-soft);
+        color: var(--agro-primary);
+    }
+
+    .comparison-list i {
+        background: var(--agro-primary-soft);
+        color: var(--agro-primary);
+    }
 }
 
 .comparison-card-heading {
@@ -1503,29 +1720,6 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         font-size: 1.22rem;
         line-height: 1.3;
     }
-}
-
-.comparison-icon {
-    width: 50px;
-    height: 50px;
-    flex: 0 0 auto;
-    border: 1px solid var(--agro-border);
-    border-radius: 12px;
-    background: var(--agro-background);
-    color: var(--agro-muted);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    i {
-        font-size: 1.35rem;
-    }
-}
-
-.comparison-card-digital .comparison-icon {
-    border-color: #cfe7d7;
-    background: var(--agro-primary-soft);
-    color: var(--agro-primary);
 }
 
 .comparison-list {
@@ -1559,12 +1753,9 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 }
 
-.comparison-card-digital .comparison-list i {
-    background: var(--agro-primary-soft);
-    color: var(--agro-primary);
-}
-
-/* Cómo funciona */
+/* =========================================================
+   CÓMO FUNCIONA
+   ========================================================= */
 
 .how-it-works-section {
     background: #ffffff;
@@ -1572,7 +1763,6 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
 
 .steps-grid {
     position: relative;
-    display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 22px;
 
@@ -1597,10 +1787,6 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     z-index: 1;
     min-height: 330px;
     padding: 30px;
-    border: 1px solid var(--agro-border);
-    border-radius: var(--agro-radius-md);
-    background: #ffffff;
-    box-shadow: var(--agro-shadow-sm);
 
     h3 {
         margin: 24px 0 11px;
@@ -1626,22 +1812,6 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     letter-spacing: -0.04em;
 }
 
-.step-icon {
-    width: 54px;
-    height: 54px;
-    border: 1px solid #d6e7db;
-    border-radius: 14px;
-    background: var(--agro-primary-soft);
-    color: var(--agro-primary);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    i {
-        font-size: 1.35rem;
-    }
-}
-
 .steps-action {
     margin-top: 34px;
     display: flex;
@@ -1655,7 +1825,9 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 }
 
-/* Experiencia móvil */
+/* =========================================================
+   EXPERIENCIA MÓVIL
+   ========================================================= */
 
 .mobile-experience-section {
     background: #ffffff;
@@ -1703,15 +1875,8 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 
     > div > i {
-        width: 40px;
-        height: 40px;
+        @include icon-box(40px, 10px);
         flex: 0 0 auto;
-        border-radius: 10px;
-        background: var(--agro-primary-soft);
-        color: var(--agro-primary);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
         font-size: 1.05rem;
     }
 
@@ -1806,9 +1971,8 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         border-radius: 10px;
         background: #ffffff;
         color: var(--agro-primary);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+
+        @include flex-center;
     }
 }
 
@@ -1894,9 +2058,8 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     border-radius: 10px;
     background: #eaf4ff;
     color: #3977a7;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+
+    @include flex-center;
 
     &.warning {
         background: #fff5df;
@@ -1955,14 +2118,15 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 }
 
-/* Evidencia del estudio */
+/* =========================================================
+   EVIDENCIA
+   ========================================================= */
 
 .evidence-section {
     background: #ffffff;
 }
 
 .insights-grid {
-    display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
 }
@@ -1970,8 +2134,6 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
 .insight-card {
     min-height: 280px;
     padding: 29px;
-    border: 1px solid var(--agro-border);
-    border-radius: var(--agro-radius-md);
     background: var(--agro-background);
 
     > strong {
@@ -1990,14 +2152,7 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
 }
 
 .insight-icon {
-    width: 48px;
-    height: 48px;
     border-radius: 12px;
-    background: var(--agro-primary-soft);
-    color: var(--agro-primary);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
 
     i {
         font-size: 1.25rem;
@@ -2028,7 +2183,9 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 }
 
-/* Preguntas frecuentes */
+/* =========================================================
+   FAQ
+   ========================================================= */
 
 .faq-section {
     background: var(--agro-background);
@@ -2110,151 +2267,18 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     }
 }
 
-/* Ajustes responsivos de las nuevas secciones */
+/* =========================================================
+   RESPONSIVE 1100px
+   ========================================================= */
 
 @media (max-width: 1100px) {
-    .mobile-experience-grid {
-        grid-template-columns: 1fr;
-        gap: 48px;
-    }
-
-    .mobile-experience-copy {
-        max-width: 760px;
-    }
-
-    .mobile-preview {
-        width: min(680px, 100%);
-        margin: 0 auto;
-    }
-
+    .hero-grid,
+    .mobile-experience-grid,
     .faq-layout {
         grid-template-columns: 1fr;
-        gap: 40px;
     }
 
-    .faq-intro {
-        position: static;
-        max-width: 720px;
-    }
-}
-
-@media (max-width: 860px) {
-    .problem-solution-section {
-        padding-top: 108px;
-    }
-
-    .comparison-grid,
-    .insights-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .comparison-card {
-        min-height: auto;
-    }
-
-    .steps-grid {
-        grid-template-columns: 1fr;
-
-        &::before {
-            display: none;
-        }
-    }
-
-    .step-card {
-        min-height: auto;
-    }
-
-    .mobile-preview-note {
-        right: 0;
-    }
-}
-
-@media (max-width: 680px) {
-    .market-validation-heading {
-        text-align: left;
-    }
-
-    .market-source {
-        padding: 0 12px;
-        text-align: left;
-    }
-
-    .market-stat {
-        min-height: auto;
-        align-items: flex-start;
-
-        span {
-            max-width: none;
-        }
-    }
-
-    .problem-solution-section {
-        padding-top: 72px;
-    }
-
-    .comparison-card,
-    .step-card,
-    .insight-card {
-        padding: 24px;
-    }
-
-    .comparison-card-heading {
-        align-items: flex-start;
-    }
-
-    .steps-action {
-        align-items: stretch;
-        flex-direction: column;
-
-        .agro-button {
-            width: 100%;
-        }
-
-        > span {
-            text-align: center;
-        }
-    }
-
-    .mobile-experience-grid {
-        gap: 26px;
-    }
-
-    .mobile-preview {
-        min-height: 600px;
-
-        &::before {
-            width: 360px;
-            height: 360px;
-        }
-    }
-
-    .phone-frame {
-        width: 276px;
-    }
-
-    .mobile-preview-note {
-        right: 0;
-        bottom: 30px;
-        left: 0;
-        max-width: 100%;
-    }
-
-    .faq-list summary {
-        min-height: 62px;
-        padding: 17px;
-        font-size: 0.85rem;
-    }
-
-    .faq-list details p {
-        padding: 0 17px 18px;
-        font-size: 0.8rem;
-    }
-}
-
-/* Responsive */
-@media (max-width: 1100px) {
     .hero-grid {
-        grid-template-columns: 1fr;
         gap: 58px;
     }
 
@@ -2262,9 +2286,19 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         max-width: 800px;
     }
 
-    .hero-visual {
+    .hero-visual,
+    .mobile-preview {
         width: min(720px, 100%);
         margin: 0 auto;
+    }
+
+    .mobile-experience-grid {
+        gap: 48px;
+    }
+
+    .mobile-experience-copy,
+    .faq-intro {
+        max-width: 760px;
     }
 
     .quick-stats-banner {
@@ -2288,7 +2322,9 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         }
     }
 
-    .benefits-grid {
+    .benefits-grid,
+    .plans-grid,
+    .testimonials-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -2297,25 +2333,13 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         gap: 44px;
     }
 
-    .features-intro {
+    .features-intro,
+    .faq-intro {
         position: static;
         max-width: 720px;
     }
 
-    .plans-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .plan-card:last-child:nth-child(odd) {
-        grid-column: 1 / -1;
-        width: min(560px, 100%);
-        justify-self: center;
-    }
-
-    .testimonials-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
+    .plan-card:last-child:nth-child(odd),
     .testimonial-card:last-child:nth-child(odd) {
         grid-column: 1 / -1;
         width: min(560px, 100%);
@@ -2329,7 +2353,15 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     .footer-column:last-child {
         grid-column: 2;
     }
+
+    .faq-layout {
+        gap: 40px;
+    }
 }
+
+/* =========================================================
+   RESPONSIVE 860px
+   ========================================================= */
 
 @media (max-width: 860px) {
     .section-container,
@@ -2405,6 +2437,29 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         padding: 88px 0;
     }
 
+    .problem-solution-section {
+        padding-top: 108px;
+    }
+
+    .comparison-grid,
+    .insights-grid,
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .comparison-card,
+    .step-card {
+        min-height: auto;
+    }
+
+    .steps-grid::before {
+        display: none;
+    }
+
+    .mobile-preview-note {
+        right: 0;
+    }
+
     .final-cta {
         padding: 48px 40px;
         flex-direction: column;
@@ -2416,6 +2471,10 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         gap: 36px;
     }
 }
+
+/* =========================================================
+   RESPONSIVE 680px
+   ========================================================= */
 
 @media (max-width: 680px) {
     .section-container,
@@ -2481,16 +2540,17 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         gap: 10px;
     }
 
-    .dashboard-metrics {
+    .dashboard-metrics,
+    .dashboard-body,
+    .benefits-grid,
+    .features-grid,
+    .plans-grid,
+    .testimonials-grid {
         grid-template-columns: 1fr;
     }
 
     .metric-card {
         min-height: 130px;
-    }
-
-    .dashboard-body {
-        grid-template-columns: 1fr;
     }
 
     .floating-insight,
@@ -2536,24 +2596,86 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         }
     }
 
+    .market-validation-heading,
+    .section-heading {
+        text-align: left;
+    }
+
+    .market-source {
+        padding: 0 12px;
+        text-align: left;
+    }
+
+    .market-stat {
+        min-height: auto;
+        align-items: flex-start;
+
+        span {
+            max-width: none;
+        }
+    }
+
     .section-block {
         padding: 72px 0;
     }
 
     .section-heading {
         margin-bottom: 38px;
-        text-align: left;
 
         h2 {
             font-size: clamp(2rem, 10vw, 2.7rem);
         }
     }
 
-    .benefits-grid,
-    .features-grid,
-    .plans-grid,
-    .testimonials-grid {
-        grid-template-columns: 1fr;
+    .problem-solution-section {
+        padding-top: 72px;
+    }
+
+    .comparison-card,
+    .step-card,
+    .insight-card {
+        padding: 24px;
+    }
+
+    .comparison-card-heading {
+        align-items: flex-start;
+    }
+
+    .steps-action {
+        align-items: stretch;
+        flex-direction: column;
+
+        .agro-button {
+            width: 100%;
+        }
+
+        > span {
+            text-align: center;
+        }
+    }
+
+    .mobile-experience-grid {
+        gap: 26px;
+    }
+
+    .mobile-preview {
+        min-height: 600px;
+
+        &::before {
+            width: 360px;
+            height: 360px;
+        }
+    }
+
+    .phone-frame {
+        width: 276px;
+    }
+
+    .mobile-preview-note {
+        right: 0;
+        bottom: 30px;
+        left: 0;
+        max-width: 100%;
     }
 
     .plan-card:last-child:nth-child(odd),
@@ -2579,6 +2701,17 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
 
     .plan-header p {
         min-height: auto;
+    }
+
+    .faq-list summary {
+        min-height: 62px;
+        padding: 17px;
+        font-size: 0.85rem;
+    }
+
+    .faq-list details p {
+        padding: 0 17px 18px;
+        font-size: 0.8rem;
     }
 
     .final-cta-section {
@@ -2617,6 +2750,10 @@ $font-family-original: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         flex-direction: column;
     }
 }
+
+/* =========================================================
+   ACCESIBILIDAD
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
     .public-home *,

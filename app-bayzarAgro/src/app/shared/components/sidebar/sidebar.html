@@ -2,7 +2,10 @@
 <button type="button" class="mobile-menu-btn" [class.hide-btn]="menuMovilAbierto" (click)="abrirMenuMovil()">
 
     <i class="bi bi-list"></i>
-    <span>Menú</span>
+
+    <span>
+        Menú
+    </span>
 
 </button>
 
@@ -33,8 +36,6 @@
         </button>
 
     </div>
-
-    
 
     <!-- Navegación -->
     <nav class="sidebar-menu">
@@ -84,6 +85,7 @@
         <!-- Administración -->
         @if (esAdministrador()) {
 
+        <hr>
         <div class="menu-section">
             Administración
         </div>
@@ -109,6 +111,9 @@
         </ul>
 
         <!-- Catálogos agrícolas -->
+
+        <hr>
+
         <div class="menu-section">
             Catálogos agrícolas
         </div>
@@ -171,6 +176,8 @@
         }
 
         <!-- Gestión de fincas -->
+
+        <hr>
         <div class="menu-section">
             Gestión de fincas
         </div>
@@ -212,6 +219,8 @@
         </ul>
 
         <!-- Operación agrícola -->
+        <hr>
+
         <div class="menu-section">
             Operación agrícola
         </div>
@@ -269,6 +278,8 @@
         </ul>
 
         <!-- Recursos -->
+
+        <hr>
         <div class="menu-section">
             Recursos
         </div>
@@ -294,6 +305,8 @@
         </ul>
 
         <!-- Finanzas -->
+
+        <hr>
         <div class="menu-section">
             Finanzas
         </div>
@@ -334,7 +347,8 @@
 
             <li class="nav-item">
 
-                <a class="nav-link" routerLink="/app/reportes/financiero" routerLinkActive="active">
+                <a class="nav-link" routerLink="/app/reportes/financiero" routerLinkActive="active"
+                    (click)="cerrarMenuMovil()">
 
                     <span class="nav-icon">
                         <i class="bi bi-bar-chart-line"></i>
@@ -360,7 +374,6 @@
             <i class="bi bi-shield-check"></i>
 
             <div>
-
                 <strong>
                     Datos protegidos
                 </strong>
@@ -368,7 +381,6 @@
                 <small>
                     Información privada por agricultor
                 </small>
-
             </div>
 
         </div>
