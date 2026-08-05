@@ -1,15 +1,22 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  inject
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+
+import { catchError, finalize, of, timeout } from 'rxjs';
 
 import { Alerta } from '../../../shared/services/alerta';
 import { IAlerta } from '../../../shared/interfaces/ialerta';
-
-import { Mensaje } from '../../../shared/components/mensaje/mensaje';
 
 @Component({
   selector: 'app-listar-alerta',
@@ -18,18 +25,17 @@ import { Mensaje } from '../../../shared/components/mensaje/mensaje';
     CommonModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule,
-    MatDialogModule
+    MatSortModule
   ],
   templateUrl: './listar-alerta.html',
   styleUrl: './listar-alerta.scss'
 })
-export class ListarAlerta implements OnInit {
+export class ListarAlerta implements OnInit, AfterViewInit {
 
-  private servicio = inject(Alerta);
-  private dialogo = inject(MatDialog);
+  private servicioAlerta = inject(Alerta);
 
   public cargando = false;
+  public alertas: IAlerta[] = [];
 
   public columnas: string[] = [
     'nivel',
@@ -40,7 +46,7 @@ export class ListarAlerta implements OnInit {
     'origen'
   ];
 
-  public dataSource = new MatTableDataSource<IAlerta>();
+  public dataSource = new MatTableDataSource<IAlerta>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -49,46 +55,40 @@ export class ListarAlerta implements OnInit {
     this.listar();
   }
 
+  public ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   public listar(): void {
 
     this.cargando = true;
 
-    this.servicio.listar().subscribe({
+    this.servicioAlerta.listar().pipe(
+      timeout({
+        first: 8000
+      }),
+      catchError((err) => {
+        console.error('Error al cargar alertas:', err);
+
+        this.alertas = [];
+        this.dataSource.data = [];
+
+        return of([]);
+      }),
+      finalize(() => {
+        this.cargando = false;
+      })
+    ).subscribe({
       next: (resp: IAlerta[]) => {
-        this.dataSource = new MatTableDataSource(resp);
 
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.alertas = resp || [];
+        this.dataSource.data = this.alertas;
 
-        this.dataSource.filterPredicate = (
-          item: IAlerta,
-          filtro: string
-        ) => {
-
-          const texto = `
-            ${item.tipo}
-            ${item.titulo}
-            ${item.mensaje}
-            ${item.nivel}
-            ${item.origen}
-            ${item.fecha || ''}
-          `.toLowerCase();
-
-          return texto.includes(filtro);
-        };
-
-        this.cargando = false;
-      },
-      error: (err) => {
-        console.error(err);
-
-        this.cargando = false;
-
-        this.mostrarMensaje(
-          'Error',
-          'No se pudieron cargar las alertas.',
-          'error'
-        );
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
       }
     });
   }
@@ -104,6 +104,12 @@ export class ListarAlerta implements OnInit {
     }
   }
 
+  public contarPorNivel(nivel: string): number {
+    return this.alertas.filter(
+      alerta => alerta.nivel === nivel
+    ).length;
+  }
+
   public claseNivel(nivel: string): string {
 
     if (nivel === 'Crítica') {
@@ -114,7 +120,11 @@ export class ListarAlerta implements OnInit {
       return 'bg-warning text-dark';
     }
 
-    return 'bg-info text-dark';
+    if (nivel === 'Informativa') {
+      return 'bg-info text-dark';
+    }
+
+    return 'bg-secondary';
   }
 
   public iconoNivel(nivel: string): string {
@@ -127,29 +137,10 @@ export class ListarAlerta implements OnInit {
       return 'bi-exclamation-triangle';
     }
 
-    return 'bi-info-circle';
-  }
+    if (nivel === 'Informativa') {
+      return 'bi-info-circle';
+    }
 
-  public contarPorNivel(nivel: string): number {
-    return this.dataSource.data.filter(
-      item => item.nivel === nivel
-    ).length;
-  }
-
-  private mostrarMensaje(
-    titulo: string,
-    mensaje: string,
-    tipo: string
-  ): void {
-
-    this.dialogo.open(Mensaje, {
-      width: '100%',
-      maxWidth: '420px',
-      data: {
-        titulo: titulo,
-        mensaje: mensaje,
-        tipo: tipo
-      }
-    });
+    return 'bi-bell';
   }
 }

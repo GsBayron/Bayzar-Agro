@@ -69,48 +69,48 @@
 
             @if(menuPerfilAbierto) {
 
-                <div
-                    class="profile-dropdown"
-                    role="menu">
+            <div
+                class="profile-dropdown"
+                role="menu">
 
-                    <div class="profile-dropdown-header">
+                <div class="profile-dropdown-header">
 
-                        <div class="dropdown-avatar">
-                            {{ usuario?.nombre?.charAt(0) || 'U' }}
-                        </div>
+                    <div class="dropdown-avatar">
+                        {{ usuario?.nombre?.charAt(0) || 'U' }}
+                    </div>
 
-                        <div>
+                    <div>
 
-                            <strong>
-                                {{ usuario?.nombre || 'Usuario' }}
-                            </strong>
+                        <strong>
+                            {{ usuario?.nombre || 'Usuario' }}
+                        </strong>
 
-                            <small>
-                                {{ usuario?.rol || 'Sesión activa' }}
-                            </small>
-
-                        </div>
+                        <small>
+                            {{ usuario?.rol || 'Sesión activa' }}
+                        </small>
 
                     </div>
 
-                    <div class="profile-dropdown-divider"></div>
-
-                    <button
-                        type="button"
-                        class="profile-dropdown-item"
-                        routerLink="/app/perfil"
-                        (click)="cerrarMenuPerfil()"
-                        role="menuitem">
-
-                        <i class="bi bi-person-gear"></i>
-
-                        <span>
-                            Administrar perfil
-                        </span>
-
-                    </button>
-
                 </div>
+
+                <div class="profile-dropdown-divider"></div>
+
+                <button
+                    type="button"
+                    class="profile-dropdown-item"
+                    routerLink="/app/perfil"
+                    (click)="cerrarMenuPerfil()"
+                    role="menuitem">
+
+                    <i class="bi bi-person-gear"></i>
+
+                    <span>
+                        Administrar perfil
+                    </span>
+
+                </button>
+
+            </div>
 
             }
 
