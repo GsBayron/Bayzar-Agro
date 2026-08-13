@@ -1,236 +1,441 @@
 <div class="login-page">
 
+    <!-- =====================================================
+         NAVBAR
+         ===================================================== -->
+
     <header class="login-navbar">
 
         <div class="navbar-container">
 
-            <a
-                class="brand"
-                routerLink="/"
-                aria-label="Ir al inicio de BayzarAgro">
+            <a class="brand" routerLink="/" aria-label="Ir al inicio de BayzarAgro">
 
                 <span class="brand-logo-wrapper">
-                    <img
-                        src="/Logo4.png"
-                        alt="Logo de BayzarAgro"
-                        class="brand-logo">
+
+                    <img src="/Logo4.png" alt="Logo de BayzarAgro" class="brand-logo">
+
                 </span>
 
                 <span class="brand-copy">
-                    <strong>BayzarAgro</strong>
-                    <small>Gestión agrícola digital</small>
+
+                    <strong>
+                        BayzarAgro
+                    </strong>
+
+                    <small>
+                        Tecnología que impulsa el campo
+                    </small>
+
                 </span>
 
             </a>
 
-            <div class="navbar-access">
-                <span>¿Todavía no tiene una cuenta?</span>
 
-                <a
-                    routerLink="/registro"
-                    [queryParams]="{ plan: 'gratuito' }"
-                    class="register-link">
+            <div class="navbar-access">
+
+                <span>
+                    ¿Todavía no tiene una cuenta?
+                </span>
+
+                <a routerLink="/registro" [queryParams]="{ plan: 'gratuito' }" class="register-link">
+
                     Crear cuenta gratis
+
                     <i class="bi bi-arrow-up-right"></i>
+
                 </a>
+
             </div>
 
         </div>
 
     </header>
 
+
+
+    <!-- =====================================================
+         CONTENIDO
+         ===================================================== -->
+
     <main class="login-main">
 
-        <div class="login-shell">
+        <div class="login-layout">
 
-            <aside class="login-info">
 
-                <div class="info-content">
+            <!-- =================================================
+                 PANEL VISUAL
+                 ================================================= -->
 
-                    <div class="info-badge">
-                        <span></span>
-                        Acceso a BayzarAgro
+            <aside class="login-visual">
+
+                <div class="login-visual-background"></div>
+                <div class="login-visual-overlay"></div>
+
+
+                <div class="visual-content">
+
+                    <div class="visual-badge">
+
+                        <i class="bi bi-leaf"></i>
+
+                        Gestión agrícola digital
+
                     </div>
+
 
                     <h1>
-                        Toda la gestión de su finca en un solo lugar
+
+                        Su finca.
+                        <span>
+                            Siempre bajo control.
+                        </span>
+
                     </h1>
 
-                    <p class="info-description">
-                        Ingrese a su cuenta para consultar fincas, cultivos,
-                        actividades, inventario, plagas y reportes desde una
-                        plataforma clara y segura.
+
+                    <p>
+
+                        Acceda a BayzarAgro para consultar
+                        y administrar la información de su operación
+                        desde un solo lugar.
+
                     </p>
 
-                    <div class="info-list">
 
-                        <div class="info-item">
-                            <span class="info-icon">
+                    <div class="visual-benefits">
+
+
+                        <div>
+
+                            <span class="benefit-icon">
+
                                 <i class="bi bi-check-lg"></i>
+
                             </span>
 
                             <div>
-                                <strong>Control agrícola centralizado</strong>
-                                <small>Organice la información de su operación.</small>
+
+                                <strong>
+                                    Información centralizada
+                                </strong>
+
+                                <small>
+                                    Fincas, cultivos, actividades e inventario.
+                                </small>
+
                             </div>
+
                         </div>
 
-                        <div class="info-item">
-                            <span class="info-icon">
+
+                        <div>
+
+                            <span class="benefit-icon">
+
                                 <i class="bi bi-check-lg"></i>
+
                             </span>
 
                             <div>
-                                <strong>Seguimiento oportuno</strong>
-                                <small>Revise actividades, inventario y cultivos.</small>
+
+                                <strong>
+                                    Seguimiento oportuno
+                                </strong>
+
+                                <small>
+                                    Consulte alertas y actividades pendientes.
+                                </small>
+
                             </div>
+
                         </div>
 
-                        <div class="info-item">
-                            <span class="info-icon">
+
+                        <div>
+
+                            <span class="benefit-icon">
+
                                 <i class="bi bi-check-lg"></i>
+
                             </span>
 
                             <div>
-                                <strong>Información protegida</strong>
-                                <small>Acceso seguro según su usuario y rol.</small>
+
+                                <strong>
+                                    Acceso protegido
+                                </strong>
+
+                                <small>
+                                    Información disponible según su usuario y rol.
+                                </small>
+
                             </div>
+
                         </div>
+
 
                     </div>
 
                 </div>
 
-                <div class="info-summary">
-                    <span class="summary-icon">
+
+
+                <!-- Tarjeta flotante -->
+
+                <div class="visual-insight">
+
+                    <div class="visual-insight-icon">
+
                         <i class="bi bi-shield-check"></i>
-                    </span>
+
+                    </div>
 
                     <div>
-                        <strong>Acceso seguro</strong>
-                        <span>
-                            Sus datos se mantienen protegidos dentro del sistema.
-                        </span>
+
+                        <small>
+                            Acceso seguro
+                        </small>
+
+                        <strong>
+                            Su información protegida
+                        </strong>
+
                     </div>
+
+                    <span class="visual-insight-status">
+
+                        <i class="bi bi-circle-fill"></i>
+
+                        Activo
+
+                    </span>
+
                 </div>
 
-                <span class="info-decoration info-decoration-one"></span>
-                <span class="info-decoration info-decoration-two"></span>
 
             </aside>
 
-            <section class="login-card" aria-labelledby="login-title">
 
-                <div class="form-heading">
 
-                    <a routerLink="/" class="back-link">
-                        <i class="bi bi-arrow-left"></i>
-                        Volver al inicio
-                    </a>
+            <!-- =================================================
+                 PANEL LOGIN
+                 ================================================= -->
 
-                    <span class="form-step">Acceso al sistema</span>
+            <section class="login-panel" aria-labelledby="login-title">
 
-                    <h2 id="login-title">
-                        Iniciar sesión
-                    </h2>
 
-                    <p>
-                        Ingrese sus credenciales para continuar al panel de
-                        control agrícola de BayzarAgro.
-                    </p>
+                <div class="login-panel-inner">
 
-                </div>
 
-                @if(mensajeSesion) {
+                    <div class="form-heading">
+
+
+                        <a routerLink="/" class="back-link">
+
+                            <i class="bi bi-arrow-left"></i>
+
+                            Volver al inicio
+
+                        </a>
+
+
+                        <div class="form-badge">
+
+                            <i class="bi bi-shield-lock"></i>
+
+                            Acceso a BayzarAgro
+
+                        </div>
+
+
+                        <h2 id="login-title">
+                            Bienvenido de nuevo
+                        </h2>
+
+
+                        <p>
+
+                            Ingrese sus credenciales para continuar
+                            administrando su operación agrícola.
+
+                        </p>
+
+                    </div>
+
+
+
+                    @if(mensajeSesion) {
 
                     <div class="status-message status-message-warning" role="alert">
+
                         <i class="bi bi-exclamation-circle"></i>
-                        <span>{{ mensajeSesion }}</span>
+
+                        <span>
+                            {{ mensajeSesion }}
+                        </span>
+
                     </div>
-
-                }
-
-                <form
-                    class="login-form"
-                    [formGroup]="formulario"
-                    (ngSubmit)="ingresar()">
-
-                    <div class="form-field">
-                        <label for="login-usuario">
-                            Usuario
-                        </label>
-
-                        <div class="input-with-icon">
-                            <i class="bi bi-person"></i>
-
-                            <input
-                                id="login-usuario"
-                                type="text"
-                                formControlName="acceso"
-                                placeholder="Ingrese su usuario"
-                                autocomplete="username">
-                        </div>
-                    </div>
-
-                    <div class="form-field">
-                        <label for="login-contrasena">
-                            Contraseña
-                        </label>
-
-                        <div class="input-with-icon">
-                            <i class="bi bi-lock"></i>
-
-                            <input
-                                id="login-contrasena"
-                                type="password"
-                                formControlName="secreto"
-                                placeholder="Ingrese su contraseña"
-                                autocomplete="current-password">
-                        </div>
-                    </div>
-
-                    @if(error()) {
-
-                        <div class="status-message status-message-error" role="alert">
-                            <i class="bi bi-exclamation-triangle"></i>
-                            <span>{{ error() }}</span>
-                        </div>
 
                     }
 
-                    <button
-                        type="submit"
-                        class="login-button"
-                        [disabled]="cargando()">
 
-                        @if(cargando()) {
-                            <span class="button-spinner" aria-hidden="true"></span>
-                            Ingresando...
-                        } @else {
-                            Ingresar
-                            <i class="bi bi-arrow-right"></i>
+
+                    <form class="login-form" [formGroup]="formulario" (ngSubmit)="ingresar()">
+
+
+
+                        <!-- Usuario -->
+
+                        <div class="form-field">
+
+                            <label for="login-usuario">
+
+                                Usuario
+
+                                <span>*</span>
+
+                            </label>
+
+
+                            <div class="input-wrapper">
+
+                                <i class="bi bi-person"></i>
+
+                                <input id="login-usuario" type="text" formControlName="acceso"
+                                    placeholder="Ingrese su usuario" autocomplete="username">
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Contraseña -->
+
+                        <div class="form-field">
+
+                            <div class="field-label-row">
+
+                                <label for="login-contrasena">
+
+                                    Contraseña
+
+                                    <span>*</span>
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="input-wrapper">
+
+                                <i class="bi bi-lock"></i>
+
+                                <input id="login-contrasena" type="password" formControlName="secreto"
+                                    placeholder="Ingrese su contraseña" autocomplete="current-password">
+
+                            </div>
+
+                        </div>
+
+
+
+                        @if(error()) {
+
+                        <div class="status-message status-message-error" role="alert">
+
+                            <i class="bi bi-exclamation-triangle"></i>
+
+                            <span>
+                                {{ error() }}
+                            </span>
+
+                        </div>
+
                         }
 
-                    </button>
 
-                    <div class="account-access">
-                        <span>¿Todavía no tiene una cuenta?</span>
 
-                        <a
-                            routerLink="/registro"
-                            [queryParams]="{ plan: 'gratuito' }">
-                            Crear cuenta gratis
-                        </a>
+                        <!-- Botón -->
+
+                        <button type="submit" class="login-button" [disabled]="cargando()">
+
+
+                            @if(cargando()) {
+
+                            <span class="button-spinner" aria-hidden="true">
+                            </span>
+
+                            Ingresando...
+
+                            } @else {
+
+                            Iniciar sesión
+
+                            <i class="bi bi-arrow-right"></i>
+
+                            }
+
+
+                        </button>
+
+
+
+                        <!-- Registro -->
+
+                        <div class="account-access">
+
+                            <span>
+                                ¿Todavía no tiene una cuenta?
+                            </span>
+
+                            <a routerLink="/registro" [queryParams]="{ plan: 'gratuito' }">
+
+                                Crear cuenta gratis
+
+                                <i class="bi bi-arrow-up-right"></i>
+
+                            </a>
+
+                        </div>
+
+
+                    </form>
+
+
+
+                    <!-- Seguridad -->
+
+                    <div class="security-note">
+
+                        <span class="security-icon">
+
+                            <i class="bi bi-lock"></i>
+
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Conexión segura
+                            </strong>
+
+                            <small>
+
+                                Sus credenciales se utilizan únicamente
+                                para acceder de forma segura a BayzarAgro.
+
+                            </small>
+
+                        </div>
+
                     </div>
 
-                </form>
 
-                <div class="security-note">
-                    <i class="bi bi-lock"></i>
-                    <span>Conexión segura para acceder a su información agrícola.</span>
                 </div>
 
             </section>
+
 
         </div>
 

@@ -1,5 +1,9 @@
 <div class="public-home">
 
+    <!-- =====================================================
+         NAVBAR
+         ===================================================== -->
+
     <header class="public-navbar">
 
         <div class="navbar-container">
@@ -17,6 +21,7 @@
 
             </a>
 
+
             <button type="button" class="mobile-menu-button" aria-label="Abrir menú de navegación"
                 [attr.aria-expanded]="menuMovilAbierto" (click)="toggleMenuMovil()">
 
@@ -26,19 +31,18 @@
             </button>
 
 
-
             <nav class="public-nav" aria-label="Navegación principal" [class.show]="menuMovilAbierto">
 
-                <button type="button" (click)="irASeccion('beneficios')">
-                    Beneficios
+                <button type="button" (click)="irASeccion('funcionalidades')">
+                    Funcionalidades
+                </button>
+
+                <button type="button" (click)="irASeccion('tecnologia')">
+                    Tecnología
                 </button>
 
                 <button type="button" (click)="irASeccion('como-funciona')">
                     Cómo funciona
-                </button>
-
-                <button type="button" (click)="irASeccion('funcionalidades')">
-                    Funcionalidades
                 </button>
 
                 <button type="button" (click)="irASeccion('planes')">
@@ -49,14 +53,21 @@
                     Preguntas
                 </button>
 
+
                 <a routerLink="/login" class="nav-login" (click)="cerrarMenuMovil()">
+
                     Iniciar sesión
+
                 </a>
+
 
                 <a routerLink="/registro" [queryParams]="{ plan: 'gratuito' }" class="nav-cta"
                     (click)="cerrarMenuMovil()">
+
                     Comenzar gratis
-                    <i class="bi bi-arrow-right"></i>
+
+                    <i class="bi bi-arrow-up-right"></i>
+
                 </a>
 
             </nav>
@@ -65,368 +76,261 @@
 
     </header>
 
+
+
     <main>
+
+        <!-- =====================================================
+             HERO
+             ===================================================== -->
 
         <section class="hero-section">
 
-            <div class="section-container hero-grid">
+            <div class="hero-background"></div>
+            <div class="hero-overlay"></div>
+
+            <div class="section-container hero-layout">
 
                 <div class="hero-content">
 
-                    <div class="section-kicker hero-kicker">
-                        <span class="kicker-dot"></span>
-                        Tecnología que impulsa el campo
+                    <div class="hero-badge">
+                        <i class="bi bi-leaf"></i>
+                        Gestión agrícola digital
                     </div>
 
+
                     <h1>
-                        Una finca más organizada empieza con mejores datos
+                        Controle su finca.
+                        <span>Decida con mejores datos.</span>
                     </h1>
 
+
                     <p class="hero-description">
-                        Centralice el control de fincas, cultivos, actividades,
-                        inventario, costos y producción en una plataforma clara,
-                        segura y fácil de usar.
+
+                        Organice cultivos, actividades, inventario,
+                        plagas y reportes desde una sola plataforma
+                        diseñada para facilitar el trabajo agrícola.
+
                     </p>
+
 
                     <div class="hero-actions">
 
                         <a routerLink="/registro" [queryParams]="{ plan: 'gratuito' }"
-                            class="agro-button agro-button-primary">
+                            class="agro-button agro-button-lime">
 
                             Comenzar gratis
-                            <i class="bi bi-arrow-up-right"></i>
+
+                            <i class="bi bi-arrow-right"></i>
 
                         </a>
 
-                        <a routerLink="/login" class="agro-button agro-button-secondary">
 
-                            Iniciar sesión
+                        <button type="button" class="hero-secondary-action" (click)="irASeccion('funcionalidades')">
 
-                        </a>
+                            <span class="play-button">
+                                <i class="bi bi-arrow-down"></i>
+                            </span>
+
+                            Conocer BayzarAgro
+
+                        </button>
 
                     </div>
+
 
                     <div class="hero-proof">
 
-                        <div class="proof-item">
+                        <span>
                             <i class="bi bi-check2-circle"></i>
-                            <span>Sin tarjeta de crédito</span>
-                        </div>
+                            Sin tarjeta de crédito
+                        </span>
 
-                        <div class="proof-item">
+                        <span>
                             <i class="bi bi-check2-circle"></i>
-                            <span>Acceso desde cualquier dispositivo</span>
-                        </div>
+                            Acceso desde cualquier dispositivo
+                        </span>
 
                     </div>
 
                 </div>
 
-                <div class="hero-visual" aria-label="Vista previa del panel agrícola">
 
-                    <div class="visual-accent visual-accent-top"></div>
-                    <div class="visual-accent visual-accent-bottom"></div>
 
-                    <article class="dashboard-card">
+                <!-- Panel flotante -->
 
-                        <div class="dashboard-topbar">
+                <div class="hero-insight">
 
-                            <div>
-                                <small>Resumen general</small>
-                                <strong>Dashboard agrícola</strong>
-                            </div>
+                    <div class="hero-insight-header">
 
-                            <span class="dashboard-status">
-                                <span></span>
-                                Actualizado
-                            </span>
-
-                        </div>
-
-                        <div class="dashboard-metrics">
-
-                            <div class="metric-card">
-                                <span class="metric-icon">
-                                    <i class="bi bi-cash-stack"></i>
-                                </span>
-                                <small>Ingresos</small>
-                                <strong>₡250.000</strong>
-                                <em>+12% este mes</em>
-                            </div>
-
-                            <div class="metric-card">
-                                <span class="metric-icon">
-                                    <i class="bi bi-wallet2"></i>
-                                </span>
-                                <small>Costos</small>
-                                <strong>₡90.000</strong>
-                                <em>Controlados</em>
-                            </div>
-
-                            <div class="metric-card metric-card-highlight">
-                                <span class="metric-icon">
-                                    <i class="bi bi-graph-up-arrow"></i>
-                                </span>
-                                <small>Ganancia</small>
-                                <strong>₡160.000</strong>
-                                <em>Margen saludable</em>
-                            </div>
-
-                        </div>
-
-                        <div class="dashboard-body">
-
-                            <div class="activity-panel">
-
-                                <div class="panel-heading">
-                                    <strong>Actividad reciente</strong>
-                                    <span>Hoy</span>
-                                </div>
-
-                                <div class="activity-list">
-
-                                    <div class="activity-item">
-                                        <span class="activity-icon success">
-                                            <i class="bi bi-check-lg"></i>
-                                        </span>
-                                        <div>
-                                            <strong>Riego completado</strong>
-                                            <small>Parcela de café · 8:30 a. m.</small>
-                                        </div>
-                                    </div>
-
-                                    <div class="activity-item">
-                                        <span class="activity-icon warning">
-                                            <i class="bi bi-exclamation-lg"></i>
-                                        </span>
-                                        <div>
-                                            <strong>Inventario por revisar</strong>
-                                            <small>Dos productos próximos a vencer</small>
-                                        </div>
-                                    </div>
-
-                                    <div class="activity-item">
-                                        <span class="activity-icon info">
-                                            <i class="bi bi-cloud-sun"></i>
-                                        </span>
-                                        <div>
-                                            <strong>Condición climática favorable</strong>
-                                            <small>Recomendación disponible</small>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <div class="production-panel">
-
-                                <div class="panel-heading">
-                                    <strong>Producción</strong>
-                                    <span>Últimos 6 meses</span>
-                                </div>
-
-                                <div class="mini-chart" aria-hidden="true">
-                                    <span style="--bar-height: 42%"></span>
-                                    <span style="--bar-height: 56%"></span>
-                                    <span style="--bar-height: 48%"></span>
-                                    <span style="--bar-height: 70%"></span>
-                                    <span style="--bar-height: 78%"></span>
-                                    <span style="--bar-height: 92%"></span>
-                                </div>
-
-                                <div class="production-value">
-                                    <strong>+24%</strong>
-                                    <span>de crecimiento</span>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-                    <div class="floating-insight floating-insight-top">
-                        <span>
-                            <i class="bi bi-shield-check"></i>
-                        </span>
                         <div>
-                            <strong>Información segura</strong>
-                            <small>Datos protegidos</small>
+
+                            <small>
+                                Resumen de operación
+                            </small>
+
+                            <strong>
+                                Mi finca
+                            </strong>
+
                         </div>
+
+
+                        <span class="live-status">
+
+                            <i class="bi bi-circle-fill"></i>
+
+                            Actualizado
+
+                        </span>
+
                     </div>
 
-                    <div class="floating-insight floating-insight-bottom">
+
+                    <div class="insight-row">
+
                         <span>
-                            <i class="bi bi-bar-chart-line"></i>
+                            Cultivos activos
                         </span>
-                        <div>
-                            <strong>Reportes claros</strong>
-                            <small>Decisiones con datos</small>
+
+                        <strong>
+                            6
+                        </strong>
+
+                    </div>
+
+
+                    <div class="insight-progress">
+
+                        <span style="width: 78%"></span>
+
+                    </div>
+
+
+                    <div class="insight-row">
+
+                        <span>
+                            Actividades pendientes
+                        </span>
+
+                        <strong>
+                            3
+                        </strong>
+
+                    </div>
+
+
+                    <div class="insight-progress">
+
+                        <span style="width: 52%"></span>
+
+                    </div>
+
+
+                    <div class="insight-row">
+
+                        <span>
+                            Alertas por revisar
+                        </span>
+
+                        <strong>
+                            2
+                        </strong>
+
+                    </div>
+
+
+                    <div class="insight-progress">
+
+                        <span style="width: 32%"></span>
+
+                    </div>
+
+
+                    <div class="farm-status">
+
+                        <div class="farm-status-icon">
+
+                            <i class="bi bi-check-lg"></i>
+
                         </div>
+
+                        <div>
+
+                            <small>
+                                Estado general
+                            </small>
+
+                            <strong>
+                                Operación al día
+                            </strong>
+
+                        </div>
+
                     </div>
 
                 </div>
 
             </div>
 
-        </section>
 
 
+            <!-- =================================================
+                 DATOS DEL ESTUDIO
+                 ================================================= -->
 
-        <section class="quick-stats-section market-validation-section"
-            aria-label="Resultados del estudio exploratorio de BayzarAgro">
+            <div class="hero-market-data">
 
-            <div class="section-container">
+                <div class="section-container market-data-grid">
 
-                <div class="market-validation-heading">
 
-                    <span class="market-validation-label">
-                        Validación inicial del mercado
-                    </span>
+                    <div class="market-data-item">
 
-                    <p>
-                        Resultados de una encuesta exploratoria aplicada a 31 personas
-                        para conocer necesidades, hábitos y aceptación de la propuesta.
-                    </p>
-
-                </div>
-
-                <div class="quick-stats-banner market-stats-banner">
-
-                    <div class="quick-stat market-stat">
                         <strong>31</strong>
-                        <span>personas participaron en el estudio</span>
+
+                        <span>
+                            personas participaron
+                            en el estudio
+                        </span>
+
                     </div>
 
-                    <div class="quick-stat market-stat">
+
+                    <div class="market-data-item">
+
                         <strong>83,9%</strong>
-                        <span>utilizaría un sistema digital agrícola</span>
+
+                        <span>
+                            utilizaría un sistema
+                            digital agrícola
+                        </span>
+
                     </div>
 
-                    <div class="quick-stat market-stat">
+
+                    <div class="market-data-item">
+
                         <strong>83,9%</strong>
-                        <span>mostró interés en alertas automáticas</span>
+
+                        <span>
+                            mostró interés
+                            en alertas automáticas
+                        </span>
+
                     </div>
 
-                    <div class="quick-stat market-stat">
+
+                    <div class="market-data-item">
+
                         <strong>93,5%</strong>
-                        <span>usaría o recomendaría BayzarAgro</span>
+
+                        <span>
+                            usaría o recomendaría
+                            BayzarAgro
+                        </span>
+
                     </div>
 
-                </div>
-
-                <p class="market-source">
-                    Estudio exploratorio del proyecto BayzarAgro. Los resultados
-                    representan únicamente a las personas encuestadas.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <section id="problema-solucion" class="section-block problem-solution-section">
-
-            <div class="section-container">
-
-                <div class="section-heading">
-                    <span class="section-kicker">Del control manual al control digital</span>
-
-                    <h2>
-                        Toda la información de su finca, sin cuadernos dispersos
-                    </h2>
-
-                    <p>
-                        BayzarAgro transforma registros manuales y datos separados
-                        en una gestión centralizada, fácil de consultar y preparada
-                        para apoyar decisiones oportunas.
-                    </p>
-                </div>
-
-                <div class="comparison-grid">
-
-                    <article class="comparison-card comparison-card-manual">
-
-                        <div class="comparison-card-heading">
-
-                            <span class="comparison-icon">
-                                <i class="bi bi-journal-text"></i>
-                            </span>
-
-                            <div>
-                                <small>Antes</small>
-                                <h3>Control manual y disperso</h3>
-                            </div>
-
-                        </div>
-
-                        <ul class="comparison-list">
-
-                            <li>
-                                <i class="bi bi-x-lg"></i>
-                                Información almacenada en cuadernos o papeles.
-                            </li>
-
-                            <li>
-                                <i class="bi bi-x-lg"></i>
-                                Fechas, tareas y aplicaciones recordadas de memoria.
-                            </li>
-
-                            <li>
-                                <i class="bi bi-x-lg"></i>
-                                Dificultad para consultar inventario y actividades.
-                            </li>
-
-                            <li>
-                                <i class="bi bi-x-lg"></i>
-                                Mayor riesgo de pérdida o duplicación de datos.
-                            </li>
-
-                        </ul>
-
-                    </article>
-
-                    <article class="comparison-card comparison-card-digital">
-
-                        <div class="comparison-card-heading">
-
-                            <span class="comparison-icon">
-                                <i class="bi bi-grid-1x2"></i>
-                            </span>
-
-                            <div>
-                                <small>Con BayzarAgro</small>
-                                <h3>Gestión centralizada y accesible</h3>
-                            </div>
-
-                        </div>
-
-                        <ul class="comparison-list">
-
-                            <li>
-                                <i class="bi bi-check2"></i>
-                                Fincas, cultivos e inventario en un solo sistema.
-                            </li>
-
-                            <li>
-                                <i class="bi bi-check2"></i>
-                                Historial de actividades y productos aplicados.
-                            </li>
-
-                            <li>
-                                <i class="bi bi-check2"></i>
-                                Alertas para tareas y fechas importantes.
-                            </li>
-
-                            <li>
-                                <i class="bi bi-check2"></i>
-                                Reportes claros para tomar mejores decisiones.
-                            </li>
-
-                        </ul>
-
-                    </article>
 
                 </div>
 
@@ -435,47 +339,82 @@
         </section>
 
 
-        <section id="beneficios" class="section-block benefits-section">
+
+        <!-- =====================================================
+             FUNCIONALIDADES / SOLUCIONES
+             ===================================================== -->
+
+        <section id="funcionalidades" class="section-block solutions-section">
+
 
             <div class="section-container">
 
-                <div class="section-heading">
-                    <span class="section-kicker">Beneficios</span>
 
-                    <h2>
-                        Más control para trabajar con tranquilidad
-                    </h2>
+                <div class="solutions-heading">
+
+                    <div>
+
+                        <span class="section-kicker light">
+                            Lo que hacemos
+                        </span>
+
+                        <h2>
+                            Todo lo necesario para
+                            administrar su finca
+                        </h2>
+
+                    </div>
+
 
                     <p>
-                        Organice la operación diaria de su finca y convierta la
-                        información en una herramienta útil para crecer.
+
+                        BayzarAgro integra las principales tareas
+                        de gestión agrícola en un solo espacio,
+                        ayudándole a mantener información organizada
+                        y disponible cuando la necesita.
+
                     </p>
+
                 </div>
 
-                <div class="benefits-grid">
 
-                    @for(beneficio of beneficios; track beneficio.titulo) {
 
-                    <article class="benefit-card">
+                <div class="solutions-grid">
 
-                        <div class="benefit-icon">
-                            <i class="bi" [class]="beneficio.icono"></i>
+
+                    @for(funcionalidad of funcionalidades; track funcionalidad.titulo) {
+
+                    <article class="solution-card">
+
+                        <div class="solution-icon">
+
+                            <i class="bi" [class]="funcionalidad.icono">
+                            </i>
+
                         </div>
+
 
                         <h3>
-                            {{ beneficio.titulo }}
+                            {{ funcionalidad.titulo }}
                         </h3>
 
+
                         <p>
-                            {{ beneficio.descripcion }}
+                            {{ funcionalidad.descripcion }}
                         </p>
 
-                        <span class="card-accent" aria-hidden="true"></span>
+
+                        <span class="solution-arrow">
+
+                            <i class="bi bi-arrow-up-right"></i>
+
+                        </span>
 
                     </article>
 
                     }
 
+
                 </div>
 
             </div>
@@ -483,78 +422,1018 @@
         </section>
 
 
-        <section id="como-funciona" class="section-block how-it-works-section">
+
+        <!-- =====================================================
+             TECNOLOGÍA / PRODUCTO
+             ===================================================== -->
+
+        <section id="tecnologia" class="section-block technology-section">
+
+
+            <div class="section-container technology-grid">
+
+
+                <div class="technology-copy">
+
+
+                    <span class="section-kicker">
+                        Nuestra tecnología
+                    </span>
+
+
+                    <h2>
+                        Datos agrícolas.
+                        <span>Mejor organizados.</span>
+                    </h2>
+
+
+                    <p>
+
+                        BayzarAgro centraliza la información
+                        de su finca para facilitar el seguimiento
+                        de cultivos, recursos y actividades.
+
+                    </p>
+
+
+
+                    <div class="technology-list">
+
+
+                        <div>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            <span>
+                                Información agrícola centralizada
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            <span>
+                                Seguimiento de actividades
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            <span>
+                                Control de inventario e insumos
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            <span>
+                                Alertas y recordatorios
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            <span>
+                                Reportes para apoyar decisiones
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            <span>
+                                Acceso desde celular y computadora
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <button type="button" class="agro-button agro-button-primary" (click)="irASeccion('planes')">
+
+                        Conocer los planes
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     MOCKUP DEL SISTEMA
+                     ================================================= -->
+
+                <div class="system-preview">
+
+
+                    <div class="preview-window">
+
+
+                        <div class="preview-sidebar">
+
+
+                            <div class="preview-logo">
+
+                                <i class="bi bi-leaf-fill"></i>
+
+                            </div>
+
+
+                            <span class="active">
+                                <i class="bi bi-grid-1x2-fill"></i>
+                            </span>
+
+                            <span>
+                                <i class="bi bi-map"></i>
+                            </span>
+
+                            <span>
+                                <i class="bi bi-flower1"></i>
+                            </span>
+
+                            <span>
+                                <i class="bi bi-box-seam"></i>
+                            </span>
+
+                            <span>
+                                <i class="bi bi-calendar3"></i>
+                            </span>
+
+                            <span>
+                                <i class="bi bi-bug"></i>
+                            </span>
+
+
+                        </div>
+
+
+
+                        <div class="preview-content">
+
+
+                            <div class="preview-header">
+
+
+                                <div>
+
+                                    <small>
+                                        BayzarAgro
+                                    </small>
+
+                                    <strong>
+                                        Resumen de la finca
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="preview-user">
+
+                                    BG
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="preview-metrics">
+
+
+                                <article>
+
+                                    <small>
+                                        Fincas
+                                    </small>
+
+                                    <strong>
+                                        2
+                                    </strong>
+
+                                </article>
+
+
+                                <article>
+
+                                    <small>
+                                        Cultivos activos
+                                    </small>
+
+                                    <strong>
+                                        6
+                                    </strong>
+
+                                </article>
+
+
+                                <article>
+
+                                    <small>
+                                        Actividades
+                                    </small>
+
+                                    <strong>
+                                        12
+                                    </strong>
+
+                                </article>
+
+
+                            </div>
+
+
+
+                            <div class="preview-main-grid">
+
+
+                                <div class="preview-map">
+
+
+                                    <div class="field field-one"></div>
+                                    <div class="field field-two"></div>
+                                    <div class="field field-three"></div>
+
+
+                                    <span class="map-point point-one">
+
+                                        <i class="bi bi-geo-alt-fill"></i>
+
+                                    </span>
+
+
+                                    <span class="map-point point-two">
+
+                                        <i class="bi bi-geo-alt-fill"></i>
+
+                                    </span>
+
+
+                                </div>
+
+
+
+                                <div class="preview-activity">
+
+
+                                    <small>
+                                        Actividad reciente
+                                    </small>
+
+
+                                    <div>
+
+                                        <i class="bi bi-check-circle-fill"></i>
+
+                                        <span>
+
+                                            <strong>
+                                                Riego completado
+                                            </strong>
+
+                                            <small>
+                                                Hace 2 h
+                                            </small>
+
+                                        </span>
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <i class="bi bi-box-seam"></i>
+
+                                        <span>
+
+                                            <strong>
+                                                Inventario actualizado
+                                            </strong>
+
+                                            <small>
+                                                Hace 5 h
+                                            </small>
+
+                                        </span>
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <i class="bi bi-flower1"></i>
+
+                                        <span>
+
+                                            <strong>
+                                                Cultivo registrado
+                                            </strong>
+
+                                            <small>
+                                                Ayer
+                                            </small>
+
+                                        </span>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="preview-floating-card">
+
+                        <i class="bi bi-shield-check"></i>
+
+                        <span>
+
+                            <small>
+                                Información
+                            </small>
+
+                            <strong>
+                                Organizada y segura
+                            </strong>
+
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             PROBLEMA Y SOLUCIÓN
+             ===================================================== -->
+
+        <section id="beneficios" class="section-block transformation-section">
+
 
             <div class="section-container">
 
+
                 <div class="section-heading">
-                    <span class="section-kicker">Cómo funciona</span>
+
+                    <span class="section-kicker">
+                        Del control manual al digital
+                    </span>
+
 
                     <h2>
-                        Empiece a organizar su finca en tres pasos
+                        Menos información dispersa.
+                        Más control de su finca.
                     </h2>
 
+
                     <p>
-                        La experiencia está pensada para que cualquier productor
-                        pueda comenzar de forma rápida, incluso con poca experiencia
-                        utilizando plataformas digitales.
+
+                        Sustituya cuadernos, papeles y datos
+                        difíciles de consultar por una herramienta
+                        centralizada y disponible cuando la necesite.
+
                     </p>
+
                 </div>
+
+
+
+                <div class="transformation-grid">
+
+
+                    <article class="transformation-card old-method">
+
+
+                        <div class="transformation-top">
+
+
+                            <span class="transformation-icon">
+
+                                <i class="bi bi-journal-text"></i>
+
+                            </span>
+
+
+                            <div>
+
+                                <small>
+                                    Control tradicional
+                                </small>
+
+                                <h3>
+                                    Información dispersa
+                                </h3>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <ul>
+
+                            <li>
+                                <i class="bi bi-x-lg"></i>
+                                Registros en cuadernos y papeles.
+                            </li>
+
+                            <li>
+                                <i class="bi bi-x-lg"></i>
+                                Fechas recordadas de memoria.
+                            </li>
+
+                            <li>
+                                <i class="bi bi-x-lg"></i>
+                                Inventario difícil de consultar.
+                            </li>
+
+                            <li>
+                                <i class="bi bi-x-lg"></i>
+                                Información duplicada o perdida.
+                            </li>
+
+                        </ul>
+
+                    </article>
+
+
+
+                    <div class="transformation-arrow">
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </div>
+
+
+
+                    <article class="transformation-card new-method">
+
+
+                        <div class="transformation-top">
+
+
+                            <span class="transformation-icon">
+
+                                <i class="bi bi-grid-1x2-fill"></i>
+
+                            </span>
+
+
+                            <div>
+
+                                <small>
+                                    Con BayzarAgro
+                                </small>
+
+                                <h3>
+                                    Gestión centralizada
+                                </h3>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <ul>
+
+                            <li>
+                                <i class="bi bi-check2"></i>
+                                Cultivos organizados.
+                            </li>
+
+                            <li>
+                                <i class="bi bi-check2"></i>
+                                Actividades registradas.
+                            </li>
+
+                            <li>
+                                <i class="bi bi-check2"></i>
+                                Inventario actualizado.
+                            </li>
+
+                            <li>
+                                <i class="bi bi-check2"></i>
+                                Alertas y reportes disponibles.
+                            </li>
+
+                        </ul>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             BENEFICIOS
+             ===================================================== -->
+
+        <section class="section-block benefits-section">
+
+
+            <div class="section-container">
+
+
+                <div class="section-heading">
+
+                    <span class="section-kicker">
+                        Beneficios
+                    </span>
+
+
+                    <h2>
+                        Más control para trabajar
+                        con tranquilidad
+                    </h2>
+
+
+                    <p>
+
+                        Convierta la información de su finca
+                        en una herramienta útil para organizar
+                        mejor cada jornada.
+
+                    </p>
+
+                </div>
+
+
+
+                <div class="benefits-grid">
+
+
+                    @for(beneficio of beneficios; track beneficio.titulo) {
+
+                    <article class="benefit-card">
+
+
+                        <div class="benefit-icon">
+
+                            <i class="bi" [class]="beneficio.icono">
+                            </i>
+
+                        </div>
+
+
+                        <h3>
+                            {{ beneficio.titulo }}
+                        </h3>
+
+
+                        <p>
+                            {{ beneficio.descripcion }}
+                        </p>
+
+
+                    </article>
+
+                    }
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             EXPERIENCIA MÓVIL
+             ===================================================== -->
+
+        <section id="acceso-movil" class="section-block mobile-section">
+
+
+            <div class="section-container mobile-layout">
+
+
+                <div class="mobile-visual">
+
+
+                    <div class="mobile-circle"></div>
+
+
+                    <div class="phone-frame">
+
+
+                        <div class="phone-notch"></div>
+
+
+                        <div class="phone-screen">
+
+
+                            <div class="phone-header">
+
+
+                                <div>
+
+                                    <small>
+                                        Buenos días
+                                    </small>
+
+                                    <strong>
+                                        Mi finca
+                                    </strong>
+
+                                </div>
+
+
+                                <span>
+                                    <i class="bi bi-bell"></i>
+                                </span>
+
+
+                            </div>
+
+
+
+                            <div class="phone-summary">
+
+
+                                <small>
+                                    Actividades de hoy
+                                </small>
+
+                                <strong>
+                                    3 pendientes
+                                </strong>
+
+
+                                <div class="phone-progress">
+
+                                    <span></span>
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="phone-items">
+
+
+                                <article>
+
+                                    <span>
+                                        <i class="bi bi-droplet"></i>
+                                    </span>
+
+                                    <div>
+
+                                        <strong>
+                                            Riego programado
+                                        </strong>
+
+                                        <small>
+                                            Café · 8:00 a. m.
+                                        </small>
+
+                                    </div>
+
+                                </article>
+
+
+                                <article>
+
+                                    <span class="warning">
+                                        <i class="bi bi-exclamation-triangle"></i>
+                                    </span>
+
+                                    <div>
+
+                                        <strong>
+                                            Producto por vencer
+                                        </strong>
+
+                                        <small>
+                                            Revisar inventario
+                                        </small>
+
+                                    </div>
+
+                                </article>
+
+
+                                <article>
+
+                                    <span class="success">
+                                        <i class="bi bi-flower1"></i>
+                                    </span>
+
+                                    <div>
+
+                                        <strong>
+                                            Seguimiento de cultivo
+                                        </strong>
+
+                                        <small>
+                                            Actualización pendiente
+                                        </small>
+
+                                    </div>
+
+                                </article>
+
+
+                            </div>
+
+
+                            <div class="phone-navigation">
+
+                                <i class="bi bi-house-door-fill"></i>
+                                <i class="bi bi-calendar3"></i>
+                                <i class="bi bi-box-seam"></i>
+                                <i class="bi bi-person"></i>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="mobile-stat-card">
+
+                        <strong>
+                            74,2%
+                        </strong>
+
+                        <span>
+                            prefirió consultar información agrícola
+                            desde el celular
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="mobile-copy">
+
+
+                    <span class="section-kicker light">
+                        Acceso desde cualquier lugar
+                    </span>
+
+
+                    <h2>
+                        Su finca también
+                        cabe en su bolsillo
+                    </h2>
+
+
+                    <p>
+
+                        BayzarAgro está diseñado para adaptarse
+                        a diferentes dispositivos y facilitar
+                        la consulta de información durante
+                        el trabajo diario.
+
+                    </p>
+
+
+
+                    <div class="mobile-benefits">
+
+
+                        <div>
+
+                            <i class="bi bi-phone"></i>
+
+                            <span>
+
+                                <strong>
+                                    Diseño adaptable
+                                </strong>
+
+                                <small>
+                                    Celular, tablet y computadora.
+                                </small>
+
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <i class="bi bi-bell"></i>
+
+                            <span>
+
+                                <strong>
+                                    Alertas visibles
+                                </strong>
+
+                                <small>
+                                    Mantenga fechas y tareas bajo control.
+                                </small>
+
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <i class="bi bi-cloud-check"></i>
+
+                            <span>
+
+                                <strong>
+                                    Información centralizada
+                                </strong>
+
+                                <small>
+                                    Consulte sus datos desde un solo sistema.
+                                </small>
+
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CÓMO FUNCIONA
+             ===================================================== -->
+
+        <section id="como-funciona" class="section-block steps-section">
+
+
+            <div class="section-container">
+
+
+                <div class="section-heading">
+
+                    <span class="section-kicker">
+                        Cómo funciona
+                    </span>
+
+
+                    <h2>
+                        Empiece en tres pasos
+                    </h2>
+
+
+                    <p>
+
+                        BayzarAgro está pensado para que comenzar
+                        sea sencillo, incluso para personas con
+                        poca experiencia utilizando sistemas digitales.
+
+                    </p>
+
+                </div>
+
+
 
                 <div class="steps-grid">
 
+
                     <article class="step-card">
 
-                        <span class="step-number">01</span>
+                        <span class="step-number">
+                            01
+                        </span>
 
                         <div class="step-icon">
+
                             <i class="bi bi-person-plus"></i>
+
                         </div>
 
-                        <h3>Cree su cuenta</h3>
+                        <h3>
+                            Cree su cuenta
+                        </h3>
 
                         <p>
-                            Registre sus datos y seleccione el plan que mejor se
-                            adapte al tamaño y las necesidades de su operación.
+
+                            Registre sus datos y seleccione
+                            el plan que mejor se adapte
+                            a sus necesidades.
+
                         </p>
 
                     </article>
 
+
+
                     <article class="step-card">
 
-                        <span class="step-number">02</span>
+                        <span class="step-number">
+                            02
+                        </span>
 
                         <div class="step-icon">
+
                             <i class="bi bi-map"></i>
+
                         </div>
 
-                        <h3>Registre su finca</h3>
+                        <h3>
+                            Registre su finca
+                        </h3>
 
                         <p>
-                            Agregue fincas, cultivos, inventario, actividades y la
-                            información que necesita consultar diariamente.
+
+                            Agregue cultivos, inventario,
+                            actividades y la información
+                            que necesita administrar.
+
                         </p>
 
                     </article>
+
+
 
                     <article class="step-card">
 
-                        <span class="step-number">03</span>
+                        <span class="step-number">
+                            03
+                        </span>
 
                         <div class="step-icon">
-                            <i class="bi bi-clipboard-data"></i>
+
+                            <i class="bi bi-bar-chart-line"></i>
+
                         </div>
 
-                        <h3>Controle y decida</h3>
+                        <h3>
+                            Controle y decida
+                        </h3>
 
                         <p>
-                            Revise alertas, existencias, historial y reportes para
-                            organizar mejor el trabajo y anticipar necesidades.
+
+                            Consulte alertas, existencias,
+                            actividades e información para
+                            organizar mejor su operación.
+
                         </p>
 
                     </article>
+
 
                 </div>
+
+
 
                 <div class="steps-action">
 
@@ -562,6 +1441,7 @@
                         class="agro-button agro-button-primary">
 
                         Crear cuenta gratis
+
                         <i class="bi bi-arrow-right"></i>
 
                     </a>
@@ -577,302 +1457,167 @@
         </section>
 
 
-        <section id="funcionalidades" class="section-block features-section">
 
-            <div class="section-container features-layout">
-
-                <div class="features-intro">
-
-                    <span class="section-kicker">Funcionalidades</span>
-
-                    <h2>
-                        Herramientas simples para una gestión agrícola completa
-                    </h2>
-
-                    <p>
-                        Desde el registro de una finca hasta el análisis de costos,
-                        BayzarAgro integra los procesos clave en una experiencia clara.
-                    </p>
-
-                    <button type="button" class="text-link" (click)="irASeccion('planes')">
-
-                        Ver planes disponibles
-                        <i class="bi bi-arrow-right"></i>
-
-                    </button>
-
-                </div>
-
-                <div class="features-grid">
-
-                    @for(funcionalidad of funcionalidades; track funcionalidad.titulo) {
-
-                    <article class="feature-card">
-
-                        <div class="feature-icon">
-                            <i class="bi" [class]="funcionalidad.icono"></i>
-                        </div>
-
-                        <div>
-                            <h3>
-                                {{ funcionalidad.titulo }}
-                            </h3>
-
-                            <p>
-                                {{ funcionalidad.descripcion }}
-                            </p>
-                        </div>
-
-                    </article>
-
-                    }
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <section id="acceso-movil" class="section-block mobile-experience-section">
-
-            <div class="section-container mobile-experience-grid">
-
-                <div class="mobile-experience-copy">
-
-                    <span class="section-kicker">Acceso desde cualquier lugar</span>
-
-                    <h2>
-                        Consulte su finca desde el dispositivo que tenga a mano
-                    </h2>
-
-                    <p>
-                        El celular fue el dispositivo preferido por la mayoría de
-                        las personas encuestadas. Por eso, BayzarAgro prioriza una
-                        experiencia adaptable, clara y cómoda para el trabajo diario.
-                    </p>
-
-                    <div class="mobile-benefits">
-
-                        <div>
-                            <i class="bi bi-phone"></i>
-
-                            <span>
-                                <strong>Diseño adaptable</strong>
-                                <small>Celular, tablet y computadora.</small>
-                            </span>
-                        </div>
-
-                        <div>
-                            <i class="bi bi-bell"></i>
-
-                            <span>
-                                <strong>Alertas visibles</strong>
-                                <small>Tareas, fechas y productos por revisar.</small>
-                            </span>
-                        </div>
-
-                        <div>
-                            <i class="bi bi-cloud-check"></i>
-
-                            <span>
-                                <strong>Información centralizada</strong>
-                                <small>Consulte datos sin depender de papeles.</small>
-                            </span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="mobile-preview" aria-label="Vista móvil de BayzarAgro">
-
-                    <div class="phone-frame">
-
-                        <div class="phone-speaker"></div>
-
-                        <div class="phone-screen">
-
-                            <div class="phone-topbar">
-
-                                <div>
-                                    <small>Buenos días</small>
-                                    <strong>Mi finca</strong>
-                                </div>
-
-                                <span>
-                                    <i class="bi bi-bell"></i>
-                                </span>
-
-                            </div>
-
-                            <div class="phone-summary">
-
-                                <small>Actividades de hoy</small>
-                                <strong>3 pendientes</strong>
-
-                                <div class="phone-progress">
-                                    <span></span>
-                                </div>
-
-                            </div>
-
-                            <div class="phone-notifications">
-
-                                <article>
-                                    <span class="phone-notification-icon">
-                                        <i class="bi bi-droplet"></i>
-                                    </span>
-
-                                    <div>
-                                        <strong>Riego programado</strong>
-                                        <small>Cultivo de tomate · 8:00 a. m.</small>
-                                    </div>
-                                </article>
-
-                                <article>
-                                    <span class="phone-notification-icon warning">
-                                        <i class="bi bi-exclamation-triangle"></i>
-                                    </span>
-
-                                    <div>
-                                        <strong>Producto por vencer</strong>
-                                        <small>Revise el inventario en 3 días.</small>
-                                    </div>
-                                </article>
-
-                                <article>
-                                    <span class="phone-notification-icon success">
-                                        <i class="bi bi-flower1"></i>
-                                    </span>
-
-                                    <div>
-                                        <strong>Seguimiento del cultivo</strong>
-                                        <small>Actualice el estado de crecimiento.</small>
-                                    </div>
-                                </article>
-
-                            </div>
-
-                            <div class="phone-navigation" aria-hidden="true">
-                                <i class="bi bi-house-door-fill"></i>
-                                <i class="bi bi-calendar3"></i>
-                                <i class="bi bi-box-seam"></i>
-                                <i class="bi bi-person"></i>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="mobile-preview-note">
-                        <i class="bi bi-phone"></i>
-                        <span>
-                            <strong>74,2%</strong>
-                            prefirió consultar información agrícola desde el celular.
-                        </span>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
+        <!-- =====================================================
+             PLANES
+             ===================================================== -->
 
         <section id="planes" class="section-block plans-section">
 
+
             <div class="section-container">
 
+
                 <div class="section-heading">
-                    <span class="section-kicker">Planes</span>
+
+                    <span class="section-kicker">
+                        Planes
+                    </span>
+
 
                     <h2>
-                        Un plan para cada etapa de su finca
+                        Un plan para cada etapa
+                        de su finca
                     </h2>
 
+
                     <p>
-                        Comience sin costo y amplíe sus herramientas conforme crece
-                        su operación agrícola.
+
+                        Comience sin costo y amplíe las
+                        herramientas disponibles conforme
+                        crece su operación agrícola.
+
                     </p>
+
                 </div>
+
+
 
                 @if(cargandoPlanes) {
 
                 <div class="loading-state">
+
                     <span class="loading-spinner"></span>
+
                     Cargando planes disponibles...
+
                 </div>
 
                 }
 
+
+
                 <div class="plans-grid">
+
 
                     @for(plan of planes; track plan.id_plan) {
 
                     <article class="plan-card" [class.recommended]="plan.destacado === 1">
 
+
                         @if(plan.destacado === 1) {
+
                         <div class="recommended-badge">
+
+                            <i class="bi bi-star-fill"></i>
+
                             Más recomendado
+
                         </div>
+
                         }
 
+
                         <div class="plan-header">
+
 
                             <span class="plan-label">
                                 Plan
                             </span>
 
+
                             <h3>
                                 {{ plan.nombre }}
                             </h3>
 
+
                             <div class="plan-price">
+
                                 {{ formatoPrecio(plan.precio_mensual) }}
 
                                 @if(tienePrecio(plan.precio_mensual)) {
-                                <small>/ mes</small>
+
+                                <small>
+                                    / mes
+                                </small>
+
                                 }
+
                             </div>
+
 
                             <p>
                                 {{ plan.descripcion }}
                             </p>
 
+
                         </div>
+
+
 
                         <div class="plan-divider"></div>
 
+
+
                         <ul class="plan-benefits">
 
+
                             @for(item of beneficiosPlan(plan.codigo); track item) {
+
                             <li>
+
                                 <i class="bi bi-check2"></i>
-                                <span>{{ item }}</span>
+
+                                <span>
+                                    {{ item }}
+                                </span>
+
                             </li>
+
                             }
+
 
                         </ul>
 
+
+
                         <a routerLink="/registro" [queryParams]="{ plan: plan.codigo }" class="agro-button plan-button"
                             [class.agro-button-primary]="plan.destacado === 1"
-                            [class.agro-button-secondary]="plan.destacado !== 1">
+                            [class.agro-button-outline]="plan.destacado !== 1">
+
 
                             @if(plan.codigo === 'gratuito') {
+
                             Comenzar gratis
+
                             } @else {
+
                             Elegir {{ plan.nombre }}
+
                             }
+
 
                             <i class="bi bi-arrow-right"></i>
 
+
                         </a>
+
 
                     </article>
 
                     }
 
+
                 </div>
 
             </div>
@@ -880,230 +1625,373 @@
         </section>
 
 
+
+        <!-- =====================================================
+             EVIDENCIA
+             ===================================================== -->
 
         <section id="evidencia" class="section-block evidence-section">
 
-            <div class="section-container">
 
-                <div class="section-heading">
-                    <span class="section-kicker">Lo que encontramos</span>
+            <div class="section-container evidence-layout">
+
+
+                <div class="evidence-copy">
+
+
+                    <span class="section-kicker">
+                        Validación inicial
+                    </span>
+
 
                     <h2>
-                        Una propuesta construida alrededor de necesidades reales
+                        Diseñado alrededor
+                        de necesidades reales
                     </h2>
 
-                    <p>
-                        Antes de definir las prioridades de BayzarAgro se realizó
-                        un estudio exploratorio para conocer cómo se administra
-                        actualmente la actividad agrícola.
-                    </p>
-                </div>
-
-                <div class="insights-grid">
-
-                    <article class="insight-card">
-
-                        <div class="insight-icon">
-                            <i class="bi bi-journal-x"></i>
-                        </div>
-
-                        <strong>Control todavía manual</strong>
-
-                        <p>
-                            Cuadernos, memoria y ausencia de registros formales
-                            continúan siendo métodos frecuentes de administración.
-                        </p>
-
-                    </article>
-
-                    <article class="insight-card">
-
-                        <div class="insight-icon">
-                            <i class="bi bi-bug"></i>
-                        </div>
-
-                        <strong>Problemas concretos</strong>
-
-                        <p>
-                            El control de plagas, las actividades, el inventario y
-                            el acceso rápido a la información destacan entre las
-                            principales dificultades.
-                        </p>
-
-                    </article>
-
-                    <article class="insight-card">
-
-                        <div class="insight-icon">
-                            <i class="bi bi-bell"></i>
-                        </div>
-
-                        <strong>Funciones prioritarias</strong>
-
-                        <p>
-                            Alertas, reportes, registro de cultivos y control de
-                            insumos fueron señalados como herramientas de alto valor.
-                        </p>
-
-                    </article>
-
-                </div>
-
-                <div class="evidence-note">
-
-                    <i class="bi bi-info-circle"></i>
 
                     <p>
-                        Estos resultados orientan el desarrollo inicial del producto,
-                        pero no representan una medición nacional del sector agrícola.
+
+                        Antes de definir las prioridades iniciales
+                        de BayzarAgro se realizó un estudio
+                        exploratorio para conocer necesidades,
+                        hábitos y percepción de la propuesta.
+
                     </p>
 
+
+                    <div class="evidence-note">
+
+                        <i class="bi bi-info-circle"></i>
+
+                        <span>
+
+                            Los resultados corresponden únicamente
+                            a las 31 personas encuestadas y no
+                            representan una medición nacional
+                            del sector agrícola.
+
+                        </span>
+
+                    </div>
+
+
                 </div>
+
+
+
+                <div class="evidence-cards">
+
+
+                    <article>
+
+                        <i class="bi bi-journal-text"></i>
+
+                        <div>
+
+                            <strong>
+                                Control manual
+                            </strong>
+
+                            <p>
+
+                                Cuadernos, memoria y registros
+                                dispersos continúan siendo métodos
+                                frecuentes de administración.
+
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <article>
+
+                        <i class="bi bi-bug"></i>
+
+                        <div>
+
+                            <strong>
+                                Necesidades concretas
+                            </strong>
+
+                            <p>
+
+                                Plagas, inventario, actividades
+                                y acceso rápido a la información
+                                destacan entre las dificultades.
+
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <article>
+
+                        <i class="bi bi-bell"></i>
+
+                        <div>
+
+                            <strong>
+                                Funciones valoradas
+                            </strong>
+
+                            <p>
+
+                                Alertas, reportes, registros
+                                de cultivos y control de insumos
+                                fueron funciones de alto interés.
+
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                </div>
+
 
             </div>
 
         </section>
 
 
+
+        <!-- =====================================================
+             FAQ
+             ===================================================== -->
+
         <section id="preguntas" class="section-block faq-section">
+
 
             <div class="section-container faq-layout">
 
-                <div class="faq-intro">
 
-                    <span class="section-kicker">Preguntas frecuentes</span>
+                <div class="faq-copy">
+
+
+                    <span class="section-kicker light">
+                        Preguntas frecuentes
+                    </span>
+
 
                     <h2>
-                        Respuestas claras antes de comenzar
+                        Todo claro antes
+                        de comenzar
                     </h2>
 
+
                     <p>
-                        Conozca cómo puede utilizar BayzarAgro y qué encontrará
-                        al crear su cuenta.
+
+                        Conozca cómo puede utilizar BayzarAgro
+                        y qué encontrará al crear su cuenta.
+
                     </p>
 
-                    <a routerLink="/registro" [queryParams]="{ plan: 'gratuito' }"
-                        class="agro-button agro-button-secondary">
+
+                    <a routerLink="/registro" [queryParams]="{ plan: 'gratuito' }" class="agro-button agro-button-lime">
 
                         Probar el plan gratuito
+
                         <i class="bi bi-arrow-right"></i>
 
                     </a>
 
+
                 </div>
+
+
 
                 <div class="faq-list">
 
+
                     <details open>
 
+
                         <summary>
+
                             ¿Puedo usar BayzarAgro desde el celular?
+
                             <i class="bi bi-plus-lg"></i>
+
                         </summary>
 
+
                         <p>
-                            Sí. La interfaz está diseñada para adaptarse a celular,
-                            tablet y computadora, de manera que pueda consultar la
-                            información desde el dispositivo más conveniente.
+
+                            Sí. La interfaz está diseñada para
+                            adaptarse a celular, tablet y computadora.
+
                         </p>
+
 
                     </details>
 
+
+
                     <details>
 
+
                         <summary>
+
                             ¿Existe un plan gratuito?
+
                             <i class="bi bi-plus-lg"></i>
+
                         </summary>
 
+
                         <p>
-                            Sí. Puede comenzar con el plan gratuito, conocer las
-                            funciones básicas y cambiar de plan cuando necesite más
-                            herramientas o capacidad.
+
+                            Sí. Puede comenzar utilizando el
+                            plan gratuito y cambiar de plan
+                            posteriormente.
+
                         </p>
+
 
                     </details>
 
+
+
                     <details>
 
+
                         <summary>
+
                             ¿Necesito experiencia utilizando sistemas digitales?
+
                             <i class="bi bi-plus-lg"></i>
+
                         </summary>
 
+
                         <p>
-                            No. BayzarAgro busca ofrecer una experiencia sencilla,
-                            con navegación clara y procesos guiados para facilitar
-                            su uso a productores con distintos niveles tecnológicos.
+
+                            No. BayzarAgro busca ofrecer
+                            navegación clara y procesos fáciles
+                            de comprender.
+
                         </p>
+
 
                     </details>
 
+
+
                     <details>
 
+
                         <summary>
+
                             ¿Qué información puedo registrar?
+
                             <i class="bi bi-plus-lg"></i>
+
                         </summary>
 
+
                         <p>
-                            Puede administrar fincas, cultivos, actividades,
-                            inventario, control de plagas, productos agrícolas,
-                            alertas y reportes desde una sola plataforma.
+
+                            Puede administrar fincas, cultivos,
+                            actividades, inventario, plagas,
+                            productos agrícolas, alertas y reportes.
+
                         </p>
 
+
                     </details>
+
+
 
                     <details>
 
+
                         <summary>
+
                             ¿Puedo consultar fertilizantes y plaguicidas?
+
                             <i class="bi bi-plus-lg"></i>
+
                         </summary>
 
+
                         <p>
-                            Sí. La propuesta incluye catálogos de productos
-                            agrícolas registrados para facilitar la consulta y
-                            mejorar el control de los insumos utilizados.
+
+                            Sí. BayzarAgro incorpora catálogos
+                            de productos agrícolas que facilitan
+                            su consulta y registro.
+
                         </p>
 
+
                     </details>
+
 
                 </div>
+
 
             </div>
 
         </section>
 
+
+
+        <!-- =====================================================
+             CTA FINAL
+             ===================================================== -->
 
         <section class="final-cta-section">
 
+
             <div class="section-container">
+
 
                 <div class="final-cta">
 
-                    <div class="final-cta-decoration" aria-hidden="true"></div>
 
-                    <div class="final-cta-copy">
-                        <span>Empiece hoy</span>
+                    <div class="final-cta-image"></div>
+
+
+                    <div class="final-cta-content">
+
+
+                        <span>
+                            Empiece hoy
+                        </span>
+
 
                         <h2>
-                            Lleve el control de su finca a un nuevo nivel
+                            Una finca mejor organizada
+                            comienza con mejores datos
                         </h2>
 
+
                         <p>
-                            Cree una cuenta gratis y organice cultivos, actividades,
-                            inventario y reportes desde una sola plataforma.
+
+                            Cree su cuenta y gestione cultivos,
+                            actividades, inventario y más
+                            desde una sola plataforma.
+
                         </p>
+
+
+                        <a routerLink="/registro" [queryParams]="{ plan: 'gratuito' }"
+                            class="agro-button agro-button-lime">
+
+                            Crear cuenta gratis
+
+                            <i class="bi bi-arrow-up-right"></i>
+
+                        </a>
+
+
                     </div>
 
-                    <a routerLink="/registro" [queryParams]="{ plan: 'gratuito' }"
-                        class="agro-button agro-button-light">
-
-                        Crear cuenta gratis
-                        <i class="bi bi-arrow-up-right"></i>
-
-                    </a>
 
                 </div>
 
@@ -1111,137 +1999,219 @@
 
         </section>
 
+
     </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
 
     <footer class="public-footer">
 
-        <div class="footer-decoration footer-decoration-one"></div>
-        <div class="footer-decoration footer-decoration-two"></div>
 
         <div class="section-container footer-grid">
 
+
             <div class="footer-brand">
 
-                <a class="brand footer-logo-link" routerLink="/" aria-label="Ir al inicio de BayzarAgro">
 
-                    <span class="brand-logo-wrapper footer-logo-wrapper">
+                <a class="brand footer-brand-link" routerLink="/">
+
+
+                    <span class="brand-logo-wrapper">
+
                         <img src="/Logo4.png" alt="Logo de BayzarAgro" class="brand-logo">
+
                     </span>
+
 
                     <span class="brand-copy">
-                        <strong>BayzarAgro</strong>
-                        <small>Tecnología que impulsa el campo</small>
+
+                        <strong>
+                            BayzarAgro
+                        </strong>
+
+                        <small>
+                            Tecnología que impulsa el campo
+                        </small>
+
                     </span>
+
 
                 </a>
 
+
                 <p>
-                    Sistema de control agrícola creado para productores y pequeñas
-                    fincas de Costa Rica. Organice cultivos, actividades, inventario,
-                    costos y producción desde una plataforma clara y segura.
+
+                    Plataforma digital creada para facilitar
+                    la organización y gestión de fincas agrícolas
+                    en Costa Rica.
+
                 </p>
+
 
                 <div class="footer-social">
 
-                    <a href="#" aria-label="Facebook de BayzarAgro">
+
+                    <a href="#" aria-label="Facebook">
+
                         <i class="bi bi-facebook"></i>
+
                     </a>
 
-                    <a href="#" aria-label="Instagram de BayzarAgro">
+
+                    <a href="#" aria-label="Instagram">
+
                         <i class="bi bi-instagram"></i>
+
                     </a>
 
-                    <a href="#" aria-label="WhatsApp de BayzarAgro">
+
+                    <a href="#" aria-label="WhatsApp">
+
                         <i class="bi bi-whatsapp"></i>
+
                     </a>
+
 
                 </div>
 
+
             </div>
 
+
+
             <div class="footer-column">
+
 
                 <h3>
                     Plataforma
                 </h3>
 
-                <button type="button" (click)="irASeccion('beneficios')">
-                    Beneficios
-                </button>
-
-                <button type="button" (click)="irASeccion('como-funciona')">
-                    Cómo funciona
-                </button>
 
                 <button type="button" (click)="irASeccion('funcionalidades')">
+
                     Funcionalidades
+
                 </button>
+
+
+                <button type="button" (click)="irASeccion('tecnologia')">
+
+                    Tecnología
+
+                </button>
+
+
+                <button type="button" (click)="irASeccion('como-funciona')">
+
+                    Cómo funciona
+
+                </button>
+
 
                 <button type="button" (click)="irASeccion('planes')">
+
                     Planes
+
                 </button>
 
-                <button type="button" (click)="irASeccion('preguntas')">
-                    Preguntas frecuentes
-                </button>
 
             </div>
 
+
+
             <div class="footer-column">
+
 
                 <h3>
                     Contacto
                 </h3>
 
+
                 <a href="mailto:info@bayzaragro.com">
+
                     <i class="bi bi-envelope"></i>
+
                     info&#64;bayzaragro.com
+
                 </a>
 
-                <span>
-                    <i class="bi bi-geo-alt"></i>
-                    Costa Rica
-                </span>
 
                 <span>
-                    <i class="bi bi-headset"></i>
-                    Atención digital
+
+                    <i class="bi bi-geo-alt"></i>
+
+                    Costa Rica
+
                 </span>
+
+
+                <span>
+
+                    <i class="bi bi-headset"></i>
+
+                    Atención digital
+
+                </span>
+
 
             </div>
 
-            <div class="footer-column footer-legal">
+
+
+            <div class="footer-column">
+
 
                 <h3>
                     Legal
                 </h3>
 
+
                 <a routerLink="/politicas-privacidad">
+
                     <i class="bi bi-shield-check"></i>
+
                     Políticas de privacidad
+
                 </a>
 
+
                 <a routerLink="/terminos-condiciones">
+
                     <i class="bi bi-file-earmark-text"></i>
+
                     Términos y condiciones
+
                 </a>
+
 
             </div>
 
+
         </div>
 
+
+
         <div class="section-container footer-bottom">
+
 
             <span>
                 © 2026 BayzarAgro. Todos los derechos reservados.
             </span>
 
+
             <span>
                 Desarrollado para la agricultura costarricense.
             </span>
 
+
         </div>
 
+
     </footer>
+
 
 </div>
