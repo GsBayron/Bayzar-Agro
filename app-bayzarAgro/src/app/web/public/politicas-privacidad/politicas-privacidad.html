@@ -8,11 +8,17 @@
 
         <div class="navbar-container">
 
-            <a class="brand" routerLink="/" aria-label="Ir al inicio de BayzarAgro">
+            <a
+                class="brand"
+                routerLink="/"
+                aria-label="Ir al inicio de BayzarAgro">
 
                 <span class="brand-logo-wrapper">
 
-                    <img src="/Logo4.png" alt="Logo de BayzarAgro" class="brand-logo">
+                    <img
+                        src="/Logo4.png"
+                        alt="Logo de BayzarAgro"
+                        class="brand-logo">
 
                 </span>
 
@@ -33,13 +39,18 @@
 
             <div class="navbar-actions">
 
-                <a routerLink="/registro" [queryParams]="{ plan: 'gratuito' }" class="register-link">
+                <a
+                    routerLink="/registro"
+                    [queryParams]="{ plan: 'gratuito' }"
+                    class="register-link">
 
                     Crear cuenta
 
                 </a>
 
-                <a routerLink="/login" class="login-link">
+                <a
+                    routerLink="/login"
+                    class="login-link">
 
                     Iniciar sesión
 
@@ -54,7 +65,6 @@
     </header>
 
 
-
     <main>
 
         <!-- =====================================================
@@ -64,13 +74,18 @@
         <section class="legal-hero">
 
             <div class="legal-hero-background"></div>
+
             <div class="legal-hero-overlay"></div>
+
 
             <div class="section-container legal-hero-layout">
 
+
                 <div class="legal-hero-content">
 
-                    <a routerLink="/" class="hero-back">
+                    <a
+                        routerLink="/"
+                        class="hero-back">
 
                         <i class="bi bi-arrow-left"></i>
 
@@ -89,8 +104,13 @@
 
 
                     <h1>
+
                         Políticas de
-                        <span>privacidad</span>
+
+                        <span>
+                            privacidad
+                        </span>
+
                     </h1>
 
 
@@ -128,6 +148,9 @@
                 </div>
 
 
+                <!-- =============================================
+                     TARJETA HERO
+                     ============================================= -->
 
                 <div class="hero-security-card">
 
@@ -148,9 +171,11 @@
                         </strong>
 
                         <p>
+
                             Procuramos administrar los datos de manera
                             responsable y utilizarlos para brindar las
                             funcionalidades de la plataforma.
+
                         </p>
 
                     </div>
@@ -160,7 +185,6 @@
             </div>
 
         </section>
-
 
 
         <!-- =====================================================
@@ -173,7 +197,7 @@
 
 
                 <!-- =================================================
-                     ÍNDICE
+                     TABLA DE CONTENIDO
                      ================================================= -->
 
                 <aside class="legal-sidebar">
@@ -193,52 +217,109 @@
                         </div>
 
 
-                        <nav class="legal-index" aria-label="Contenido de la política de privacidad">
+                        <nav
+                            class="legal-index"
+                            aria-label="Contenido de la política de privacidad">
 
-                            <a href="#informacion">
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('informacion')">
+
                                 <span>01</span>
+
                                 Información recopilada
-                            </a>
 
-                            <a href="#uso">
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('uso')">
+
                                 <span>02</span>
+
                                 Uso de la información
-                            </a>
 
-                            <a href="#seguridad">
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('seguridad')">
+
                                 <span>03</span>
+
                                 Seguridad
-                            </a>
 
-                            <a href="#roles">
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('roles')">
+
                                 <span>04</span>
+
                                 Acceso según roles
-                            </a>
 
-                            <a href="#pagos">
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('pagos')">
+
                                 <span>05</span>
+
                                 Información de pago
-                            </a>
 
-                            <a href="#conservacion">
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('conservacion')">
+
                                 <span>06</span>
+
                                 Conservación de datos
-                            </a>
 
-                            <a href="#responsabilidad">
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('responsabilidad')">
+
                                 <span>07</span>
+
                                 Responsabilidad
-                            </a>
 
-                            <a href="#cambios">
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('cambios')">
+
                                 <span>08</span>
-                                Cambios en la política
-                            </a>
 
-                            <a href="#contacto">
+                                Cambios en la política
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('contacto')">
+
                                 <span>09</span>
+
                                 Contacto
-                            </a>
+
+                            </button>
+
 
                         </nav>
 
@@ -254,8 +335,10 @@
                                 </strong>
 
                                 <span>
+
                                     El acceso se controla mediante
                                     autenticación, roles y permisos.
+
                                 </span>
 
                             </div>
@@ -267,7 +350,6 @@
                 </aside>
 
 
-
                 <!-- =================================================
                      DOCUMENTO
                      ================================================= -->
@@ -275,7 +357,9 @@
                 <div class="legal-document">
 
 
-                    <!-- INTRODUCCIÓN -->
+                    <!-- =================================================
+                         INTRODUCCIÓN
+                         ================================================= -->
 
                     <div class="legal-introduction">
 
@@ -305,12 +389,13 @@
                     </div>
 
 
-
                     <!-- =================================================
                          01
                          ================================================= -->
 
-                    <article id="informacion" class="legal-article">
+                    <article
+                        id="informacion"
+                        class="legal-article">
 
                         <div class="article-heading">
 
@@ -417,12 +502,13 @@
                     </article>
 
 
-
                     <!-- =================================================
                          02
                          ================================================= -->
 
-                    <article id="uso" class="legal-article">
+                    <article
+                        id="uso"
+                        class="legal-article">
 
                         <div class="article-heading">
 
@@ -447,10 +533,9 @@
 
                         <p>
 
-                            La información registrada se utiliza para
-                            permitir el funcionamiento de la plataforma
-                            y brindar herramientas de gestión agrícola
-                            al usuario.
+                            La información registrada se utiliza para permitir
+                            el funcionamiento de la plataforma y brindar
+                            herramientas de gestión agrícola al usuario.
 
                         </p>
 
@@ -492,8 +577,10 @@
                                 <i class="bi bi-check2"></i>
 
                                 <span>
-                                    Mostrar alertas relacionadas con
-                                    actividades, inventario o plagas.
+
+                                    Mostrar alertas relacionadas con actividades,
+                                    inventario o plagas.
+
                                 </span>
 
                             </li>
@@ -503,8 +590,10 @@
                                 <i class="bi bi-check2"></i>
 
                                 <span>
+
                                     Mejorar la organización de la
                                     información agrícola.
+
                                 </span>
 
                             </li>
@@ -514,12 +603,13 @@
                     </article>
 
 
-
                     <!-- =================================================
                          03
                          ================================================= -->
 
-                    <article id="seguridad" class="legal-article">
+                    <article
+                        id="seguridad"
+                        class="legal-article">
 
                         <div class="article-heading">
 
@@ -544,8 +634,8 @@
 
                         <p>
 
-                            BayzarAgro implementa controles básicos
-                            de acceso mediante autenticación de usuarios,
+                            BayzarAgro implementa controles básicos de
+                            acceso mediante autenticación de usuarios,
                             roles y permisos. Las contraseñas deben
                             almacenarse de forma protegida y no deben
                             compartirse con terceros.
@@ -591,12 +681,13 @@
                     </article>
 
 
-
                     <!-- =================================================
                          04
                          ================================================= -->
 
-                    <article id="roles" class="legal-article">
+                    <article
+                        id="roles"
+                        class="legal-article">
 
                         <div class="article-heading">
 
@@ -621,8 +712,8 @@
 
                         <p>
 
-                            La plataforma utiliza roles para controlar el
-                            acceso a la información. Por ejemplo, un
+                            La plataforma utiliza roles para controlar
+                            el acceso a la información. Por ejemplo, un
                             administrador puede gestionar usuarios y catálogos,
                             mientras que un agricultor accede principalmente
                             a la información relacionada con su propia
@@ -683,12 +774,13 @@
                     </article>
 
 
-
                     <!-- =================================================
                          05
                          ================================================= -->
 
-                    <article id="pagos" class="legal-article">
+                    <article
+                        id="pagos"
+                        class="legal-article">
 
                         <div class="article-heading">
 
@@ -763,12 +855,13 @@
                     </article>
 
 
-
                     <!-- =================================================
                          06
                          ================================================= -->
 
-                    <article id="conservacion" class="legal-article">
+                    <article
+                        id="conservacion"
+                        class="legal-article">
 
                         <div class="article-heading">
 
@@ -803,12 +896,13 @@
                     </article>
 
 
-
                     <!-- =================================================
                          07
                          ================================================= -->
 
-                    <article id="responsabilidad" class="legal-article">
+                    <article
+                        id="responsabilidad"
+                        class="legal-article">
 
                         <div class="article-heading">
 
@@ -833,23 +927,50 @@
 
                         <p>
 
-                            El usuario es responsable de mantener
-                            actualizada la información registrada y
-                            de utilizar la plataforma de forma adecuada.
-                            También debe evitar compartir datos sensibles
-                            o credenciales con personas no autorizadas.
+                            El usuario es responsable de mantener actualizada
+                            la información registrada y de utilizar la
+                            plataforma de forma adecuada. También debe
+                            evitar compartir datos sensibles o credenciales
+                            con personas no autorizadas.
 
                         </p>
 
-                    </article>
 
+                        <div class="legal-highlight">
+
+                            <span class="highlight-icon">
+
+                                <i class="bi bi-person-check"></i>
+
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Responsabilidad de la cuenta
+                                </strong>
+
+                                <span>
+
+                                    Mantenga actualizados sus datos y proteja
+                                    sus credenciales de acceso.
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
 
 
                     <!-- =================================================
                          08
                          ================================================= -->
 
-                    <article id="cambios" class="legal-article">
+                    <article
+                        id="cambios"
+                        class="legal-article">
 
                         <div class="article-heading">
 
@@ -874,22 +995,22 @@
 
                         <p>
 
-                            BayzarAgro podrá actualizar esta política
-                            de privacidad cuando sea necesario.
-                            Las modificaciones podrán publicarse
-                            dentro de esta misma sección.
+                            BayzarAgro podrá actualizar esta política de
+                            privacidad cuando sea necesario. Las modificaciones
+                            podrán publicarse dentro de esta misma sección.
 
                         </p>
 
                     </article>
 
 
-
                     <!-- =================================================
                          09
                          ================================================= -->
 
-                    <article id="contacto" class="legal-article">
+                    <article
+                        id="contacto"
+                        class="legal-article">
 
                         <div class="article-heading">
 
@@ -914,15 +1035,17 @@
 
                         <p>
 
-                            Para consultas relacionadas con privacidad
-                            o tratamiento de datos, el usuario puede
-                            contactar al equipo de BayzarAgro mediante
-                            los canales definidos dentro de la plataforma.
+                            Para consultas relacionadas con privacidad o
+                            tratamiento de datos, el usuario puede contactar
+                            al equipo de BayzarAgro mediante los canales
+                            definidos dentro de la plataforma.
 
                         </p>
 
 
-                        <a href="mailto:info@bayzaragro.com" class="contact-card">
+                        <a
+                            href="mailto:info@bayzaragro.com"
+                            class="contact-card">
 
                             <span class="contact-icon">
 
@@ -948,7 +1071,6 @@
 
                     </article>
 
-
                 </div>
 
             </div>
@@ -956,16 +1078,17 @@
         </section>
 
 
-
         <!-- =====================================================
-             NAVEGACIÓN LEGAL
+             NAVEGACIÓN INFERIOR
              ===================================================== -->
 
         <section class="legal-navigation-section">
 
             <div class="section-container legal-navigation">
 
-                <a routerLink="/" class="navigation-link navigation-back">
+                <a
+                    routerLink="/"
+                    class="navigation-link navigation-back">
 
                     <i class="bi bi-arrow-left"></i>
 
@@ -984,7 +1107,9 @@
                 </a>
 
 
-                <a routerLink="/terminos-condiciones" class="navigation-link navigation-next">
+                <a
+                    routerLink="/terminos-condiciones"
+                    class="navigation-link navigation-next">
 
                     <span>
 
@@ -1009,7 +1134,6 @@
     </main>
 
 
-
     <!-- =====================================================
          FOOTER
          ===================================================== -->
@@ -1020,11 +1144,16 @@
 
             <div class="footer-brand">
 
-                <a routerLink="/" class="brand footer-brand-link">
+                <a
+                    routerLink="/"
+                    class="brand footer-brand-link">
 
                     <span class="brand-logo-wrapper">
 
-                        <img src="/Logo4.png" alt="Logo de BayzarAgro" class="brand-logo">
+                        <img
+                            src="/Logo4.png"
+                            alt="Logo de BayzarAgro"
+                            class="brand-logo">
 
                     </span>
 
@@ -1045,8 +1174,8 @@
 
                 <p>
 
-                    Plataforma digital para facilitar la
-                    organización y gestión de fincas agrícolas.
+                    Plataforma digital para facilitar
+                    la organización y gestión de fincas agrícolas.
 
                 </p>
 
@@ -1059,12 +1188,18 @@
                     Inicio
                 </a>
 
-                <a routerLink="/registro" [queryParams]="{ plan: 'gratuito' }">
+                <a
+                    routerLink="/registro"
+                    [queryParams]="{ plan: 'gratuito' }">
+
                     Crear cuenta
+
                 </a>
 
                 <a routerLink="/terminos-condiciones">
+
                     Términos y condiciones
+
                 </a>
 
             </div>
@@ -1075,11 +1210,17 @@
         <div class="section-container footer-bottom">
 
             <span>
-                © 2026 BayzarAgro. Todos los derechos reservados.
+
+                © 2026 BayzarAgro.
+                Todos los derechos reservados.
+
             </span>
 
             <span>
-                Desarrollado para la agricultura costarricense.
+
+                Desarrollado para la
+                agricultura costarricense.
+
             </span>
 
         </div>
