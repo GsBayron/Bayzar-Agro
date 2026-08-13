@@ -14,4 +14,18 @@ import { RouterLink } from '@angular/router';
 })
 export class TerminosCondiciones {
 
+  public irASeccion(id: string): void {
+
+    const elemento = document.getElementById(id);
+
+    if (!elemento) {
+        return;
+    }
+
+    elemento.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+}
+
 }

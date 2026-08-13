@@ -1,513 +1,1229 @@
 <div class="legal-page">
 
-    <!-- NAVBAR PÚBLICA -->
+    <!-- =====================================================
+         NAVBAR
+         ===================================================== -->
+
     <header class="legal-navbar">
 
-        <a
-            class="brand"
-            routerLink="/"
-            aria-label="Ir al inicio de BayzarAgro">
-
-            <div class="brand-logo-container">
-
-                <img
-                    src="/Logo4.png"
-                    alt="Logo de BayzarAgro"
-                    class="brand-logo">
-
-            </div>
-
-            <div class="brand-text">
-
-                <strong>
-                    BayzarAgro
-                </strong>
-
-                <small>
-                    Gestión agrícola digital
-                </small>
-
-            </div>
-
-        </a>
-
-        <div class="navbar-actions">
+        <div class="navbar-container">
 
             <a
-                routerLink="/registro"
-                [queryParams]="{ plan: 'gratuito' }"
-                class="link-register">
+                class="brand"
+                routerLink="/"
+                aria-label="Ir al inicio de BayzarAgro">
 
-                Crear cuenta
+                <span class="brand-logo-wrapper">
+
+                    <img
+                        src="/Logo4.png"
+                        alt="Logo de BayzarAgro"
+                        class="brand-logo">
+
+                </span>
+
+                <span class="brand-copy">
+
+                    <strong>
+                        BayzarAgro
+                    </strong>
+
+                    <small>
+                        Tecnología que impulsa el campo
+                    </small>
+
+                </span>
 
             </a>
 
-            <a
-                routerLink="/login"
-                class="btn-primary btn-small">
 
-                <i class="bi bi-box-arrow-in-right"></i>
-                Iniciar sesión
+            <div class="navbar-actions">
 
-            </a>
+                <a
+                    routerLink="/registro"
+                    [queryParams]="{ plan: 'gratuito' }"
+                    class="register-link">
+
+                    Crear cuenta
+
+                </a>
+
+                <a
+                    routerLink="/login"
+                    class="login-link">
+
+                    Iniciar sesión
+
+                    <i class="bi bi-arrow-up-right"></i>
+
+                </a>
+
+            </div>
 
         </div>
 
     </header>
 
-    <main class="legal-main">
 
-        <!-- HERO -->
+    <main>
+
+        <!-- =====================================================
+             HERO
+             ===================================================== -->
+
         <section class="legal-hero">
 
-            <div class="legal-hero-content">
+            <div class="legal-hero-background"></div>
 
-                <div class="legal-badge">
+            <div class="legal-hero-overlay"></div>
 
-                    <i class="bi bi-shield-check"></i>
 
-                    Protección de datos
+            <div class="section-container legal-hero-layout">
 
-                </div>
 
-                <h1>
-                    Políticas de privacidad
-                </h1>
+                <div class="legal-hero-content">
 
-                <p>
-                    Esta política explica de forma general cómo BayzarAgro puede
-                    recopilar, utilizar y proteger la información registrada por
-                    los usuarios dentro de la plataforma.
-                </p>
+                    <a
+                        routerLink="/"
+                        class="hero-back">
 
-                <div class="legal-update">
+                        <i class="bi bi-arrow-left"></i>
 
-                    <i class="bi bi-calendar3"></i>
+                        Volver al inicio
 
-                    <span>
-                        Última actualización: agosto de 2026
-                    </span>
+                    </a>
 
-                </div>
 
-            </div>
+                    <div class="legal-badge">
 
-            <div class="legal-hero-icon">
+                        <i class="bi bi-shield-check"></i>
 
-                <i class="bi bi-file-earmark-lock"></i>
+                        Protección de datos
 
-            </div>
-
-        </section>
-
-        <!-- CONTENIDO -->
-        <section class="legal-content-layout">
-
-           
-
-            <!-- TARJETA LEGAL -->
-            <section class="legal-card">
-
-                <div class="legal-introduction">
-
-                    <div class="introduction-icon">
-                        <i class="bi bi-info-circle"></i>
                     </div>
+
+
+                    <h1>
+
+                        Políticas de
+
+                        <span>
+                            privacidad
+                        </span>
+
+                    </h1>
+
+
+                    <p>
+
+                        Conozca cómo BayzarAgro puede recopilar,
+                        utilizar y proteger la información registrada
+                        por los usuarios dentro de la plataforma.
+
+                    </p>
+
+
+                    <div class="legal-meta">
+
+                        <span>
+
+                            <i class="bi bi-calendar3"></i>
+
+                            Última actualización:
+                            agosto de 2026
+
+                        </span>
+
+                        <span>
+
+                            <i class="bi bi-clock"></i>
+
+                            Lectura aproximada:
+                            6 minutos
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =============================================
+                     TARJETA HERO
+                     ============================================= -->
+
+                <div class="hero-security-card">
+
+                    <span class="hero-security-icon">
+
+                        <i class="bi bi-file-earmark-lock"></i>
+
+                    </span>
 
                     <div>
 
+                        <small>
+                            Privacidad en BayzarAgro
+                        </small>
+
                         <strong>
-                            Compromiso con la privacidad
+                            Su información forma parte esencial de su operación
                         </strong>
 
                         <p>
-                            BayzarAgro procura gestionar la información de sus
-                            usuarios de forma responsable y utilizarla únicamente
-                            para brindar las funcionalidades de la plataforma.
+
+                            Procuramos administrar los datos de manera
+                            responsable y utilizarlos para brindar las
+                            funcionalidades de la plataforma.
+
                         </p>
 
                     </div>
 
                 </div>
 
-                <article id="informacion" class="legal-article">
-
-                    <div class="article-heading">
-
-                        <span class="article-number">
-                            01
-                        </span>
-
-                        <h2>
-                            Información que se recopila
-                        </h2>
-
-                    </div>
-
-                    <p>
-                        BayzarAgro puede recopilar información básica proporcionada
-                        por el usuario al crear una cuenta, como nombre, apellidos,
-                        correo electrónico, teléfono, usuario de acceso y plan
-                        seleccionado.
-                    </p>
-
-                    <p>
-                        También puede almacenar información operativa registrada
-                        dentro del sistema, incluyendo datos sobre fincas, cultivos,
-                        actividades, inventario, plagas, costos, producción,
-                        ingresos, reportes y alertas.
-                    </p>
-
-                </article>
-
-                <article id="uso" class="legal-article">
-
-                    <div class="article-heading">
-
-                        <span class="article-number">
-                            02
-                        </span>
-
-                        <h2>
-                            Uso de la información
-                        </h2>
-
-                    </div>
-
-                    <p>
-                        La información registrada se utiliza para permitir el
-                        funcionamiento de la plataforma y brindar herramientas de
-                        gestión agrícola al usuario.
-                    </p>
-
-                    <ul class="legal-list">
-
-                        <li>
-                            <i class="bi bi-check-circle-fill"></i>
-                            Administrar cuentas de usuario.
-                        </li>
-
-                        <li>
-                            <i class="bi bi-check-circle-fill"></i>
-                            Gestionar fincas, cultivos y actividades.
-                        </li>
-
-                        <li>
-                            <i class="bi bi-check-circle-fill"></i>
-                            Generar reportes operativos y financieros.
-                        </li>
-
-                        <li>
-                            <i class="bi bi-check-circle-fill"></i>
-                            Mostrar alertas relacionadas con actividades,
-                            inventario o plagas.
-                        </li>
-
-                        <li>
-                            <i class="bi bi-check-circle-fill"></i>
-                            Mejorar la organización de la información agrícola.
-                        </li>
-
-                    </ul>
-
-                </article>
-
-                <article id="seguridad" class="legal-article">
-
-                    <div class="article-heading">
-
-                        <span class="article-number">
-                            03
-                        </span>
-
-                        <h2>
-                            Seguridad de la información
-                        </h2>
-
-                    </div>
-
-                    <p>
-                        BayzarAgro implementa controles básicos de acceso mediante
-                        autenticación de usuarios, roles y permisos. Las contraseñas
-                        deben almacenarse de forma protegida y no deben compartirse
-                        con terceros.
-                    </p>
-
-                    <p>
-                        El usuario también debe tomar medidas para proteger su
-                        cuenta, como utilizar contraseñas seguras y cerrar sesión
-                        cuando utilice dispositivos compartidos.
-                    </p>
-
-                    <div class="legal-highlight">
-
-                        <i class="bi bi-shield-lock"></i>
-
-                        <span>
-                            Nunca comparta su contraseña ni sus datos de acceso con
-                            personas no autorizadas.
-                        </span>
-
-                    </div>
-
-                </article>
-
-                <article id="roles" class="legal-article">
-
-                    <div class="article-heading">
-
-                        <span class="article-number">
-                            04
-                        </span>
-
-                        <h2>
-                            Acceso según roles
-                        </h2>
-
-                    </div>
-
-                    <p>
-                        La plataforma utiliza roles para controlar el acceso a la
-                        información. Por ejemplo, un administrador puede gestionar
-                        usuarios y catálogos, mientras que un agricultor accede
-                        principalmente a la información relacionada con su propia
-                        operación agrícola.
-                    </p>
-
-                </article>
-
-                <article id="pagos" class="legal-article">
-
-                    <div class="article-heading">
-
-                        <span class="article-number">
-                            05
-                        </span>
-
-                        <h2>
-                            Información de pago
-                        </h2>
-
-                    </div>
-
-                    <p>
-                        En esta versión del proyecto, los formularios de pago pueden
-                        utilizarse de forma visual o simulada. BayzarAgro no procesa
-                        pagos reales desde esta interfaz de demostración.
-                    </p>
-
-                    <p>
-                        En una futura integración con una pasarela de pago, la
-                        información financiera deberá ser gestionada mediante
-                        proveedores seguros y especializados.
-                    </p>
-
-                    <div class="legal-note">
-
-                        <i class="bi bi-credit-card"></i>
-
-                        <div>
-
-                            <strong>
-                                Pago simulado
-                            </strong>
-
-                            <span>
-                                Actualmente no se realizan cobros reales dentro de
-                                la plataforma.
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-                <article id="conservacion" class="legal-article">
-
-                    <div class="article-heading">
-
-                        <span class="article-number">
-                            06
-                        </span>
-
-                        <h2>
-                            Conservación de datos
-                        </h2>
-
-                    </div>
-
-                    <p>
-                        La información registrada puede conservarse mientras la
-                        cuenta del usuario se mantenga activa o mientras sea
-                        necesaria para el funcionamiento del sistema.
-                    </p>
-
-                </article>
-
-                <article id="responsabilidad" class="legal-article">
-
-                    <div class="article-heading">
-
-                        <span class="article-number">
-                            07
-                        </span>
-
-                        <h2>
-                            Responsabilidad del usuario
-                        </h2>
-
-                    </div>
-
-                    <p>
-                        El usuario es responsable de mantener actualizada la
-                        información registrada y de utilizar la plataforma de forma
-                        adecuada. También debe evitar compartir datos sensibles o
-                        credenciales con personas no autorizadas.
-                    </p>
-
-                </article>
-
-                <article id="cambios" class="legal-article">
-
-                    <div class="article-heading">
-
-                        <span class="article-number">
-                            08
-                        </span>
-
-                        <h2>
-                            Cambios en la política
-                        </h2>
-
-                    </div>
-
-                    <p>
-                        BayzarAgro podrá actualizar esta política de privacidad
-                        cuando sea necesario. Las modificaciones podrán publicarse
-                        dentro de esta misma sección.
-                    </p>
-
-                </article>
-
-                <article id="contacto" class="legal-article">
-
-                    <div class="article-heading">
-
-                        <span class="article-number">
-                            09
-                        </span>
-
-                        <h2>
-                            Contacto
-                        </h2>
-
-                    </div>
-
-                    <p>
-                        Para consultas relacionadas con privacidad o tratamiento
-                        de datos, el usuario puede contactar al equipo de
-                        BayzarAgro mediante los canales definidos dentro de la
-                        plataforma.
-                    </p>
-
-                    <a
-                        href="mailto:info@bayzaragro.com"
-                        class="contact-card">
-
-                        <div class="contact-icon">
-                            <i class="bi bi-envelope"></i>
-                        </div>
-
-                        <div>
-
-                            <small>
-                                Correo electrónico
-                            </small>
-
-                            <strong>
-                                info@bayzaragro.com
-                            </strong>
-
-                        </div>
-
-                        <i class="bi bi-arrow-up-right contact-arrow"></i>
-
-                    </a>
-
-                </article>
-
-            </section>
+            </div>
 
         </section>
 
-        <!-- NAVEGACIÓN LEGAL -->
-        <section class="legal-navigation">
 
-            <a
-                routerLink="/"
-                class="btn-secondary">
+        <!-- =====================================================
+             CONTENIDO
+             ===================================================== -->
 
-                <i class="bi bi-arrow-left"></i>
-                Volver al inicio
+        <section class="legal-content-section">
 
-            </a>
+            <div class="section-container legal-layout">
 
-            <a
-                routerLink="/terminos-condiciones"
-                class="btn-primary">
 
-                Ver términos y condiciones
-                <i class="bi bi-arrow-right"></i>
+                <!-- =================================================
+                     TABLA DE CONTENIDO
+                     ================================================= -->
 
-            </a>
+                <aside class="legal-sidebar">
+
+                    <div class="sidebar-card">
+
+                        <div class="sidebar-heading">
+
+                            <span>
+                                Contenido
+                            </span>
+
+                            <small>
+                                Política de privacidad
+                            </small>
+
+                        </div>
+
+
+                        <nav
+                            class="legal-index"
+                            aria-label="Contenido de la política de privacidad">
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('informacion')">
+
+                                <span>01</span>
+
+                                Información recopilada
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('uso')">
+
+                                <span>02</span>
+
+                                Uso de la información
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('seguridad')">
+
+                                <span>03</span>
+
+                                Seguridad
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('roles')">
+
+                                <span>04</span>
+
+                                Acceso según roles
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('pagos')">
+
+                                <span>05</span>
+
+                                Información de pago
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('conservacion')">
+
+                                <span>06</span>
+
+                                Conservación de datos
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('responsabilidad')">
+
+                                <span>07</span>
+
+                                Responsabilidad
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('cambios')">
+
+                                <span>08</span>
+
+                                Cambios en la política
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                (click)="irASeccion('contacto')">
+
+                                <span>09</span>
+
+                                Contacto
+
+                            </button>
+
+
+                        </nav>
+
+
+                        <div class="sidebar-security">
+
+                            <i class="bi bi-shield-check"></i>
+
+                            <div>
+
+                                <strong>
+                                    Información protegida
+                                </strong>
+
+                                <span>
+
+                                    El acceso se controla mediante
+                                    autenticación, roles y permisos.
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </aside>
+
+
+                <!-- =================================================
+                     DOCUMENTO
+                     ================================================= -->
+
+                <div class="legal-document">
+
+
+                    <!-- =================================================
+                         INTRODUCCIÓN
+                         ================================================= -->
+
+                    <div class="legal-introduction">
+
+                        <span class="introduction-icon">
+
+                            <i class="bi bi-info-circle"></i>
+
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Compromiso con la privacidad
+                            </strong>
+
+                            <p>
+
+                                BayzarAgro procura gestionar la información
+                                de sus usuarios de forma responsable y
+                                utilizarla únicamente para brindar las
+                                funcionalidades de la plataforma.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         01
+                         ================================================= -->
+
+                    <article
+                        id="informacion"
+                        class="legal-article">
+
+                        <div class="article-heading">
+
+                            <span class="article-number">
+                                01
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Datos de la plataforma
+                                </small>
+
+                                <h2>
+                                    Información que se recopila
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <p>
+
+                            BayzarAgro puede recopilar información básica
+                            proporcionada por el usuario al crear una cuenta,
+                            como nombre, apellidos, correo electrónico,
+                            teléfono, usuario de acceso y plan seleccionado.
+
+                        </p>
+
+
+                        <p>
+
+                            También puede almacenar información operativa
+                            registrada dentro del sistema, incluyendo datos
+                            sobre fincas, cultivos, actividades, inventario,
+                            plagas, costos, producción, ingresos, reportes
+                            y alertas.
+
+                        </p>
+
+
+                        <div class="data-types">
+
+                            <div>
+
+                                <i class="bi bi-person"></i>
+
+                                <span>
+
+                                    <strong>
+                                        Datos personales
+                                    </strong>
+
+                                    <small>
+                                        Nombre, correo, teléfono y acceso.
+                                    </small>
+
+                                </span>
+
+                            </div>
+
+
+                            <div>
+
+                                <i class="bi bi-flower1"></i>
+
+                                <span>
+
+                                    <strong>
+                                        Datos agrícolas
+                                    </strong>
+
+                                    <small>
+                                        Fincas, cultivos, plagas y actividades.
+                                    </small>
+
+                                </span>
+
+                            </div>
+
+
+                            <div>
+
+                                <i class="bi bi-clipboard-data"></i>
+
+                                <span>
+
+                                    <strong>
+                                        Datos operativos
+                                    </strong>
+
+                                    <small>
+                                        Inventario, costos, producción y reportes.
+                                    </small>
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- =================================================
+                         02
+                         ================================================= -->
+
+                    <article
+                        id="uso"
+                        class="legal-article">
+
+                        <div class="article-heading">
+
+                            <span class="article-number">
+                                02
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Finalidad
+                                </small>
+
+                                <h2>
+                                    Uso de la información
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <p>
+
+                            La información registrada se utiliza para permitir
+                            el funcionamiento de la plataforma y brindar
+                            herramientas de gestión agrícola al usuario.
+
+                        </p>
+
+
+                        <ul class="legal-list">
+
+                            <li>
+
+                                <i class="bi bi-check2"></i>
+
+                                <span>
+                                    Administrar cuentas de usuario.
+                                </span>
+
+                            </li>
+
+                            <li>
+
+                                <i class="bi bi-check2"></i>
+
+                                <span>
+                                    Gestionar fincas, cultivos y actividades.
+                                </span>
+
+                            </li>
+
+                            <li>
+
+                                <i class="bi bi-check2"></i>
+
+                                <span>
+                                    Generar reportes operativos y financieros.
+                                </span>
+
+                            </li>
+
+                            <li>
+
+                                <i class="bi bi-check2"></i>
+
+                                <span>
+
+                                    Mostrar alertas relacionadas con actividades,
+                                    inventario o plagas.
+
+                                </span>
+
+                            </li>
+
+                            <li>
+
+                                <i class="bi bi-check2"></i>
+
+                                <span>
+
+                                    Mejorar la organización de la
+                                    información agrícola.
+
+                                </span>
+
+                            </li>
+
+                        </ul>
+
+                    </article>
+
+
+                    <!-- =================================================
+                         03
+                         ================================================= -->
+
+                    <article
+                        id="seguridad"
+                        class="legal-article">
+
+                        <div class="article-heading">
+
+                            <span class="article-number">
+                                03
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Protección
+                                </small>
+
+                                <h2>
+                                    Seguridad de la información
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <p>
+
+                            BayzarAgro implementa controles básicos de
+                            acceso mediante autenticación de usuarios,
+                            roles y permisos. Las contraseñas deben
+                            almacenarse de forma protegida y no deben
+                            compartirse con terceros.
+
+                        </p>
+
+
+                        <p>
+
+                            El usuario también debe tomar medidas para
+                            proteger su cuenta, como utilizar contraseñas
+                            seguras y cerrar sesión cuando utilice
+                            dispositivos compartidos.
+
+                        </p>
+
+
+                        <div class="legal-highlight">
+
+                            <span class="highlight-icon">
+
+                                <i class="bi bi-shield-lock"></i>
+
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Proteja sus credenciales
+                                </strong>
+
+                                <span>
+
+                                    Nunca comparta su contraseña ni sus
+                                    datos de acceso con personas no autorizadas.
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- =================================================
+                         04
+                         ================================================= -->
+
+                    <article
+                        id="roles"
+                        class="legal-article">
+
+                        <div class="article-heading">
+
+                            <span class="article-number">
+                                04
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Permisos
+                                </small>
+
+                                <h2>
+                                    Acceso según roles
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <p>
+
+                            La plataforma utiliza roles para controlar
+                            el acceso a la información. Por ejemplo, un
+                            administrador puede gestionar usuarios y catálogos,
+                            mientras que un agricultor accede principalmente
+                            a la información relacionada con su propia
+                            operación agrícola.
+
+                        </p>
+
+
+                        <div class="roles-grid">
+
+                            <div class="role-item">
+
+                                <span>
+
+                                    <i class="bi bi-person-gear"></i>
+
+                                </span>
+
+                                <div>
+
+                                    <strong>
+                                        Administrador
+                                    </strong>
+
+                                    <small>
+                                        Gestión administrativa y catálogos.
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="role-item">
+
+                                <span>
+
+                                    <i class="bi bi-person"></i>
+
+                                </span>
+
+                                <div>
+
+                                    <strong>
+                                        Agricultor
+                                    </strong>
+
+                                    <small>
+                                        Acceso a su propia operación agrícola.
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- =================================================
+                         05
+                         ================================================= -->
+
+                    <article
+                        id="pagos"
+                        class="legal-article">
+
+                        <div class="article-heading">
+
+                            <span class="article-number">
+                                05
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Facturación
+                                </small>
+
+                                <h2>
+                                    Información de pago
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <p>
+
+                            En esta versión del proyecto, los formularios
+                            de pago pueden utilizarse de forma visual o
+                            simulada. BayzarAgro no procesa pagos reales
+                            desde esta interfaz de demostración.
+
+                        </p>
+
+
+                        <p>
+
+                            En una futura integración con una pasarela
+                            de pago, la información financiera deberá ser
+                            gestionada mediante proveedores seguros y
+                            especializados.
+
+                        </p>
+
+
+                        <div class="payment-note">
+
+                            <span class="payment-icon">
+
+                                <i class="bi bi-credit-card"></i>
+
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Estado actual
+                                </small>
+
+                                <strong>
+                                    Pago simulado
+                                </strong>
+
+                                <p>
+
+                                    Actualmente no se realizan cobros
+                                    reales dentro de la plataforma.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- =================================================
+                         06
+                         ================================================= -->
+
+                    <article
+                        id="conservacion"
+                        class="legal-article">
+
+                        <div class="article-heading">
+
+                            <span class="article-number">
+                                06
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Permanencia
+                                </small>
+
+                                <h2>
+                                    Conservación de datos
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <p>
+
+                            La información registrada puede conservarse
+                            mientras la cuenta del usuario se mantenga
+                            activa o mientras sea necesaria para el
+                            funcionamiento del sistema.
+
+                        </p>
+
+                    </article>
+
+
+                    <!-- =================================================
+                         07
+                         ================================================= -->
+
+                    <article
+                        id="responsabilidad"
+                        class="legal-article">
+
+                        <div class="article-heading">
+
+                            <span class="article-number">
+                                07
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Uso responsable
+                                </small>
+
+                                <h2>
+                                    Responsabilidad del usuario
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <p>
+
+                            El usuario es responsable de mantener actualizada
+                            la información registrada y de utilizar la
+                            plataforma de forma adecuada. También debe
+                            evitar compartir datos sensibles o credenciales
+                            con personas no autorizadas.
+
+                        </p>
+
+
+                        <div class="legal-highlight">
+
+                            <span class="highlight-icon">
+
+                                <i class="bi bi-person-check"></i>
+
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Responsabilidad de la cuenta
+                                </strong>
+
+                                <span>
+
+                                    Mantenga actualizados sus datos y proteja
+                                    sus credenciales de acceso.
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- =================================================
+                         08
+                         ================================================= -->
+
+                    <article
+                        id="cambios"
+                        class="legal-article">
+
+                        <div class="article-heading">
+
+                            <span class="article-number">
+                                08
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Actualizaciones
+                                </small>
+
+                                <h2>
+                                    Cambios en la política
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <p>
+
+                            BayzarAgro podrá actualizar esta política de
+                            privacidad cuando sea necesario. Las modificaciones
+                            podrán publicarse dentro de esta misma sección.
+
+                        </p>
+
+                    </article>
+
+
+                    <!-- =================================================
+                         09
+                         ================================================= -->
+
+                    <article
+                        id="contacto"
+                        class="legal-article">
+
+                        <div class="article-heading">
+
+                            <span class="article-number">
+                                09
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Ayuda
+                                </small>
+
+                                <h2>
+                                    Contacto
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <p>
+
+                            Para consultas relacionadas con privacidad o
+                            tratamiento de datos, el usuario puede contactar
+                            al equipo de BayzarAgro mediante los canales
+                            definidos dentro de la plataforma.
+
+                        </p>
+
+
+                        <a
+                            href="mailto:info@bayzaragro.com"
+                            class="contact-card">
+
+                            <span class="contact-icon">
+
+                                <i class="bi bi-envelope"></i>
+
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Correo electrónico
+                                </small>
+
+                                <strong>
+                                    info&#64;bayzaragro.com
+                                </strong>
+
+                            </div>
+
+                            <i class="bi bi-arrow-up-right contact-arrow"></i>
+
+                        </a>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             NAVEGACIÓN INFERIOR
+             ===================================================== -->
+
+        <section class="legal-navigation-section">
+
+            <div class="section-container legal-navigation">
+
+                <a
+                    routerLink="/"
+                    class="navigation-link navigation-back">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    <span>
+
+                        <small>
+                            Regresar
+                        </small>
+
+                        <strong>
+                            Volver al inicio
+                        </strong>
+
+                    </span>
+
+                </a>
+
+
+                <a
+                    routerLink="/terminos-condiciones"
+                    class="navigation-link navigation-next">
+
+                    <span>
+
+                        <small>
+                            Documento relacionado
+                        </small>
+
+                        <strong>
+                            Términos y condiciones
+                        </strong>
+
+                    </span>
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
 
         </section>
 
     </main>
 
-    <!-- FOOTER -->
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
     <footer class="legal-footer">
 
-        <div class="footer-brand">
+        <div class="section-container footer-layout">
 
-            <img
-                src="/Logo3.png"
-                alt="Logo de BayzarAgro">
+            <div class="footer-brand">
 
-            <div>
+                <a
+                    routerLink="/"
+                    class="brand footer-brand-link">
 
-                <strong>
-                    BayzarAgro
-                </strong>
+                    <span class="brand-logo-wrapper">
 
-                <span>
-                    Gestión agrícola digital
-                </span>
+                        <img
+                            src="/Logo4.png"
+                            alt="Logo de BayzarAgro"
+                            class="brand-logo">
+
+                    </span>
+
+                    <span class="brand-copy">
+
+                        <strong>
+                            BayzarAgro
+                        </strong>
+
+                        <small>
+                            Tecnología que impulsa el campo
+                        </small>
+
+                    </span>
+
+                </a>
+
+
+                <p>
+
+                    Plataforma digital para facilitar
+                    la organización y gestión de fincas agrícolas.
+
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a routerLink="/">
+                    Inicio
+                </a>
+
+                <a
+                    routerLink="/registro"
+                    [queryParams]="{ plan: 'gratuito' }">
+
+                    Crear cuenta
+
+                </a>
+
+                <a routerLink="/terminos-condiciones">
+
+                    Términos y condiciones
+
+                </a>
 
             </div>
 
         </div>
 
-        <div class="footer-links">
 
-            <a routerLink="/">
-                Inicio
-            </a>
+        <div class="section-container footer-bottom">
 
-            <a routerLink="/registro">
-                Crear cuenta
-            </a>
+            <span>
 
-            <a routerLink="/terminos-condiciones">
-                Términos y condiciones
-            </a>
+                © 2026 BayzarAgro.
+                Todos los derechos reservados.
+
+            </span>
+
+            <span>
+
+                Desarrollado para la
+                agricultura costarricense.
+
+            </span>
 
         </div>
-
-        <small>
-            © 2026 BayzarAgro. Todos los derechos reservados.
-        </small>
 
     </footer>
 
