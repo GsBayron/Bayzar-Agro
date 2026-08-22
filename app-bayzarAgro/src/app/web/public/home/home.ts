@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
@@ -16,14 +16,35 @@ import { IPlan } from '../../../shared/interfaces/iplan';
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
-export class Home implements OnInit {
+export class Home implements OnInit, OnDestroy {
 
   private servicioPublico = inject(Publico);
   private cd = inject(ChangeDetectorRef);
+  private autoScrollFrame: number | null = null;
+  private duracionAutoScroll = 70000; // 70 segundos
+  private tiempoInicioScroll = 0;
+  private scrollInicial = 0;
+  private distanciaScroll = 0;
+
 
   public planes: IPlan[] = [];
   public cargandoPlanes = false;
   public menuMovilAbierto = false;
+
+  public autoScrollActivo = false;
+  public llegoAlFinal = false;
+
+  @HostListener('window:scroll')
+  public verificarScroll(): void {
+
+    if (window.innerWidth < 992) {
+      this.llegoAlFinal = false;
+      return;
+    }
+
+    this.llegoAlFinal = this.estaEnElFinal();
+  }
+
 
   public beneficios = [
     {
@@ -127,6 +148,8 @@ export class Home implements OnInit {
   }
 
   public irASeccion(id: string): void {
+    this.detenerAutoScroll();
+    this.llegoAlFinal = false;
     this.cerrarMenuMovil();
 
     const elemento = document.getElementById(id);
@@ -187,5 +210,111 @@ export class Home implements OnInit {
       'Reportes premium',
       'Soporte preferencial'
     ];
+  }
+
+  public toggleAutoScroll(): void {
+
+    if (this.autoScrollActivo) {
+      this.detenerAutoScroll();
+      return;
+    }
+
+    this.iniciarAutoScroll();
+  }
+
+  private iniciarAutoScroll(): void {
+
+  if (window.innerWidth < 992) {
+    return;
+  }
+
+  this.autoScrollActivo = true;
+  this.llegoAlFinal = false;
+
+  this.tiempoInicioScroll = performance.now();
+  this.scrollInicial = window.scrollY;
+
+  const altoPagina = document.documentElement.scrollHeight;
+  const altoVentana = window.innerHeight;
+
+  this.distanciaScroll = altoPagina - altoVentana - this.scrollInicial;
+
+  this.ejecutarAutoScroll();
+}
+
+  private ejecutarAutoScroll(): void {
+
+  if (!this.autoScrollActivo) {
+    return;
+  }
+
+  const tiempoActual = performance.now();
+  const tiempoTranscurrido = tiempoActual - this.tiempoInicioScroll;
+
+  const progreso = Math.min(
+    tiempoTranscurrido / this.duracionAutoScroll,
+    1
+  );
+
+  const nuevaPosicion = this.scrollInicial + (this.distanciaScroll * progreso);
+
+  window.scrollTo({
+    top: nuevaPosicion,
+    behavior: 'auto'
+  });
+
+  if (progreso >= 1 || this.estaEnElFinal()) {
+    this.detenerAutoScroll();
+    this.llegoAlFinal = true;
+    return;
+  }
+
+  this.autoScrollFrame = requestAnimationFrame(() => {
+    this.ejecutarAutoScroll();
+  });
+}
+
+  public detenerAutoScroll(): void {
+
+    this.autoScrollActivo = false;
+
+    if (this.autoScrollFrame !== null) {
+      cancelAnimationFrame(this.autoScrollFrame);
+      this.autoScrollFrame = null;
+    }
+  }
+
+  public ngOnDestroy(): void {
+    this.detenerAutoScroll();
+  }
+
+  public accionBotonAutoScroll(): void {
+
+    if (this.llegoAlFinal) {
+      this.volverAlInicio();
+      return;
+    }
+
+    this.toggleAutoScroll();
+  }
+
+  public volverAlInicio(): void {
+
+    this.detenerAutoScroll();
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+
+    this.llegoAlFinal = false;
+  }
+
+  private estaEnElFinal(): boolean {
+
+    const posicionActual = window.scrollY + window.innerHeight;
+    const altoPagina = document.documentElement.scrollHeight;
+
+    return posicionActual >= altoPagina - 10;
   }
 }

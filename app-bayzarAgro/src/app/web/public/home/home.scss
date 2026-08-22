@@ -4669,6 +4669,55 @@ $font-family: system-ui,
 
 }
 
+.auto-scroll-button {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    z-index: 1100;
+    border: 0;
+    background: linear-gradient(135deg, #198754, #0F5132);
+    color: #ffffff;
+    border-radius: 999px;
+    padding: 0.9rem 1.15rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 800;
+    box-shadow: 0 18px 40px rgba(25, 135, 84, 0.28);
+    transition: 0.2s ease;
+
+    i {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 22px 50px rgba(25, 135, 84, 0.35);
+    }
+
+    &.active {
+        background: linear-gradient(135deg, #123524, #198754);
+    }
+}
+
+.auto-scroll-button.to-top {
+    background: linear-gradient(135deg, #123524, #0F5132);
+}
+
+@media (max-width: 991px) {
+
+    .auto-scroll-button {
+        display: none;
+    }
+}
+
 
 /* =========================================================
    RESPONSIVE

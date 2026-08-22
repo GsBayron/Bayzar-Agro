@@ -2002,7 +2002,24 @@
 
     </main>
 
-
+    <button type="button" class="auto-scroll-button" (click)="accionBotonAutoScroll()" [class.active]="autoScrollActivo"
+        [class.to-top]="llegoAlFinal"
+        [attr.aria-label]="llegoAlFinal ? 'Volver al inicio del Home' : autoScrollActivo ? 'Pausar desplazamiento automático' : 'Iniciar desplazamiento automático'">
+    
+        @if(llegoAlFinal) {
+        <i class="bi bi-arrow-up"></i>
+        <span>Inicio</span>
+        } @else {
+        @if(autoScrollActivo) {
+        <i class="bi bi-pause-fill"></i>
+        <span>Pausar</span>
+        } @else {
+        <i class="bi bi-play-fill"></i>
+        <span>Recorrido</span>
+        }
+        }
+    
+    </button>
 
     <!-- =====================================================
          FOOTER
